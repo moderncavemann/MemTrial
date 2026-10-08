@@ -1,4 +1,4 @@
-"""MemGate core (2026-10-04): learning when to trust memory.
+"""MemTrial core (2026-10-04): learning when to trust memory.
 
 Per decision date t the agent is run with designed subsets of the k = 4 retrieved experiences. After the outcome matures:
   (1) counterfactual contribution  c[t,h] = mean utility of subsets containing h - mean of subsets without h (Banzhaf);
@@ -13,7 +13,7 @@ Per decision date t the agent is run with designed subsets of the k = 4 retrieve
                                     (one-sided t-test, level alpha, at least MIN_SCORES scored dates): the learned values have
                                     predicted the future, not only fitted the past;
   (4) anchored allocation           open  -> the subset with the highest predicted value;
-                                    closed -> KL-anchored FTRL between the safe reference and the average of the designed
+                                    closed -> KL-anchored FTRL between the conservative reference and the average of the designed
                                     drafts (prior alpha0 on the reference, lambda = lam0 * sigma / sqrt(n)).
 Ablation switches: learner {'content', 'identity'}, gate {'prequential', 'ftest', 'none'}, closed {'ftrl', 'ens', 'ref', 'uniform'}."""
 import math, collections
@@ -169,7 +169,7 @@ def ftrl_q(sumG, n, sig, a0, lam0):
     return float(GRID[int(np.argmax(sumG / n - lam * kl))])
 
 
-class MemGate:
+class MemTrial:
     """one deployment world; call decide(...) then matured(...) for each date in time order."""
     def __init__(self, Z=None, learner="content", gate="prequential", closed="ftrl", alpha=0.05, a0=0.9, lam0=4.0, masks=None):
         self.L = ValueLearner(Z, learner if learner in ("content", "content_lr", "identity") else "content")
@@ -203,8 +203,8 @@ class MemGate:
         self.sumG += grid; self.n += 1; self.sig += abs(u_ref - u_ens) / 2.0
 
 
-class MemGateBank:
-    """all MemGate variants of one deployment world, sharing learner fits, gate statistics and FTRL sums.
+class MemTrialBank:
+    """all MemTrial variants of one deployment world, sharing learner fits, gate statistics and FTRL sums.
     variants: name -> dict(learner, gate, closed, alpha). decide() returns {name: realised utility}."""
     def __init__(self, Z, variants, masks=None, a0=0.9, lam0=4.0):
         self.V = variants; self.masks = masks or list(range(16)); self.a0, self.lam0 = a0, lam0

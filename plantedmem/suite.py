@@ -8,8 +8,8 @@ next-month return, otherwise a random class; a draft that uses a set of experien
 predictions. Retrieval ranks experiences by a score that depends on the market regime, which reproduces the market
 confound of outcome credit. Regimes (REGIMES): no influence, noise only, beta 0.1 / 0.25 / 0.5, and 48 experiences whose
 content is uninformative or informative about their quality. Investors (GAMMA): risk aversion 2, 5 and 10.
-Every method sees the same retrieved experiences; MemTrial is MemGateBank of ../memtrial/memgate.py (frozen) and runs
-together with its ablation variants (MG_VARIANTS). The first `warm` dates are not scored.
+Every method sees the same retrieved experiences; MemTrial is MemTrialBank of ../memtrial/memtrial.py (frozen) and runs
+together with its ablation variants (MT_VARIANTS). The first `warm` dates are not scored.
 
 Usage: python3 suite.py run|prun <investor> <s0> <s1>  -> results/suite5_<investor>_<s0>_<s1>.json
        investor in {aggressive, balanced, conservative}; dev seeds 0-14, test seeds 15-114 (the paper's tables);
@@ -21,12 +21,12 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import world as DR
 sys.path.insert(0, str(HERE.parent / "memtrial"))
-from memgate import MemGateBank
-MG_VARIANTS = {"MemGate": dict(learner="auto"), "MemGate | content learner only": dict(learner="content"),
-               "MemGate | identity learner": dict(learner="identity"), "MemGate | F-test gate": dict(learner="auto", gate="ftest"),
-               "MemGate | no gate": dict(learner="auto", gate="none"), "MemGate | closed->ensemble": dict(learner="auto", closed="ens"),
-               "MemGate | closed->reference": dict(learner="auto", closed="ref"), "MemGate | uniform prior": dict(learner="auto", closed="uniform"),
-               "MemGate | gate 0.2": dict(learner="auto", alpha=0.2), "MemGate | gate 0.01": dict(learner="auto", alpha=0.01)}
+from memtrial import MemTrialBank
+MT_VARIANTS = {"MemTrial": dict(learner="auto"), "MemTrial | content learner only": dict(learner="content"),
+               "MemTrial | identity learner": dict(learner="identity"), "MemTrial | F-test gate": dict(learner="auto", gate="ftest"),
+               "MemTrial | no gate": dict(learner="auto", gate="none"), "MemTrial | closed->ensemble": dict(learner="auto", closed="ens"),
+               "MemTrial | closed->reference": dict(learner="auto", closed="ref"), "MemTrial | uniform prior": dict(learner="auto", closed="uniform"),
+               "MemTrial | gate 0.2": dict(learner="auto", alpha=0.2), "MemTrial | gate 0.01": dict(learner="auto", alpha=0.01)}
 D, BASE, REL, RET, REG, HALF = DR.D, DR.BASE, DR.REL, DR.RET, DR.REG, DR.HALF
 OUT = HERE / "results"; OUT.mkdir(exist_ok=True)
 GRID = np.linspace(0.0, 1.0, 201)
@@ -46,7 +46,7 @@ def U_batch(Wm, rel, gamma, fee=0.0015):
 def episode(beta, seed, M=12, warm=12, p_inf=0.7, noise_only=False, gamma=5.0, kappa=0.0):
     """One world (seed) of one regime for one investor -> ({method: mean utility over the scored dates}, MemTrial trust rate).
     Keys: the baselines of Table 3 (see ../tables/sd_pm.py and ../memtrial/paper_tables.py for the paper's names), MemTrial
-    ('MemGate'), its variants, and '_open|<variant>' (share of dates on which the variant acted on its learned values)."""
+    ('MemTrial'), its variants, and '_open|<variant>' (share of dates on which the variant acted on its learned values)."""
     U = lambda w, t: DR.env.utility(w, REL[t], gamma=gamma)
     rng = np.random.default_rng(seed); prng = random.Random(seed); rng2 = np.random.default_rng(seed + 10 ** 6)
     types = np.array([0] * M) if noise_only else np.array([1] * (M // 4) + [0] * (M - 2 * (M // 4)) + [-1] * (M // 4)); rng.shuffle(types)
@@ -62,7 +62,7 @@ def episode(beta, seed, M=12, warm=12, p_inf=0.7, noise_only=False, gamma=5.0, k
     up_obs = []; uprng = random.Random(seed + 7)
     rng5 = np.random.default_rng(seed + 4 * 10 ** 6)
     Zc = {int(m): list(kappa * types[m] * np.eye(8)[0] + rng5.normal(0, 1, 8)) for m in range(M)}     # content features
-    MG = MemGateBank(Zc, MG_VARIANTS, masks=HALF)
+    MT = MemTrialBank(Zc, MT_VARIANTS, masks=HALF)
     rng6 = np.random.default_rng(seed + 5 * 10 ** 6)
     imp = np.full(M, 0.5); votes = np.zeros(M); refl = []; hed = []; pastret = []
     for t in range(len(D)):
@@ -131,13 +131,13 @@ def episode(beta, seed, M=12, warm=12, p_inf=0.7, noise_only=False, gamma=5.0, k
         else:
             qh = np.full(5, 0.2)
         out["Hedge (adapted)"] = float(U_batch((qh @ Wh)[None, :], rel, gamma)[0])
-        # ---- MemTrial (frozen memgate.py) and its variants ----
+        # ---- MemTrial (frozen memtrial.py) and its variants ----
         idsl = [int(m) for m in ret4]
-        for name, val in MG.decide(t, idsl, umem, refavg, ens, gridE).items():
-            out[name] = val; out["_open|" + name] = float(MG.log[name][-1][1])
+        for name, val in MT.decide(t, idsl, umem, refavg, ens, gridE).items():
+            out[name] = val; out["_open|" + name] = float(MT.log[name][-1][1])
         if t >= warm:
             for k, v in out.items(): res[k].append(v)
-        MG.matured(t, idsl, umem, refavg, ens, gridE)
+        MT.matured(t, idsl, umem, refavg, ens, gridE)
         for m in fm: imp[m] = min(1.0, max(0.0, imp[m] + (0.1 if u_fm > u_ew else -0.1)))
         for m in xp: votes[m] += 1.0 if u_xp > u_ew else -1.0
         refl.append(int(np.argmax(RET[t]))); hed.append(list(uh))
@@ -146,7 +146,7 @@ def episode(beta, seed, M=12, warm=12, p_inf=0.7, noise_only=False, gamma=5.0, k
             on = [umem[mask] for mask in HALF if (mask >> j) & 1]; off = [umem[mask] for mask in HALF if not (mask >> j) & 1]
             obs[m].append(np.mean(on) - np.mean(off))
     means = {k: float(np.mean(v)) for k, v in res.items()}
-    return means, means["_open|MemGate"]
+    return means, means["_open|MemTrial"]
 
 
 def _job(a):

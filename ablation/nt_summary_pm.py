@@ -20,9 +20,9 @@ GROUPS = {"no signal": ["no influence", "noise only"], "signal": ["beta 0.1", "b
           "core": ["no influence", "noise only", "beta 0.1", "beta 0.25", "beta 0.5"],
           "many": ["many experiences"], "informative": ["many experiences, informative content"]}
 def per_seed(key, regs): return np.array([np.mean([CT[(g, n)][s][key] for g in G3 for n in regs]) for s in SEEDS])
-V = ["MemGate", "MemGate | identity learner", "MemGate | content learner only", "MemGate | F-test gate", "MemGate | no gate",
-     "NT|never trust", "MemGate | closed->ensemble", "MemGate | closed->reference", "MemGate | uniform prior",
-     "no-memory 8-draw ensemble (reference)", "W1N|MemGate", "W1N|fallback to 1/N", "W1N|uniform prior", "NT|never trust, 1/N reference"]
+V = ["MemTrial", "MemTrial | identity learner", "MemTrial | content learner only", "MemTrial | F-test gate", "MemTrial | no gate",
+     "NT|never trust", "MemTrial | closed->ensemble", "MemTrial | closed->reference", "MemTrial | uniform prior",
+     "no-memory 8-draw ensemble (reference)", "W1N|MemTrial", "W1N|fallback to 1/N", "W1N|uniform prior", "NT|never trust, 1/N reference"]
 out = {}
 for k in V:
     out[k] = {}
@@ -33,7 +33,7 @@ for k in V:
 json.dump(out, open(HERE / "NT_PM_SUMMARY.json", "w"))
 print(f"{'variant':42s}" + "".join(f"{g:>16s}" for g in GROUPS))
 for k in V: print(f"{k:42s}" + "".join(f"{out[k][g][0]:9.3f}±{out[k][g][1]:.3f}" for g in GROUPS))
-mg = {g: np.array(out["MemGate"][g][2]) for g in GROUPS}
-for k in ("NT|never trust", "MemGate | no gate", "MemGate | closed->reference"):
-    d = {g: np.array(out[k][g][2]) - mg[g] for g in GROUPS}
+mt = {g: np.array(out["MemTrial"][g][2]) for g in GROUPS}
+for k in ("NT|never trust", "MemTrial | no gate", "MemTrial | closed->reference"):
+    d = {g: np.array(out[k][g][2]) - mt[g] for g in GROUPS}
     print("paired diff vs MemTrial", k, {g: (round(float(d[g].mean()), 4), "identical" if np.all(d[g] == 0) else "") for g in GROUPS})

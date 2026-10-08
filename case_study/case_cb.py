@@ -1,5 +1,5 @@
 """Case study on ClassAlloc (offline; python3 case_cb.py INVESTOR DATE [DATE ...]) -> CASE_CB_<investor>.json.
-Replays MemTrial (frozen memgate.py, the loop of cb_eval.evaluate_method) for every seed and records, on the given dates,
+Replays MemTrial (frozen memtrial.py, the loop of cb_eval.evaluate_method) for every seed and records, on the given dates,
 what the method saw and did: the retrieved lessons, the eight designed drafts and their utilities, the Banzhaf contributions,
 the learned values, the forward-score trust test, the action and its outcome. Read-only on published files."""
 import sys, json, pickle
@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; LAB = HERE.parent; SUP = LAB / "classalloc_and_robustness"
 sys.path.insert(0, str(SUP)); sys.path.insert(0, str(LAB / "memtrial"))
-import memgate as MG
-from memgate import MemGateBank, GRID, ftrl_q, banzhaf
+import memtrial as MT
+from memtrial import MemTrialBank, GRID, ftrl_q, banzhaf
 import cb_eval as CE, run_cb as RC
 inv, targets = sys.argv[1], sys.argv[2:]
 C = pickle.load(open(SUP / "classalloc/run/eval/cache.pkl", "rb"))
@@ -18,7 +18,7 @@ B = RC.Bench(); M_, mfl, gam = CE.INV[inv]; ew = CE.project(np.full(CE.K, 1.0 / 
 out = {"investor": inv, "classes": CE.CL, "one_over_n": ew.tolist(), "cases": {}}
 nxt = CE.to_next(dates)
 for s in seeds:
-    bank = MemGateBank(Z, {"MemGate": dict(learner="auto")}, masks=CE.HALF); h = ew.copy(); fb = CE.Feedback()
+    bank = MemTrialBank(Z, {"MemTrial": dict(learner="auto")}, masks=CE.HALF); h = ew.copy(); fb = CE.Feedback()
     for t in dates:
         for a_ in fb.ready(t): bank.matured(*a_)
         w = {k: CE.project(v, M_, mfl) for k, v in W[(t, s)].items()}; R = rel[t]; ids = top4[t]
@@ -27,8 +27,8 @@ for s in seeds:
         u_ref = float(CE.util(ew, R, gam, h)[0][0]); u_ens = float(CE.util(ens, R, gam, h)[0][0])
         grid = CE.util(GRID[:, None] * ew[None, :] + (1 - GRID)[:, None] * ens[None, :], R, gam, h)[0]
         q = ftrl_q(bank.sumG, bank.n, bank.sig, 0.9, 4.0)
-        out_u = bank.decide(t, ids, U, u_ref, u_ens, grid)["MemGate"]; op = bool(bank.log["MemGate"][-1][1]); p = float(bank.log["MemGate"][-1][2])
-        sc = {m: (np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MG.MIN_SCORES else -np.inf) for m in ("identity", "content")}
+        out_u = bank.decide(t, ids, U, u_ref, u_ens, grid)["MemTrial"]; op = bool(bank.log["MemTrial"][-1][1]); p = float(bank.log["MemTrial"][-1][2])
+        sc = {m: (np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MT.MIN_SCORES else -np.inf) for m in ("identity", "content")}
         lm = "content" if sc["content"] > sc["identity"] else "identity"
         v = [float(bank.L[lm].predict(x)) for x in ids]
         best = max(CE.HALF, key=lambda k: (sum(v[j] for j in range(len(ids)) if (k >> j) & 1), -bin(k).count("1")))

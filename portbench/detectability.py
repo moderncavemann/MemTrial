@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / "memtrial"))
 import monthly_lib as ML
-from memgate import f_sf
+from memtrial import f_sf
 MASKS = [str(m) for m in range(16)]
 
 if __name__ == "__main__":

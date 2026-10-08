@@ -18,7 +18,7 @@ KEYS = {"1/N": "1/N", "Minimum variance": "Minimum variance", "Zero-shot": "Zero
         "Similarity retrieval (top-2)": "Similarity retrieval (top-2)", "Similarity retrieval (top-4)": "Similarity retrieval (top-4)",
         "FinMem": "FinMem", "MemRL": "MemRL", "Reflexion": "Reflexion", "ExpeL": "ExpeL (adapted)",
         "Uplift credit": "Uplift credit (UpliftMem-style)", "Counterfactual selection": "Counterfactual selection (no gate)",
-        "Draft averaging": "Draft averaging (8 drafts)", "Hedge": "Hedge (memory families)", "MemTrial": "MemGate"}
+        "Draft averaging": "Draft averaging (8 drafts)", "Hedge": "Hedge (memory families)", "MemTrial": "MemTrial"}
 RULE = ("1/N", "Minimum variance")
 LAST = "2024-11-01"
 

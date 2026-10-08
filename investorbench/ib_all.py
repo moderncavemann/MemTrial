@@ -2,22 +2,22 @@
 {"res": {method: [dates][investors][seeds]}, "dates": [...]}. Settlement: weights held from the close of day t to the close
 of day t+1; mandate = risky cap M on the four stocks and cash floor m (scaling rule); fee 15 bps on the distance from the
 equal-weight book; utility = r - (gamma/2) r^2 (r = daily net return), reported in percentage points per day.
-MemGate = frozen version (../memtrial/MEMGATE_FROZEN.json): half-fraction designed subsets, content features = 8-dim PCA
+MemTrial = frozen version (../memtrial/MEMTRIAL_FROZEN.json): half-fraction designed subsets, content features = 8-dim PCA
 of the experiences' text-embedding-3-small vectors."""
 import sys, json, glob, math, random, collections
 from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / "memtrial"))
 import run_ib as RB
-from memgate import MemGateBank, banzhaf, GRID
+from memtrial import MemTrialBank, banzhaf, GRID
 HALF = [0, 3, 5, 6, 9, 10, 12, 15]
 INV = {"conservative": (0.40, 0.40, 10.0), "balanced": (0.65, 0.20, 5.0), "aggressive": (0.90, 0.05, 2.0)}
 FEE = 0.0015; KEYS = RB.KEYS
-VARIANTS = {"MemGate": dict(learner="auto"), "MemGate | content learner only": dict(learner="content"),
-            "MemGate | identity learner": dict(learner="identity"), "MemGate | F-test gate": dict(learner="auto", gate="ftest"),
-            "MemGate | no gate": dict(learner="auto", gate="none"), "MemGate | closed->ensemble": dict(learner="auto", closed="ens"),
-            "MemGate | closed->reference": dict(learner="auto", closed="ref"), "MemGate | uniform prior": dict(learner="auto", closed="uniform"),
-            "MemGate | gate 0.2": dict(learner="auto", alpha=0.2), "MemGate | gate 0.01": dict(learner="auto", alpha=0.01)}
+VARIANTS = {"MemTrial": dict(learner="auto"), "MemTrial | content learner only": dict(learner="content"),
+            "MemTrial | identity learner": dict(learner="identity"), "MemTrial | F-test gate": dict(learner="auto", gate="ftest"),
+            "MemTrial | no gate": dict(learner="auto", gate="none"), "MemTrial | closed->ensemble": dict(learner="auto", closed="ens"),
+            "MemTrial | closed->reference": dict(learner="auto", closed="ref"), "MemTrial | uniform prior": dict(learner="auto", closed="uniform"),
+            "MemTrial | gate 0.2": dict(learner="auto", alpha=0.2), "MemTrial | gate 0.01": dict(learner="auto", alpha=0.01)}
 
 
 def vec(w): return np.array([w[k] for k in KEYS], float)
@@ -56,7 +56,7 @@ def main():
     res = collections.defaultdict(lambda: np.full((len(dates), 3, len(seeds)), np.nan))
     for pi, (p, (M, mfl, gam)) in enumerate(INV.items()):
         for si, s in enumerate(seeds):
-            bank = MemGateBank(Z, VARIANTS, masks=HALF); hist = []; up_obs = []; hed = []; rnd = random.Random(f"{p}|{s}")
+            bank = MemTrialBank(Z, VARIANTS, masks=HALF); hist = []; up_obs = []; hed = []; rnd = random.Random(f"{p}|{s}")
             for di, t in enumerate(dates):
                 w = {k: project(v, M, mfl) for k, v in W[(t, s)].items()}; r = ret[t]
                 ew = project(np.full(5, 0.2), M, mfl)
@@ -103,7 +103,7 @@ def main():
                 hist.append({"ids": ids, "cf": [banzhaf({m: u[f"m{m}"] for m in range(16)}, j, list(range(16))) for j in range(4)]})
     J = {"res": {k: np.where(np.isnan(v), None, v).tolist() for k, v in res.items()}, "dates": dates, "seeds": seeds}
     (HERE / ("ib_all.json" if out_dir.name == "run" else f"ib_all_{out_dir.name}.json")).write_text(json.dumps(J))
-    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "Hedge", "MemGate"]:
+    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "Hedge", "MemTrial"]:
         x = np.array(res[k], float).mean((0, 1)); print(f"{k:28s} {100*np.nanmean(x):.4f} +- {100*np.nanstd(x, ddof=1):.4f} (pp/day)")
 
 

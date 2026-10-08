@@ -13,7 +13,7 @@ LLMB = ["Zero-shot (no memory)", "Self-consistency", "Similarity retrieval (top-
         "ExpeL", "Uplift credit", "Counterfactual selection", "Draft averaging", "Hedge"]
 ps = lambda a: 1e4 * np.nanmean(np.asarray(a, float), (0, 1))          # per seed, bp/day
 pt = lambda a: 100 * np.nanmean(np.asarray(a, float), (0, 1))          # per seed, %
-mg = lambda folder, slug: json.load(open(folder / f"mg_{slug}.json"))
+mt = lambda folder, slug: json.load(open(folder / f"mt_{slug}.json"))
 out = {}
 # ---- main table and robustness rows, every run
 RUNS = {"gpt-4.1-mini, 0.7 (main)": TO, "gpt-4.1-mini, 0": SR / "t0.0/eval", "gpt-4.1-mini, 0.3": SR / "t0.3/eval", "gpt-4.1-mini, 1.0": SR / "t1.0/eval",
@@ -22,32 +22,32 @@ out["runs"] = {}
 for lab, f in RUNS.items():
     if not (f / "base.json").exists(): print(f"{lab}: not evaluated here (needs the logs of that run)"); continue
     B = json.load(open(f / "base.json")); R = {k: ps(v) for k, v in B["res"].items()}
-    m = mg(f, "MemGate"); R["MemGate"] = ps(m["res"]); R["MemGate | no gate"] = ps(mg(f, "MemGate_no_gate")["res"])
+    m = mt(f, "MemTrial"); R["MemTrial"] = ps(m["res"]); R["MemTrial | no gate"] = ps(mt(f, "MemTrial_no_gate")["res"])
     be = max(EXP, key=lambda k: R[k].mean()); bo = max(LLMB, key=lambda k: R[k].mean())
     out["runs"][lab] = {"rows": {k: ms(v) for k, v in R.items()}, "best_experience_agent": be, "best_other": bo,
-                        "best_other_ms": ms(R[bo]), "improv": ms(R["MemGate"] - R[be]), "minus_1N": ms(R["MemGate"] - R["1/N"]),
+                        "best_other_ms": ms(R[bo]), "improv": ms(R["MemTrial"] - R[be]), "minus_1N": ms(R["MemTrial"] - R["1/N"]),
                         "trust_pct": ms(pt(m["open"]))}
-    print(f"{lab:26s} MemTrial {R['MemGate'].mean():.2f}±{R['MemGate'].std(ddof=1):.2f} improv {out['runs'][lab]['improv']} -1/N {out['runs'][lab]['minus_1N']} trust {out['runs'][lab]['trust_pct']} best other {bo} {out['runs'][lab]['best_other_ms']}")
+    print(f"{lab:26s} MemTrial {R['MemTrial'].mean():.2f}±{R['MemTrial'].std(ddof=1):.2f} improv {out['runs'][lab]['improv']} -1/N {out['runs'][lab]['minus_1N']} trust {out['runs'][lab]['trust_pct']} best other {bo} {out['runs'][lab]['best_other_ms']}")
 # ---- ablation, trust test sensitivity and anchor (main run)
-ABL = {"MemGate": "MemGate", "per-experience only": "MemGate_identity_learner", "content-aware only": "MemGate_content_learner_only",
-       "in-sample F-test": "MemGate_F_test_gate", "no trust test": "MemGate_no_gate", "fall back to the draft average": "MemGate_closed_ensemble",
-       "fall back to the reference": "MemGate_closed_reference", "uniform prior": "MemGate_uniform_prior",
-       "alpha=0.01": "MemGate_gate_0_01", "alpha=0.02": "S_alpha_0_02", "alpha=0.1": "S_alpha_0_1", "alpha=0.2": "MemGate_gate_0_2",
+ABL = {"MemTrial": "MemTrial", "per-experience only": "MemTrial_identity_learner", "content-aware only": "MemTrial_content_learner_only",
+       "in-sample F-test": "MemTrial_F_test_gate", "no trust test": "MemTrial_no_gate", "fall back to the draft average": "MemTrial_closed_ensemble",
+       "fall back to the reference": "MemTrial_closed_reference", "uniform prior": "MemTrial_uniform_prior",
+       "alpha=0.01": "MemTrial_gate_0_01", "alpha=0.02": "S_alpha_0_02", "alpha=0.1": "S_alpha_0_1", "alpha=0.2": "MemTrial_gate_0_2",
        "minscores=5": "S_minscores_5", "minscores=20": "S_minscores_20"}
 out["variants"] = {}
 for lab, slug in ABL.items():
-    J = mg(TO, slug); out["variants"][lab] = {"util": ms(ps(J["res"])), "trust_pct": ms(pt(J["open"]))}
+    J = mt(TO, slug); out["variants"][lab] = {"util": ms(ps(J["res"])), "trust_pct": ms(pt(J["open"]))}
 out["anchor"] = {}
 for a0 in (0.5, 0.75, 0.9, 0.95):
     for l0 in (1.0, 4.0, 16.0):
-        slug = "MemGate" if (a0, l0) == (0.9, 4.0) else "S_" + re.sub(r"[^A-Za-z0-9]+", "_", f"a0={a0},lam0={l0}").strip("_")
-        out["anchor"][f"{a0},{l0}"] = ms(ps(mg(TO, slug)["res"]))
+        slug = "MemTrial" if (a0, l0) == (0.9, 4.0) else "S_" + re.sub(r"[^A-Za-z0-9]+", "_", f"a0={a0},lam0={l0}").strip("_")
+        out["anchor"][f"{a0},{l0}"] = ms(ps(mt(TO, slug)["res"]))
 # ---- decomposition (supplement): utility, gross return, trading cost, risk penalty, per seed
 B = json.load(open(TO / "base.json")); dec = {}
 for k in ["1/N", "Zero-shot (no memory)", "Similarity retrieval (top-4)", "Draft averaging", "ExpeL"]:
     u, g, c = (np.array(B[x][k], float) for x in ("res", "gross", "cost"))
     dec[k] = {"utility": ms(ps(u)), "gross": ms(ps(g)), "cost": ms(ps(c)), "risk": ms(ps(g - c - u))}
-m = mg(TO, "MemGate"); u = np.array(m["res"], float); c = np.array(m["cost"], float)
+m = mt(TO, "MemTrial"); u = np.array(m["res"], float); c = np.array(m["cost"], float)
 net = np.stack([(1 - np.sqrt(1 - 2 * GAM[i] * u[:, i])) / GAM[i] for i in range(3)], 1); g = net + c
 dec["MemTrial"] = {"utility": ms(ps(u)), "gross": ms(ps(g)), "cost": ms(ps(c)), "risk": ms(ps(g - c - u))}
 out["decomposition"] = dec

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Offline evaluation of an InvestorBench variant run (no API calls).
 
-Same methods, mandates, fee rule (15 bp on what is traded) and frozen method code (memgate.py) as the InvestorBench
+Same methods, mandates, fee rule (15 bp on what is traded) and frozen method code (memtrial.py) as the InvestorBench
 column of Table 3: the functions of investorbench/ib_turnover.py are reused unchanged, only pointed at the
-variant's logged drafts. Writes <run>/eval/{cache.pkl, base.json, mg_*.json, SUMMARY.json}; never touches the published
+variant's logged drafts. Writes <run>/eval/{cache.pkl, base.json, mt_*.json, SUMMARY.json}; never touches the published
 files of the main run.
 
 Usage: python3 ib_eval_variant.py VARIANT [--mock]      (VARIANT = folder name under ib_runs/ or ib_runs_mock/)
        python3 ib_eval_variant.py --run-dir DIR --out-dir DIR2   (any run folder, e.g. the main run, for a reproduction check)
-       add --stage cache|base|mg|mg-nogate|summary to run one step at a time (default: all steps)
+       add --stage cache|base|mt|mt-nogate|summary to run one step at a time (default: all steps)
 """
 from __future__ import annotations
 import collections, glob, json, math, pickle, sys
@@ -19,12 +19,12 @@ HERE = Path(__file__).resolve().parent
 IB = HERE.parent / "investorbench"
 sys.path.insert(0, str(IB)); sys.path.insert(0, str(IB.parent / "memtrial"))
 import ib_turnover as IT                  # unchanged; IT.OUT is redirected below
-import memgate as MG
+import memtrial as MT
 
 EXPERIENCE = ["FinMem", "MemRL", "Reflexion", "ExpeL"]
 METHODS = ["1/N", "Minimum variance", "Zero-shot (no memory)", "Self-consistency", "Similarity retrieval (top-2)",
            "Similarity retrieval (top-4)", "FinMem", "MemRL", "Reflexion", "ExpeL", "Uplift credit",
-           "Counterfactual selection", "Draft averaging", "Hedge", "MemGate", "MemGate | no gate"]
+           "Counterfactual selection", "Draft averaging", "Hedge", "MemTrial", "MemTrial | no gate"]
 
 
 def build_cache(run):
@@ -59,7 +59,7 @@ def paired_p(a, b):
     """one-sided paired t-test of mean(a - b) > 0; a, b: per-date values."""
     d = np.asarray(a) - np.asarray(b); n = len(d); sd = d.std(ddof=1)
     if sd == 0: return 0.0 if d.mean() > 0 else 1.0
-    return MG.t_sf(d.mean() / (sd / math.sqrt(n)), n - 1)
+    return MT.t_sf(d.mean() / (sd / math.sqrt(n)), n - 1)
 
 
 def diag(C):
@@ -78,7 +78,7 @@ def diag(C):
                 oc.append(Um[on].mean()); cf.append(Um[on].mean() - Um[off].mean()); mk.append(u1n)
             if len(seeds) > 1:
                 grand = U.mean(); ssb = len(seeds) * ((Um - grand) ** 2).sum(); ssw = ((U - Um) ** 2).sum()
-                dfw = 16 * (len(seeds) - 1); F = (ssb / 15) / (ssw / dfw) if ssw > 0 else np.inf; det += MG.f_sf(F, 15, dfw) < 0.05
+                dfw = 16 * (len(seeds) - 1); F = (ssb / 15) / (ssw / dfw) if ssw > 0 else np.inf; det += MT.f_sf(F, 15, dfw) < 0.05
             h = IT.drift(ew, r)
         out[p] = dict(outcome_vs_1N=spearman(oc, mk), cf_vs_1N=spearman(cf, mk), detectable_days=int(det), days=len(dates))
     return out
@@ -91,21 +91,21 @@ def main():
     else:
         run = HERE / ("ib_runs_mock" if "--mock" in sys.argv else "ib_runs") / sys.argv[1]; IT.OUT = run / "eval"
     IT.OUT.mkdir(parents=True, exist_ok=True)
-    stage = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "all"   # cache | base | mg | mg-nogate | summary
+    stage = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "all"   # cache | base | mt | mt-nogate | summary
     if stage in ("all", "cache"):
         info = build_cache(run); (IT.OUT / "cache_info.json").write_text(json.dumps(info))
     if stage == "cache": return
     C = IT.load(); info = json.load(open(IT.OUT / "cache_info.json"))
     if stage in ("all", "base"): IT.stage_base()
-    for name, st in (("MemGate", "mg"), ("MemGate | no gate", "mg-nogate")):
+    for name, st in (("MemTrial", "mt"), ("MemTrial | no gate", "mt-nogate")):
         if stage in ("all", st):
             res, op = IT.run_variant(name, C); print(f"{name:20s} {1e4 * res.mean():6.2f} bp/day; trust rate {100 * op.mean():.1f}%")
     if stage not in ("all", "summary"): return
     base = json.load(open(IT.OUT / "base.json"))
     R = {k: np.array(v, float) for k, v in base["res"].items()}; cost = {k: np.array(v, float) for k, v in base["cost"].items()}
     trust = {}; fwd = {}
-    for name in ("MemGate", "MemGate | no gate"):
-        J = json.load(open(IT.OUT / f"mg_{IT.slug(name)}.json")); R[name] = np.array(J["res"], float)
+    for name in ("MemTrial", "MemTrial | no gate"):
+        J = json.load(open(IT.OUT / f"mt_{IT.slug(name)}.json")); R[name] = np.array(J["res"], float)
         cost[name] = np.array(J["cost"], float); trust[name] = 100 * float(np.mean(J["open"]))
         sc = [v[m][0] for v in J["forward_score"].values() for m in v if v[m][0] is not None]
         fwd[name] = float(np.mean(sc)) if sc else None
@@ -118,16 +118,16 @@ def main():
     best = max(EXPERIENCE, key=lambda k: rows[k]["mean"])
     summ = {"run": str(run.name), "manifest": json.load(open(run / "MANIFEST.json")) if (run / "MANIFEST.json").exists() else None,
             "drafts": info, "rows_bp_per_day": rows, "best_experience_agent": best,
-            "improv_vs_best_bp": rows["MemGate"]["mean"] - rows[best]["mean"],
-            "p_vs_best": paired_p(by_date["MemGate"], by_date[best]),
-            "memgate_minus_1N_bp": rows["MemGate"]["mean"] - rows["1/N"]["mean"],
+            "improv_vs_best_bp": rows["MemTrial"]["mean"] - rows[best]["mean"],
+            "p_vs_best": paired_p(by_date["MemTrial"], by_date[best]),
+            "memtrial_minus_1N_bp": rows["MemTrial"]["mean"] - rows["1/N"]["mean"],
             "best_minus_1N_bp": rows[best]["mean"] - rows["1/N"]["mean"],
             "trust_rate_pct": trust, "mean_forward_score": fwd, "table1": diag(C)}
     (IT.OUT / "SUMMARY.json").write_text(json.dumps(summ, indent=1))
     print(f"\n{run.name}: utility, bp per day (mean ± sd over seeds)")
     for k in METHODS: print(f"  {k:30s} {rows[k]['mean']:7.2f} ± {rows[k]['sd']:.2f}   cost {rows[k]['cost_bp']:.2f}")
-    print(f"  best experience-learning agent: {best}; MemGate - best = {summ['improv_vs_best_bp']:+.2f} bp (p = {summ['p_vs_best']:.3f}); "
-          f"MemGate - 1/N = {summ['memgate_minus_1N_bp']:+.2f} bp; trust rate {trust['MemGate']:.1f}%")
+    print(f"  best experience-learning agent: {best}; MemTrial - best = {summ['improv_vs_best_bp']:+.2f} bp (p = {summ['p_vs_best']:.3f}); "
+          f"MemTrial - 1/N = {summ['memtrial_minus_1N_bp']:+.2f} bp; trust rate {trust['MemTrial']:.1f}%")
 
 
 if __name__ == "__main__":

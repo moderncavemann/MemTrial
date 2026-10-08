@@ -1,5 +1,5 @@
-"""Hyperparameter sensitivity and weak-reference robustness of the frozen MemGate (2026-10-04). Offline, no LLM calls.
-memgate.py is NOT modified (frozen; hash in MEMGATE_FROZEN.json). SensBank re-implements MemGateBank.decide with
+"""Hyperparameter sensitivity and weak-reference robustness of the frozen MemTrial (2026-10-04). Offline, no LLM calls.
+memtrial.py is NOT modified (frozen; hash in MEMTRIAL_FROZEN.json). SensBank re-implements MemTrialBank.decide with
 per-variant (alpha, a0, lam0, min_scores); the original variant names are recomputed too and must equal the stored
 pb_all / results values. Two extra worlds read the caller's locals (analysis code only):
   pb16 (PortBench): a second bank on all 16 subsets, 16-draft average in the closed state -> 'S16|...'
@@ -11,8 +11,8 @@ from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; LAB = HERE.parent; OUT = HERE / "sens"; OUT.mkdir(exist_ok=True)
 sys.path.insert(0, str(HERE))
-import memgate as MGm
-from memgate import MemGateBank, ftest, ftrl_q, t_sf, GRID
+import memtrial as MTm
+from memtrial import MemTrialBank, ftest, ftrl_q, t_sf, GRID
 
 SENS_V = {"S|default": dict(learner="auto")}
 for a in (0.01, 0.02, 0.1, 0.2): SENS_V[f"S|alpha={a}"] = dict(learner="auto", alpha=a)
@@ -20,12 +20,12 @@ for a0 in (0.5, 0.75, 0.9, 0.95):
     for l0 in (1.0, 4.0, 16.0):
         if (a0, l0) != (0.9, 4.0): SENS_V[f"S|a0={a0},lam0={l0}"] = dict(learner="auto", a0=a0, lam0=l0)
 for ms in (5, 20): SENS_V[f"S|minscores={ms}"] = dict(learner="auto", minsc=ms)
-W1N_V = {"W1N|MemGate": dict(learner="auto", closed="ftrl1n"), "W1N|fallback to 1/N": dict(learner="auto", closed="ref1n"),
+W1N_V = {"W1N|MemTrial": dict(learner="auto", closed="ftrl1n"), "W1N|fallback to 1/N": dict(learner="auto", closed="ref1n"),
          "W1N|uniform prior": dict(learner="auto", closed="uniform1n")}
-S16_V = {"S16|MemGate": dict(learner="auto"), "S16|no gate": dict(learner="auto", gate="none")}
+S16_V = {"S16|MemTrial": dict(learner="auto"), "S16|no gate": dict(learner="auto", gate="none")}
 
 
-class SensBank(MemGateBank):
+class SensBank(MemTrialBank):
     def __init__(self, Z, variants, masks=None, a0=0.9, lam0=4.0, extra=None):
         super().__init__(Z, variants, masks, a0, lam0)
         self.extra = extra; self.sumGN = np.zeros(len(GRID)); self.nN = 0; self.sigN = 0.0; self._pend = None
@@ -60,7 +60,7 @@ class SensBank(MemGateBank):
             return qc[(a, l, w)]
         out = {}
         for name, cfg in self.V.items():
-            ms = cfg.get("minsc", MGm.MIN_SCORES); lm = cfg.get("learner", "content")
+            ms = cfg.get("minsc", MTm.MIN_SCORES); lm = cfg.get("learner", "content")
             if lm == "auto":
                 sc = {m: np.mean(self.G[m].scores) if len(self.G[m].scores) >= ms else -np.inf for m in ("identity", "content")}
                 lm = "content" if sc["content"] > sc["identity"] else "identity"
@@ -96,23 +96,23 @@ class SensBank(MemGateBank):
 
 def run_pb(cfg, p):
     sys.path.insert(0, str(LAB / "portbench")); import pb_all as PA
-    PA.MemGateBank = lambda Z, V, masks=None: SensBank(Z, {**PA.VARIANTS, **SENS_V}, masks=masks, extra="pb16")
+    PA.MemTrialBank = lambda Z, V, masks=None: SensBank(Z, {**PA.VARIANTS, **SENS_V}, masks=masks, extra="pb16")
     rows, ids, dates, split = PA.ML.load_monthly(); inp = json.load(open(PA.HERE / "data/inputs.json"))
     D = PA.ML.Data(rows, ids, dates, split, cache=PA.ML.load_cache())
     Z = PA.content_features(D, inp); t0 = time.time()
     res, gl = PA.run(D, cfg, p, Z)
-    keep = {k: v for k, v in res.items() if k.startswith(("S|", "S16|", "MemGate")) or k == "1/N"}
+    keep = {k: v for k, v in res.items() if k.startswith(("S|", "S16|", "MemTrial")) or k == "1/N"}
     json.dump({"res": keep, "split": split}, open(OUT / f"pb_{cfg}_{p}.json", "w")); print(cfg, p, f"{time.time() - t0:.0f}s")
 
 
 def run_ct(g, s0, s1):
     sys.path.insert(0, str(LAB / "plantedmem")); import suite as V5
-    V5.MemGateBank = lambda Z, V, masks=None: SensBank(Z, {**V5.MG_VARIANTS, **SENS_V, **W1N_V}, masks=masks, extra="ct1n")
+    V5.MemTrialBank = lambda Z, V, masks=None: SensBank(Z, {**V5.MT_VARIANTS, **SENS_V, **W1N_V}, masks=masks, extra="ct1n")
     import multiprocessing as mp
     jobs = [(g, n, s) for n in V5.REGIMES for s in range(s0, s1)]; t0 = time.time()
     with mp.get_context("fork").Pool(4) as pool: outs = pool.map(V5._job, jobs, chunksize=5)
     R = collections.defaultdict(dict)
-    for (g_, n, s), o in zip(jobs, outs): R[n][str(s)] = [{k: v for k, v in o[0].items() if "|" in k or k.startswith(("MemGate", "1/N", "uniform", "no-memory", "counterfactual"))}, o[1]]
+    for (g_, n, s), o in zip(jobs, outs): R[n][str(s)] = [{k: v for k, v in o[0].items() if "|" in k or k.startswith(("MemTrial", "1/N", "uniform", "no-memory", "counterfactual"))}, o[1]]
     json.dump(R, open(OUT / f"ct_{g}_{s0}_{s1}.json", "w")); print(g, s0, s1, f"{time.time() - t0:.0f}s")
 
 

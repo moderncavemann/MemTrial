@@ -2,7 +2,7 @@
 pb / ib : decomposition of utility (test period) into gross return, trading cost and risk penalty, plus the L1 distance
           from the equal-weight book (what the cost is charged on) and the risky share, for 1/N, zero-shot, similarity
           top-4 and the 8-draft average. Both benchmarks charge 15 bps on the distance from the equal-weight book.
-pb0/ib0: all methods recomputed with zero trading cost (MemGate included; its learning sees the zero-cost utilities).
+pb0/ib0: all methods recomputed with zero trading cost (MemTrial included; its learning sees the zero-cost utilities).
 Analysis only: published result files are not touched."""
 import sys, os, json, collections, math
 from pathlib import Path
@@ -26,7 +26,7 @@ if mode in ("pb", "pb0"):
                 res, _ = PA.run(D, c, p, Z); test = sorted(d for d in res["1/N"] if d >= split)
                 OUT[f"{c}|{p}"] = {k: 100 * float(np.mean([np.mean(res[k][d]) for d in test])) for k in
                                    ["1/N", "Zero-shot (no memory)", "Similarity retrieval (top-4)", "Draft averaging (8 drafts)", "FinMem", "MemRL", "Reflexion",
-                                    "Counterfactual selection (no gate)", "Hedge (memory families)", "MemGate", "MemGate | no gate"] if k in res}
+                                    "Counterfactual selection (no gate)", "Hedge (memory families)", "MemTrial", "MemTrial | no gate"] if k in res}
                 continue
             key = (c, p); gam = PA.ML.GAMMA[p]; acc = collections.defaultdict(lambda: collections.defaultdict(list))
             for d in sorted(D.proj[key]):
@@ -55,7 +55,7 @@ if mode in ("ib", "ib0"):
         finally:
             pub.write_bytes(keep); sys.argv = argv
         for k in ["1/N", "Zero-shot (no memory)", "Similarity retrieval (top-4)", "Draft averaging", "FinMem", "MemRL", "Reflexion", "ExpeL",
-                  "Counterfactual selection", "Hedge", "MemGate", "MemGate | no gate"]:
+                  "Counterfactual selection", "Hedge", "MemTrial", "MemTrial | no gate"]:
             x = np.array(J["res"][k], float); OUT[k] = {p: 1e4 * float(np.nanmean(x[:, i, :])) for i, p in enumerate(G3)}
     else:
         import glob

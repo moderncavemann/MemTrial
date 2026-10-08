@@ -2,30 +2,30 @@
 PortBench-Full / PortBench-Raw: 3 seeds (independent draws per arm), test months 2023-2024, averaged over the 3 investors.
 InvestorBench: 3 seeds, test days 2020-10..2021-05, averaged over the 3 investors (if the run exists).
 Controlled (= PlantedMem): 100 test seeds, averaged over the 5 core regimes and the 3 investors.
-* = MemGate better than the best experience-learning agent of the column, paired t-test p < 0.05 (dates for real
+* = MemTrial better than the best experience-learning agent of the column, paired t-test p < 0.05 (dates for real
 benchmarks, seeds for the controlled one)."""
 import sys, json, glob, math, collections
 from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; LAB = HERE.parent
 sys.path.insert(0, str(HERE))
-from memgate import t_sf
+from memtrial import t_sf
 
 FAMILIES = [("Rule-based portfolios", ["1/N", "Minimum variance"]),
             ("LLM agents without experience learning", ["Zero-shot (no memory)", "Self-consistency", "Similarity retrieval (top-2)", "Similarity retrieval (top-4)"]),
             ("Experience-learning agents", ["FinMem", "MemRL", "Reflexion", "ExpeL"]),
             ("Credit-based and ensemble learners", ["Uplift credit", "Counterfactual selection", "Draft averaging", "Hedge"]),
-            ("Ours", ["MemGate"])]
+            ("Ours", ["MemTrial"])]
 EXPERIENCE = ["FinMem", "MemRL", "Reflexion", "ExpeL"]
 PB = {"1/N": "1/N", "Minimum variance": "Minimum variance", "Zero-shot (no memory)": "Zero-shot (no memory)", "Self-consistency": "Self-consistency (3 drafts)",
       "Similarity retrieval (top-2)": "Similarity retrieval (top-2)", "Similarity retrieval (top-4)": "Similarity retrieval (top-4)", "FinMem": "FinMem",
       "MemRL": "MemRL", "Reflexion": "Reflexion", "ExpeL": "ExpeL (adapted)", "Uplift credit": "Uplift credit (UpliftMem-style)",
-      "Counterfactual selection": "Counterfactual selection (no gate)", "Draft averaging": "Draft averaging (8 drafts)", "Hedge": "Hedge (memory families)", "MemGate": "MemGate"}
+      "Counterfactual selection": "Counterfactual selection (no gate)", "Draft averaging": "Draft averaging (8 drafts)", "Hedge": "Hedge (memory families)", "MemTrial": "MemTrial"}
 CT = {"1/N": "1/N", "Minimum variance": "Minimum variance", "Zero-shot (no memory)": "no memory", "Self-consistency": "no-memory 8-draw ensemble (reference)",
       "Similarity retrieval (top-2)": "similarity top-2", "Similarity retrieval (top-4)": "all 4", "FinMem": "FinMem (adapted)",
       "MemRL": "outcome credit top-2 (MemRL/FinMem-style)", "Reflexion": "Reflexion (adapted)", "ExpeL": "ExpeL (adapted)",
       "Uplift credit": "uplift credit top-2 (regression-adjusted, UpliftMem/UCOB-style)", "Counterfactual selection": "counterfactual credit argmax top-2",
-      "Draft averaging": "uniform aggregation of the 8 members", "Hedge": "Hedge (adapted)", "MemGate": "MemGate"}
+      "Draft averaging": "uniform aggregation of the 8 members", "Hedge": "Hedge (adapted)", "MemTrial": "MemTrial"}
 ADAPTED = {"PortBench": {"ExpeL", "Uplift credit"}, "Controlled": {"FinMem", "MemRL", "Reflexion", "ExpeL", "Hedge", "Uplift credit"}, "InvestorBench": {"FinMem", "MemRL", "Uplift credit"}}
 SCALE = {"InvestorBench": 1e4}          # InvestorBench in basis points per day; the others in pp per period
 CORE = ["no influence", "noise only", "beta 0.1", "beta 0.25", "beta 0.5"]
@@ -94,7 +94,7 @@ def main():
     cols.append(("Controlled", col))
     L = ["# Main results (mean ± sd over seeds; utility in percentage points per decision period)", "",
          "| Method | " + " | ".join(c for c, _ in cols) + " |", "|---" * (len(cols) + 1) + "|"]
-    best = {c: max((v[0], k) for k, v in col.items() if k != "MemGate")[1] for c, col in cols}
+    best = {c: max((v[0], k) for k, v in col.items() if k != "MemTrial")[1] for c, col in cols}
     for fam, methods in FAMILIES:
         L.append(f"| *{fam}* |" + " |" * len(cols))
         for m in methods:
@@ -102,7 +102,7 @@ def main():
             for c, col in cols:
                 if m not in col: cells.append("—"); continue
                 mu, sd, per = col[m]; star = False
-                if m == "MemGate":
+                if m == "MemTrial":
                     be = max((col[e][0], e) for e in EXPERIENCE if e in col)[1]; star = ptest(per, col[be][2]) < 0.05 and mu > col[be][0]
                 bold = mu >= max(v[0] for v in col.values()) - 1e-12
                 tag = "†" if m in ADAPTED.get(c.split("-")[0], set()) else ""
@@ -110,19 +110,19 @@ def main():
             L.append(f"| {m} | " + " | ".join(cells) + " |")
     imp, gap = [], []
     for c, col in cols:
-        be = max((col[e][0], e) for e in EXPERIENCE if e in col)[1]; d = col["MemGate"][0] - col[be][0]
+        be = max((col[e][0], e) for e in EXPERIENCE if e in col)[1]; d = col["MemTrial"][0] - col[be][0]
         sc = SCALE.get(c, 100)
-        imp.append(f"{sc*d:+.2f} (vs {be}; p = {ptest(col['MemGate'][2], col[be][2]):.3f})")
-        gap.append(f"{sc*(col['MemGate'][0] - col['1/N'][0]):+.2f}")
-    L += [f"| Improv. over best experience-learning agent | " + " | ".join(imp) + " |", f"| MemGate minus 1/N | " + " | ".join(gap) + " |", "",
+        imp.append(f"{sc*d:+.2f} (vs {be}; p = {ptest(col['MemTrial'][2], col[be][2]):.3f})")
+        gap.append(f"{sc*(col['MemTrial'][0] - col['1/N'][0]):+.2f}")
+    L += [f"| Improv. over best experience-learning agent | " + " | ".join(imp) + " |", f"| MemTrial minus 1/N | " + " | ".join(gap) + " |", "",
           "† adapted: the baseline's memory-scoring rule re-implemented over the same experience pool (its own memory module cannot run there)."]
     # ---- ablation ----
-    ABL_NAME = {"MemGate": "MemGate (full)", "MemGate | identity learner": "w/o content-based value learning (per-experience only)",
-                "MemGate | content learner only": "w/o learner selection (content-based only)", "MemGate | F-test gate": "In-sample test instead of forward validation",
-                "MemGate | no gate": "w/o trust gate", "MemGate | closed->ensemble": "Fallback to the draft average instead of 1/N",
-                "MemGate | closed->reference": "Fallback to 1/N without online learning", "MemGate | uniform prior": "w/o anchoring (uniform prior)"}
-    ABL = ["MemGate", "MemGate | identity learner", "MemGate | content learner only", "MemGate | F-test gate", "MemGate | no gate",
-           "MemGate | closed->ensemble", "MemGate | closed->reference", "MemGate | uniform prior"]
+    ABL_NAME = {"MemTrial": "MemTrial (full)", "MemTrial | identity learner": "w/o content-based value learning (per-experience only)",
+                "MemTrial | content learner only": "w/o learner selection (content-based only)", "MemTrial | F-test gate": "In-sample test instead of forward validation",
+                "MemTrial | no gate": "w/o trust gate", "MemTrial | closed->ensemble": "Fallback to the draft average instead of 1/N",
+                "MemTrial | closed->reference": "Fallback to 1/N without online learning", "MemTrial | uniform prior": "w/o anchoring (uniform prior)"}
+    ABL = ["MemTrial", "MemTrial | identity learner", "MemTrial | content learner only", "MemTrial | F-test gate", "MemTrial | no gate",
+           "MemTrial | closed->ensemble", "MemTrial | closed->reference", "MemTrial | uniform prior"]
     L += ["", "# Ablation (mean ± sd over seeds; same units)", "", "| Variant | PortBench-Full | PortBench-Raw | InvestorBench (bp/day) | Controlled (core) | Controlled (many experiences, informative content) |", "|---|---|---|---|---|---|"]
     IBA = ib_load()
     PBA = {cfg: pb_load(cfg)[0] for cfg in ("full-price", "raw-price")}

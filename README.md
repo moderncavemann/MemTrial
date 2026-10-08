@@ -3,8 +3,6 @@
 Code for the paper *MemTrial: Learning When to Trust Memory in LLM Portfolio Agents*: the method, the four benchmarks with
 every baseline and ablation, the LLM runners, and the logged LLM outputs from which every number in the paper's tables is
 recomputed offline.
-In the code, MemTrial appears under its working name **MemGate** (`memtrial/memgate.py`, class `MemGateBank`; result keys
-`MemGate` and `MemGate | <variant>`), and the conservative reference of the paper is called the safe reference.
 
 ## Requirements
 
@@ -26,7 +24,7 @@ results: Tables 1, 3 and 4 and Figure 4 are reproduced to the last reported digi
 
 | Folder | Contents | Paper |
 |---|---|---|
-| `memtrial/` | `memgate.py`: MemTrial (Banzhaf contributions over the half-fraction design, Fay-Herriot value models, prequential trust test, KL-anchored action), frozen before InvestorBench and ClassAlloc were run (hash in `MEMGATE_FROZEN.json`). `sens.py`: hyperparameter and weak-reference variants. `paper_tables.py`, `trust_rates.py`, `timing.py`, `why_1n.py`, `alias_check.py` (half fraction against the full factorial): analyses | Sec. 3; App. C, D |
+| `memtrial/` | `memtrial.py`: MemTrial (Banzhaf contributions over the half-fraction design, Fay-Herriot value models, prequential trust test, KL-anchored action), frozen before InvestorBench and ClassAlloc were run (hash in `MEMTRIAL_FROZEN.json`). `sens.py`: hyperparameter and weak-reference variants. `paper_tables.py`, `trust_rates.py`, `timing.py`, `why_1n.py`, `alias_check.py` (half fraction against the full factorial): analyses | Sec. 3; App. C, D |
 | `plantedmem/` | PlantedMem: `env.py` with `env_cache.pkl` (real PortBench prices, 2,828 logged LLM drafts), `world.py`, `suite.py` (every method and variant), `k_designs.py` and `k_designs16.py` (number of retrieved experiences) | Table 3, Figs. 4-6 |
 | `portbench/` | `monthly_lib.py` (exact settlement, investor mandates, utility), `monthly_policies.py`, `pb_all.py` (every method, time-forward), `pb_k.py`, `detectability.py`. `data/`: every logged PortBench draft (`executions.jsonl.gz`), the retrieved experiences and their embeddings | Tables 1, 3, 4 |
 | `portbench_after_cutoff/` | `eval_ext.py`: PortBench with the twelve decisions of 2025-2026 | App. D.15 |
@@ -43,7 +41,7 @@ results: Tables 1, 3 and 4 and Figure 4 are reproduced to the last reported digi
 | Result | File |
 |---|---|
 | Table 1 | `table1/T1C_report.json` |
-| Table 3 | `tables/PAPER_TABLES.md`; per seed and date: `portbench/pb_all_*.json`, `investorbench/turnover/{base,mg_MemGate}.json`, `classalloc_and_robustness/classalloc/run/eval/{base,mg0}.pkl`, `plantedmem/results/suite5_*.json`; Self-consistency: `classalloc_and_robustness/sc_runs/*/SC_EVAL.json` |
+| Table 3 | `tables/PAPER_TABLES.md`; per seed and date: `portbench/pb_all_*.json`, `investorbench/turnover/{base,mt_MemTrial}.json`, `classalloc_and_robustness/classalloc/run/eval/{base,mt0}.pkl`, `plantedmem/results/suite5_*.json`; Self-consistency: `classalloc_and_robustness/sc_runs/*/SC_EVAL.json` |
 | Table 4 | `wealth/RETURN_RISK.json` (`table4`) |
 | Fig. 3 (wealth) | `wealth/WEALTH_*.json`, `wealth/MARKET.json` |
 | Fig. 4 (ablation) | `ablation/NT_MATRIX2.json` |

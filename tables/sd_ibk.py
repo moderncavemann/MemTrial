@@ -1,5 +1,5 @@
 """InvestorBench, number of retrieved experiences k: per-seed utility and trust rate of each design
-(python3 sd_ibk.py NAME [NAME ...] -> SD_ibk_<i>.json). Re-runs the unchanged ib_k.run (frozen memgate.py) on the logged drafts."""
+(python3 sd_ibk.py NAME [NAME ...] -> SD_ibk_<i>.json). Re-runs the unchanged ib_k.run (frozen memtrial.py) on the logged drafts."""
 import sys, json, time
 import numpy as np
 from sd_common import *

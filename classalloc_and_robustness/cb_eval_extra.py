@@ -6,11 +6,11 @@ import json, math, pickle, sys
 from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / "memtrial"))
-import memgate as MG
-from memgate import MemGateBank, GRID, ftrl_q
+import memtrial as MT
+from memtrial import MemTrialBank, GRID, ftrl_q
 import cb_eval as CE
 
-VARIANTS = {"MemGate": dict(learner="auto"),
+VARIANTS = {"MemTrial": dict(learner="auto"),
             "identity learner only": dict(learner="identity"), "content learner only": dict(learner="content"),
             "F-test gate": dict(learner="auto", gate="ftest"), "no gate": dict(learner="auto", gate="none"),
             "closed -> draft average": dict(learner="auto", closed="ens"), "closed -> reference": dict(learner="auto", closed="ref"),
@@ -24,7 +24,7 @@ def run_variant(C, name):
     for pi, (p, (M, mfl, gam)) in enumerate(CE.INV.items()):
         ew = CE.project(np.full(CE.K, 1.0 / CE.K), M, mfl)
         for si, s in enumerate(seeds):
-            bank = MemGateBank(Z, {name: cfg}, masks=CE.HALF); h = ew.copy(); fb = CE.Feedback()
+            bank = MemTrialBank(Z, {name: cfg}, masks=CE.HALF); h = ew.copy(); fb = CE.Feedback()
             for di, t in enumerate(dates):
                 for a_ in fb.ready(t): bank.matured(*a_)
                 w = {k: CE.project(v, M, mfl) for k, v in W[(t, s)].items()}; R = rel[t]; ids = top4[t]
@@ -37,7 +37,7 @@ def run_variant(C, name):
                 if op:
                     lm = cfg.get("learner", "content")
                     if lm == "auto":
-                        sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MG.MIN_SCORES else -np.inf for m in ("identity", "content")}
+                        sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MT.MIN_SCORES else -np.inf for m in ("identity", "content")}
                         lm = "content" if sc["content"] > sc["identity"] else "identity"
                     v = [bank.L[lm].predict(hh) for hh in ids]
                     best = max(CE.HALF, key=lambda k: (sum(v[j] for j in range(len(ids)) if (k >> j) & 1), -bin(k).count("1")))
@@ -57,7 +57,7 @@ def run_variant(C, name):
 def welch(a, b):
     a, b = np.asarray(a), np.asarray(b); va, vb = a.var(ddof=1) / len(a), b.var(ddof=1) / len(b)
     t = (a.mean() - b.mean()) / math.sqrt(va + vb); df = (va + vb) ** 2 / (va ** 2 / (len(a) - 1) + vb ** 2 / (len(b) - 1))
-    return float(t), float(df), float(2 * MG.t_sf(abs(t), df))
+    return float(t), float(df), float(2 * MT.t_sf(abs(t), df))
 
 
 def main():
@@ -73,7 +73,7 @@ def main():
     if part in ("all", "cutoff"):
         R = json.load(open(ev / "RESULTS.json")); res = {k: np.array(v) for k, v in R["res_pp"].items()}; dates = R["dates"]
         post = np.array([t >= "2024-07-01" for t in dates]); cut = {}
-        for k in ["Zero-shot (no memory)", "Self-consistency", "Draft averaging", "Similarity retrieval (top-4)", "MemRL", "MemGate"]:
+        for k in ["Zero-shot (no memory)", "Self-consistency", "Draft averaging", "Similarity retrieval (top-4)", "MemRL", "MemTrial"]:
             d = res[k].mean((1, 2)) - res["1/N"].mean((1, 2))          # per month, mean over investors and seeds
             t, df, p = welch(d[~post], d[post])
             cut[k] = dict(before=float(d[~post].mean()), after=float(d[post].mean()), welch_t=t, df=df, p_two_sided=p)

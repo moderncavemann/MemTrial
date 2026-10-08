@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""InvestorBench multi-asset extension for MemGate (paid; gpt-4.1-mini-2025-04-14, temperature 0.7).
+"""InvestorBench multi-asset extension for MemTrial (paid; gpt-4.1-mini-2025-04-14, temperature 0.7).
 
 Benchmark: public InvestorBench data (Li et al., ACL 2025; data/SOURCE_COMMIT.txt), multi-asset mode. Four stocks with
 complete prices (HON, JNJ, MSFT, UVV; NFLX is dropped because 41 of its warm-up/test days have no price) plus cash.

@@ -1,8 +1,8 @@
 """Never-trust ablation in PlantedMem (offline, no API calls).
 
-"NT|never trust" is MemTrial (MemGate) with the trust test never passing (alpha = 0), so every decision takes the anchored
-action; "NT|never trust, 1/N reference" is the same with 1/N as the reference (as W1N|MemGate). Same episodes, seeds and
-code path as memtrial/sens.py run_ct (SensBank over the frozen memgate.py, which is not modified); only variants are added,
+"NT|never trust" is MemTrial with the trust test never passing (alpha = 0), so every decision takes the anchored
+action; "NT|never trust, 1/N reference" is the same with 1/N as the reference (as W1N|MemTrial). Same episodes, seeds and
+code path as memtrial/sens.py run_ct (SensBank over the frozen memtrial.py, which is not modified); only variants are added,
 and the bank's learning does not depend on which variant is deployed, so all other values are unchanged.
 usage: python3 nt_pm.py <s0> <s1> [procs]   -> nt_pm_<s0>_<s1>.json (three investors, seven regimes)"""
 import sys, json, time, collections
@@ -13,13 +13,13 @@ import sens as SN
 import suite as V5
 NT_V = {"NT|never trust": dict(learner="auto", alpha=0.0),
         "NT|never trust, 1/N reference": dict(learner="auto", closed="ftrl1n", alpha=0.0)}
-V5.MemGateBank = lambda Z, V, masks=None: SN.SensBank(Z, {**V5.MG_VARIANTS, **SN.W1N_V, **NT_V}, masks=masks, extra="ct1n")
+V5.MemTrialBank = lambda Z, V, masks=None: SN.SensBank(Z, {**V5.MT_VARIANTS, **SN.W1N_V, **NT_V}, masks=masks, extra="ct1n")
 KEEP = ("1/N", "no-memory 8-draw ensemble (reference)", "uniform aggregation of the 8 members", "counterfactual credit argmax top-2")
 
 def job(a):
     g, n, s = a
     o = V5._job(a)
-    return a, [{k: v for k, v in o[0].items() if "|" in k or k.startswith("MemGate") or k in KEEP}, o[1]]
+    return a, [{k: v for k, v in o[0].items() if "|" in k or k.startswith("MemTrial") or k in KEEP}, o[1]]
 
 if __name__ == "__main__":
     s0, s1 = int(sys.argv[1]), int(sys.argv[2]); procs = int(sys.argv[3]) if len(sys.argv) > 3 else 4

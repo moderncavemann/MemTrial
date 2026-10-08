@@ -4,38 +4,38 @@ ib_all.py charges the 15 bp fee every day on the L1 distance between the day's p
 (0.2 in each stock and in cash), whether or not anything is traded: a conservative investor who simply holds the
 mandate-projected 1/N portfolio (0.1 per stock, 0.6 cash) pays 12 bp per day. Here the fee is charged on what is traded:
 the L1 change between the holdings a method carries into the day (its previous portfolio after one day of price drift)
-and its new target. Everything else is as in ib_all.py: same logged drafts, mandates, utility, methods and MemGate code
-(memgate.py frozen, unmodified). Every method starts the test period holding the mandate-projected 1/N portfolio and carries
+and its new target. Everything else is as in ib_all.py: same logged drafts, mandates, utility, methods and MemTrial code
+(memtrial.py frozen, unmodified). Every method starts the test period holding the mandate-projected 1/N portfolio and carries
 its own holdings forward, so the fee of each candidate it considers depends on what it holds; its learning signals
 (counterfactual contributions, uplift regression, Hedge feedback, the FTRL statistics of the anchored allocation) use the
 same fee as its evaluation. Published files (ib_all.json, IB_DIAG.json) are not touched.
 
 Stages:
   cache               -> turnover/cache.pkl (drafts, returns, retrieval, content features)
-  base                -> turnover/base.json (all methods except MemGate)
-  mg NAME[;NAME...]   -> turnover/mg_<k>.json, one MemGate variant per name (keys of VARIANTS)
+  base                -> turnover/base.json (all methods except MemTrial)
+  mt NAME[;NAME...]   -> turnover/mt_<k>.json, one MemTrial variant per name (keys of VARIANTS)
   merge               -> ib_all_turnover.json (layout of ib_all.json), turnover/SUMMARY.json
   diag                -> IB_DIAG_turnover.json (Table 1 rows)"""
 import sys, json, glob, math, random, collections, pickle, time, re
 from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / "memtrial"))
-import memgate as MG
-from memgate import MemGateBank, banzhaf, GRID, ftrl_q, f_sf
+import memtrial as MT
+from memtrial import MemTrialBank, banzhaf, GRID, ftrl_q, f_sf
 OUT = HERE / "turnover"; OUT.mkdir(exist_ok=True)
 HALF = [0, 3, 5, 6, 9, 10, 12, 15]; FULL = list(range(16))
 INV = {"conservative": (0.40, 0.40, 10.0), "balanced": (0.65, 0.20, 5.0), "aggressive": (0.90, 0.05, 2.0)}
 FEE = 0.0015
 EXPERIENCE = ("FinMem", "MemRL", "Reflexion", "ExpeL")
 
-VARIANTS = {"MemGate": dict(learner="auto"), "MemGate | content learner only": dict(learner="content"),
-            "MemGate | identity learner": dict(learner="identity"), "MemGate | F-test gate": dict(learner="auto", gate="ftest"),
-            "MemGate | no gate": dict(learner="auto", gate="none"), "MemGate | closed->ensemble": dict(learner="auto", closed="ens"),
-            "MemGate | closed->reference": dict(learner="auto", closed="ref"), "MemGate | uniform prior": dict(learner="auto", closed="uniform"),
-            "MemGate | gate 0.2": dict(learner="auto", alpha=0.2), "MemGate | gate 0.01": dict(learner="auto", alpha=0.01),
+VARIANTS = {"MemTrial": dict(learner="auto"), "MemTrial | content learner only": dict(learner="content"),
+            "MemTrial | identity learner": dict(learner="identity"), "MemTrial | F-test gate": dict(learner="auto", gate="ftest"),
+            "MemTrial | no gate": dict(learner="auto", gate="none"), "MemTrial | closed->ensemble": dict(learner="auto", closed="ens"),
+            "MemTrial | closed->reference": dict(learner="auto", closed="ref"), "MemTrial | uniform prior": dict(learner="auto", closed="uniform"),
+            "MemTrial | gate 0.2": dict(learner="auto", alpha=0.2), "MemTrial | gate 0.01": dict(learner="auto", alpha=0.01),
             "S|alpha=0.02": dict(learner="auto", alpha=0.02), "S|alpha=0.1": dict(learner="auto", alpha=0.1),
             "S|minscores=5": dict(learner="auto", minsc=5), "S|minscores=20": dict(learner="auto", minsc=20),
-            "S16|MemGate": dict(learner="auto", full=True), "S16|no gate": dict(learner="auto", gate="none", full=True)}
+            "S16|MemTrial": dict(learner="auto", full=True), "S16|no gate": dict(learner="auto", gate="none", full=True)}
 for _a0 in (0.5, 0.75, 0.9, 0.95):
     for _l0 in (1.0, 4.0, 16.0):
         if (_a0, _l0) != (0.9, 4.0): VARIANTS[f"S|a0={_a0},lam0={_l0}"] = dict(learner="auto", a0=_a0, lam0=_l0)
@@ -172,13 +172,13 @@ def run_variant(name, C):
     nD, nS = len(dates), len(seeds)
     res = np.full((nD, 3, nS), np.nan); cost = np.full((nD, 3, nS), np.nan); opened = np.zeros((nD, 3, nS)); qs = np.full((nD, 3, nS), np.nan)
     fscore = {}
-    keep = MG.MIN_SCORES
-    if ms is not None: MG.MIN_SCORES = ms
+    keep = MT.MIN_SCORES
+    if ms is not None: MT.MIN_SCORES = ms
     try:
         for pi, (p, (M, mfl, gam)) in enumerate(INV.items()):
             ew = project(np.full(5, 0.2), M, mfl)
             for si, s in enumerate(seeds):
-                bank = MemGateBank(Z, {name: cfg}, masks=masks, a0=a0, lam0=lam0); h = ew.copy()
+                bank = MemTrialBank(Z, {name: cfg}, masks=masks, a0=a0, lam0=lam0); h = ew.copy()
                 for di, t in enumerate(dates):
                     w = {k: project(v, M, mfl) for k, v in W[(t, s)].items()}; r = ret[t]; ids = top4[t]
                     ens = np.mean([w[f"m{m}"] for m in masks], 0)
@@ -191,7 +191,7 @@ def run_variant(name, C):
                     if op:                                  # the designed draft the bank deployed
                         lm = cfg.get("learner", "content")
                         if lm == "auto":
-                            sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MG.MIN_SCORES else -np.inf for m in ("identity", "content")}
+                            sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MT.MIN_SCORES else -np.inf for m in ("identity", "content")}
                             lm = "content" if sc["content"] > sc["identity"] else "identity"
                         v = [bank.L[lm].predict(hh) for hh in ids]
                         best = max(masks, key=lambda k: (sum(v[j] for j in range(len(ids)) if (k >> j) & 1), -bin(k).count("1")))
@@ -205,13 +205,13 @@ def run_variant(name, C):
                     res[di, pi, si] = out; cost[di, pi, si] = float(parts(X, r, h)[1][0]); opened[di, pi, si] = op; h = drift(X, r)
                 fscore[f"{p}|{s}"] = {m: (float(np.mean(G.scores)) if G.scores else None, len(G.scores)) for m, G in bank.G.items()}
     finally:
-        MG.MIN_SCORES = keep
+        MT.MIN_SCORES = keep
     json.dump({"name": name, "res": res.tolist(), "cost": cost.tolist(), "open": opened.tolist(),
-               "q": np.where(np.isnan(qs), None, qs).tolist(), "forward_score": fscore}, open(OUT / f"mg_{slug(name)}.json", "w"))
+               "q": np.where(np.isnan(qs), None, qs).tolist(), "forward_score": fscore}, open(OUT / f"mt_{slug(name)}.json", "w"))
     return res, opened
 
 
-def stage_mg(names):
+def stage_mt(names):
     C = load()
     for n in names:
         t0 = time.time(); res, op = run_variant(n, C)
@@ -220,26 +220,26 @@ def stage_mg(names):
 
 def stage_merge():
     C = load(); B = json.load(open(OUT / "base.json")); res = dict(B["res"]); sens = {}; opn = {}; fsc = {}; q = {}
-    missing = [n for n in VARIANTS if not (OUT / f"mg_{slug(n)}.json").exists()]
+    missing = [n for n in VARIANTS if not (OUT / f"mt_{slug(n)}.json").exists()]
     if missing: raise SystemExit(f"missing variants: {missing}")
     for n in VARIANTS:
-        J = json.load(open(OUT / f"mg_{slug(n)}.json")); a = np.array(J["res"], float)
+        J = json.load(open(OUT / f"mt_{slug(n)}.json")); a = np.array(J["res"], float)
         opn[n] = float(np.mean(J["open"])); fsc[n] = J["forward_score"]
         qq = np.array(J["q"], float); q[n] = float(np.nanmean(qq)) if np.isfinite(qq).any() else None
-        if n.startswith("MemGate"): res[n] = J["res"]
+        if n.startswith("MemTrial"): res[n] = J["res"]
         sens[n] = (1e4 * a.mean((0, 1))).tolist()                    # per-seed mean, bp/day
     out = {"res": res, "dates": C["dates"], "seeds": C["seeds"],
            "fee_rule": "15 bps on the L1 change between the drifted holdings carried into the day and the new target"}
     (HERE / "ib_all_turnover.json").write_text(json.dumps(out))
     cost = {k: 1e4 * float(np.nanmean(np.array(v, float))) for k, v in B["cost"].items()}
-    cost["MemGate"] = 1e4 * float(np.nanmean(np.array(json.load(open(OUT / f"mg_{slug('MemGate')}.json"))["cost"], float)))
+    cost["MemTrial"] = 1e4 * float(np.nanmean(np.array(json.load(open(OUT / f"mt_{slug('MemTrial')}.json"))["cost"], float)))
     summ = {"per_seed_bp": sens, "open_share": opn, "mean_q_closed": q, "forward_score": fsc, "mean_cost_bp": cost,
             "mean_gross_bp": {k: 1e4 * float(np.nanmean(np.array(v, float))) for k, v in B["gross"].items()}}
     (OUT / "SUMMARY.json").write_text(json.dumps(summ, indent=1))
     A = {k: np.array(v, float) for k, v in res.items()}
-    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "Counterfactual selection", "Hedge", "Draft averaging", "MemGate", "MemGate | no gate"]:
+    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "Counterfactual selection", "Hedge", "Draft averaging", "MemTrial", "MemTrial | no gate"]:
         x = np.nanmean(A[k], (0, 1)); print(f"{k:28s} {1e4*x.mean():6.2f} ± {1e4*x.std(ddof=1):.2f} bp/day   cost {cost.get(k, float('nan')):.2f}")
-    print("open share MemGate:", round(100 * opn["MemGate"], 2), "%")
+    print("open share MemTrial:", round(100 * opn["MemTrial"], 2), "%")
 
 
 def stage_diag():
@@ -265,7 +265,7 @@ def stage_diag():
         out[p] = dict(outcome_vs_1N=spearman(oc, mk), cf_vs_1N=spearman(cf, mk), detectable_days=int(det), days=len(dates),
                       chance=0.05 * len(dates), best_agent=best, best_minus_1N_bp=1e4 * (ex[best] - n1),
                       cfsel_minus_1N_bp=1e4 * (np.nanmean(R["Counterfactual selection"][:, pi, :]) - n1),
-                      memgate_minus_1N_bp=1e4 * (np.nanmean(R["MemGate"][:, pi, :]) - n1),
+                      memtrial_minus_1N_bp=1e4 * (np.nanmean(R["MemTrial"][:, pi, :]) - n1),
                       one_over_n_bp=1e4 * n1)
     (HERE / "IB_DIAG_turnover.json").write_text(json.dumps(out, indent=1)); print(json.dumps(out, indent=1))
 
@@ -274,7 +274,7 @@ if __name__ == "__main__":
     st = sys.argv[1]
     if st == "cache": stage_cache()
     elif st == "base": stage_base()
-    elif st == "mg": stage_mg(sys.argv[2].split(";"))
+    elif st == "mt": stage_mt(sys.argv[2].split(";"))
     elif st == "merge": stage_merge()
     elif st == "diag": stage_diag()
     else: raise SystemExit(__doc__)

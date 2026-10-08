@@ -1,10 +1,10 @@
-"""How many retrieved experiences (k)? InvestorBench sensitivity of MemGate with the existing drafts (python3 ib_k.py) ->
+"""How many retrieved experiences (k)? InvestorBench sensitivity of MemTrial with the existing drafts (python3 ib_k.py) ->
 turnover/K_IB.json. Fee on traded amounts as in ib_turnover.py. The logged drafts cover every subset of the 4 retrieved
-experiences, so k = 2, 3, 4 can be evaluated without new LLM calls: MemGate uses the first k retrieved experiences
-(by similarity) and a designed set of their subsets. memgate.py unmodified."""
+experiences, so k = 2, 3, 4 can be evaluated without new LLM calls: MemTrial uses the first k retrieved experiences
+(by similarity) and a designed set of their subsets. memtrial.py unmodified."""
 import json, numpy as np
 import ib_turnover as T
-from memgate import MemGateBank, GRID, ftrl_q
+from memtrial import MemTrialBank, GRID, ftrl_q
 def even(k): return [m for m in range(1 << k) if bin(m).count("1") % 2 == 0]
 DESIGNS = {"k=2, full (4 drafts)": (2, list(range(4))), "k=3, half (4 drafts)": (3, even(3)), "k=3, full (8 drafts)": (3, list(range(8))),
            "k=4, half (8 drafts)": (4, even(4)), "k=4, full (16 drafts)": (4, list(range(16)))}
@@ -16,7 +16,7 @@ def run(k, masks, C):
     for pi, (p, (M, mfl, gam)) in enumerate(T.INV.items()):
         ew = T.project(np.full(5, 0.2), M, mfl)
         for si, s in enumerate(seeds):
-            bank = MemGateBank(Z, {"MemGate": dict(learner="auto")}, masks=masks); h = ew.copy()
+            bank = MemTrialBank(Z, {"MemTrial": dict(learner="auto")}, masks=masks); h = ew.copy()
             for di, t in enumerate(dates):
                 w = {kk: T.project(v, M, mfl) for kk, v in W[(t, s)].items()}; r = ret[t]; ids = top4[t][:k]
                 ens = np.mean([w[f"m{m}"] for m in masks], 0)
@@ -24,9 +24,9 @@ def run(k, masks, C):
                 u_ref = float(T.util(ew, r, gam, h)[0]); u_ens = float(T.util(ens, r, gam, h)[0])
                 grid = T.util(GRID[:, None] * ew[None, :] + (1 - GRID)[:, None] * ens[None, :], r, gam, h)
                 q = ftrl_q(bank.sumG, bank.n, bank.sig, 0.9, 4.0)
-                out = bank.decide(t, ids, U, u_ref, u_ens, grid)["MemGate"]; o = bool(bank.log["MemGate"][-1][1])
+                out = bank.decide(t, ids, U, u_ref, u_ens, grid)["MemTrial"]; o = bool(bank.log["MemTrial"][-1][1])
                 if o:
-                    sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= T.MG.MIN_SCORES else -np.inf for m in ("identity", "content")}
+                    sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= T.MT.MIN_SCORES else -np.inf for m in ("identity", "content")}
                     lm = "content" if sc["content"] > sc["identity"] else "identity"; v = [bank.L[lm].predict(x) for x in ids]
                     best = max(masks, key=lambda mm: (sum(v[j] for j in range(k) if (mm >> j) & 1), -bin(mm).count("1"))); X = w[f"m{best}"]
                 else:

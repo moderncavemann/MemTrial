@@ -3,7 +3,7 @@ plantedmem/suite.py exactly (its source is reused verbatim and only logging line
 on every test date, from matured dates only, the value each method has learned for every experience retrieved so far:
   outcome credit  - MemRL-style running value Q (the 'outcome credit top-2' policy of the suite),
   counterfactual  - mean past Banzhaf contribution (what Counterfactual selection ranks by),
-  MemTrial        - posterior mean of the selected value learner (frozen memgate.py, learner chosen by forward scores).
+  MemTrial        - posterior mean of the selected value learner (frozen memtrial.py, learner chosen by forward scores).
 Score per date: Spearman correlation between these values and the planted quality (+1 useful, 0 neutral, -1 misleading).
 usage: python3 value_recovery.py run <budget_s>  -> VR_LOG.jsonl (resumable); python3 value_recovery.py summary -> VR_SUMMARY.json"""
 import sys, json, time, inspect
@@ -12,7 +12,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent; LAB = HERE.parent
 for p in (LAB / "plantedmem", LAB / "plantedmem", LAB / "memtrial"): sys.path.insert(0, str(p))
 import suite as S5
-import memgate as MGm
+import memtrial as MTm
 REGS = ["beta 0.5", "beta 0.25", "no influence", "many experiences, informative content"]
 SEEDS = range(15, 115); GAMMA = 5.0                       # test seeds, balanced investor
 src = inspect.getsource(S5.episode).replace("def episode(", "def episode_log(", 1)
@@ -21,15 +21,15 @@ assert src.count(a1) == 1; src = src.replace(a1, "    LOG = []\n" + a1 + "      
 a2 = "        if t >= warm:\n            for k, v in out.items(): res[k].append(v)\n"
 assert src.count(a2) == 1
 inj = ("        if t >= warm:\n"
-       "            sc_ = {mm: np.mean(MG.G[mm].scores) if len(MG.G[mm].scores) >= MGm.MIN_SCORES else -np.inf for mm in ('identity', 'content')}\n"
+       "            sc_ = {mm: np.mean(MT.G[mm].scores) if len(MT.G[mm].scores) >= MTm.MIN_SCORES else -np.inf for mm in ('identity', 'content')}\n"
        "            lm_ = 'content' if sc_['content'] > sc_['identity'] else 'identity'\n"
-       "            LOG.append(dict(t=t, seen=[m for m in range(M) if len(obs[m]) > 0], mt=[MG.L[lm_].predict(m) for m in range(M)],\n"
+       "            LOG.append(dict(t=t, seen=[m for m in range(M) if len(obs[m]) > 0], mt=[MT.L[lm_].predict(m) for m in range(M)],\n"
        "                            cf=[float(np.mean(obs[m])) if obs[m] else 0.0 for m in range(M)], oc=[float(x) for x in q_pre],\n"
-       "                            open=float(MG.log['MemGate'][-1][1]), learner=lm_))\n")
+       "                            open=float(MT.log['MemTrial'][-1][1]), learner=lm_))\n")
 src = src.replace(a2, inj + a2, 1)
 a3 = "    means = {k: float(np.mean(v))"
 assert src.count(a3) == 1; src = src.replace(a3, "    return LOG, [int(x) for x in types]\n" + a3, 1)
-NS = S5.__dict__; NS["MGm"] = MGm; exec(src, NS); episode_log = NS["episode_log"]
+NS = S5.__dict__; NS["MTm"] = MTm; exec(src, NS); episode_log = NS["episode_log"]
 
 
 def ranks(x):

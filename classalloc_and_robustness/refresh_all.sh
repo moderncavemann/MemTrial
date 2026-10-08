@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 for d in classalloc/run_*_t0.7; do
   [ -f "$d/RUN_SUMMARY.json" ] || continue; r=$(basename "$d")
   if [ ! -f "$d/eval/RESULTS.json" ] || [ "$d/RUN_SUMMARY.json" -nt "$d/eval/RESULTS.json" ]; then
-    for st in cache base mg0 mg1 mg2 summary; do python3 cb_eval.py --run "$r" --stage $st > /dev/null 2>&1 || echo "cb_eval $r $st failed"; done
+    for st in cache base mt0 mt1 mt2 summary; do python3 cb_eval.py --run "$r" --stage $st > /dev/null 2>&1 || echo "cb_eval $r $st failed"; done
     echo "evaluated $r"
   fi
   (cd ../wealth && python3 wealth_cb.py "$r" > /dev/null 2>&1 || echo "wealth_cb $r failed")
@@ -13,7 +13,7 @@ done
 for d in ib_runs/*/; do
   v=$(basename "$d"); [ -f "$d/RUN_SUMMARY.json" ] || continue
   if [ ! -f "$d/eval/SUMMARY.json" ] || [ "$d/RUN_SUMMARY.json" -nt "$d/eval/SUMMARY.json" ]; then
-    for st in cache base mg mg-nogate summary; do python3 ib_eval_variant.py "$v" --stage $st > /dev/null 2>&1 || echo "ib_eval $v $st failed"; done
+    for st in cache base mt mt-nogate summary; do python3 ib_eval_variant.py "$v" --stage $st > /dev/null 2>&1 || echo "ib_eval $v $st failed"; done
     echo "evaluated $v"
   fi
 done

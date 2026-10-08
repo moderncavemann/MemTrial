@@ -29,12 +29,12 @@ def per_seed(store, key, regs, idx=0, scale=100.0):
 out = {"n_seeds_core": len(ALL[("balanced", CORE[0])]), "n_seeds_k": len(K[("balanced", CORE[0])])}
 # ---- main table derived rows (core regimes)
 EXP = ["FinMem", "MemRL", "Reflexion", "ExpeL"]
-mg = per_seed(ALL, "MemGate", CORE); best = max(EXP, key=lambda k: per_seed(ALL, CT[k], CORE).mean())
-out["main"] = {"best_experience_agent": best, "improv": ms(mg - per_seed(ALL, CT[best], CORE)), "minus_1N": ms(mg - per_seed(ALL, "1/N", CORE)),
-               "trust_pct": ms(per_seed(ALL, "_open|MemGate", CORE))}
+mt = per_seed(ALL, "MemTrial", CORE); best = max(EXP, key=lambda k: per_seed(ALL, CT[k], CORE).mean())
+out["main"] = {"best_experience_agent": best, "improv": ms(mt - per_seed(ALL, CT[best], CORE)), "minus_1N": ms(mt - per_seed(ALL, "1/N", CORE)),
+               "trust_pct": ms(per_seed(ALL, "_open|MemTrial", CORE))}
 # ---- ablation / trust-sensitivity trust rates (core and informative)
-ABL = ["MemGate", "MemGate | identity learner", "MemGate | content learner only", "MemGate | F-test gate", "MemGate | no gate",
-       "MemGate | closed->ensemble", "MemGate | closed->reference", "MemGate | uniform prior"]
+ABL = ["MemTrial", "MemTrial | identity learner", "MemTrial | content learner only", "MemTrial | F-test gate", "MemTrial | no gate",
+       "MemTrial | closed->ensemble", "MemTrial | closed->reference", "MemTrial | uniform prior"]
 out["trust_ablation"] = {n: {"core": ms(per_seed(ALL, "_open|" + n, CORE)), "informative": ms(per_seed(ALL, "_open|" + n, [INF]))} for n in ABL}
 SENSN = ["S|default", "S|alpha=0.01", "S|alpha=0.02", "S|alpha=0.1", "S|alpha=0.2", "S|minscores=5", "S|minscores=20"]
 out["trust_sens"] = {n: {"core": ms(per_seed(SENS, "_open|" + n, CORE)), "informative": ms(per_seed(SENS, "_open|" + n, [INF]))} for n in SENSN}
@@ -42,17 +42,17 @@ out["util_sens"] = {n: {"core": ms(per_seed(SENS, n, CORE)), "informative": ms(p
 # ---- anchor table (core)
 AN = [k for k in next(iter(SENS.values()))["15"][0] if k.startswith("S|a0=")]
 out["anchor_core"] = {n: ms(per_seed(SENS, n, CORE)) for n in AN}
-out["anchor_core"]["default (MemGate)"] = ms(per_seed(SENS, "MemGate", CORE))
+out["anchor_core"]["default (MemTrial)"] = ms(per_seed(SENS, "MemTrial", CORE))
 # ---- trust rate by regime
-TR = {"MemTrial (forward test)": "_open|MemGate", "Per-experience learner only": "_open|MemGate | identity learner", "In-sample F-test": "_open|MemGate | F-test gate"}
+TR = {"MemTrial (forward test)": "_open|MemTrial", "Per-experience learner only": "_open|MemTrial | identity learner", "In-sample F-test": "_open|MemTrial | F-test gate"}
 out["trust_by_regime"] = {lab: {n: ms(per_seed(ALL, key, [n])) for n in REGS} for lab, key in TR.items()}
 # ---- utility by regime
 UR = {"Reference (memory-free average)": "no-memory 8-draw ensemble (reference)", "Outcome credit (MemRL)": "outcome credit top-2 (MemRL/FinMem-style)",
-      "Counterfactual selection": "counterfactual credit argmax top-2", "MemTrial w/o trust test": "MemGate | no gate", "MemTrial": "MemGate"}
+      "Counterfactual selection": "counterfactual credit argmax top-2", "MemTrial w/o trust test": "MemTrial | no gate", "MemTrial": "MemTrial"}
 out["util_by_regime"] = {lab: {n: ms(per_seed(ALL, key, [n])) for n in REGS} for lab, key in UR.items()}
 # ---- weak reference (1/N as the reference)
 WR = {"1/N": "1/N", "Draft averaging": "uniform aggregation of the 8 members", "MemTrial, fixed fallback to 1/N": "W1N|fallback to 1/N",
-      "MemTrial, anchored (a0=0.9)": "W1N|MemGate", "MemTrial, uniform prior (a0=0.5)": "W1N|uniform prior"}
+      "MemTrial, anchored (a0=0.9)": "W1N|MemTrial", "MemTrial, uniform prior (a0=0.5)": "W1N|uniform prior"}
 out["weakref_by_regime"] = {lab: {**{n: ms(per_seed(SENS, key, [n])) for n in REGS}, "core": ms(per_seed(SENS, key, CORE))} for lab, key in WR.items()}
 # ---- k and design (seeds 15-64)
 KD = ["reference (8 memory-free drafts)", "k=2, full (4 drafts)", "k=3, half (4 drafts)", "k=3, full (8 drafts)", "k=4, half (8 drafts)",

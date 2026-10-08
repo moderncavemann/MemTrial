@@ -13,7 +13,7 @@ import numpy as np
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 PER_YEAR = {"PortBench-Full": 12, "PortBench-Raw": 12, "PortBench": 12, "InvestorBench": 252, "ClassAlloc": 12}
 INV = ["conservative", "balanced", "aggressive"]
-REN = {"MemGate": "MemTrial", "ExpeL (adapted)": "ExpeL", "Self-consistency (3 drafts)": "Self-consistency", "Uplift credit (UpliftMem-style)": "Uplift credit",
+REN = {"MemTrial": "MemTrial", "ExpeL (adapted)": "ExpeL", "Self-consistency (3 drafts)": "Self-consistency", "Uplift credit (UpliftMem-style)": "Uplift credit",
        "Counterfactual selection (no gate)": "Counterfactual selection", "Draft averaging (8 drafts)": "Draft averaging", "Hedge (memory families)": "Hedge"}
 ORDER = ["Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "MemTrial"]
 MK = json.load(open("MARKET.json"))
@@ -43,7 +43,7 @@ def pb():
         for p in INV:
             J = json.load(open(f"WEALTH_PB_{cfg}_{p}.json")); test = [d for d in J["dates"] if d >= J["split"]]; net = {}
             for k, byd in J["net"].items():
-                if k.startswith("MemGate |"): continue
+                if k.startswith("MemTrial |"): continue
                 if all(d in byd for d in test): net[REN.get(k, k)] = np.array([byd[d] for d in test], float)
             out[(cfg, p)] = {"dates": test, "net": net}
     return out

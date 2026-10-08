@@ -1,19 +1,19 @@
 """ClassAlloc: sd over the three seeds for every ClassAlloc number reported without one (python3 sd_cb.py -> SD_cb.json).
-Per seed = mean over the 71 test months and the three investors, pp per month. Reads classalloc/run/eval/{cache,base,mg0}.pkl;
-the ablation variants are re-run with the loop of cb_eval_extra.run_variant (frozen memgate.py), keeping per-seed values."""
+Per seed = mean over the 71 test months and the three investors, pp per month. Reads classalloc/run/eval/{cache,base,mt0}.pkl;
+the ablation variants are re-run with the loop of cb_eval_extra.run_variant (frozen memtrial.py), keeping per-seed values."""
 import json, pickle
 import numpy as np
 from sd_common import *
-import memgate as MG
-from memgate import MemGateBank, GRID, ftrl_q
+import memtrial as MT
+from memtrial import MemTrialBank, GRID, ftrl_q
 import cb_eval as CE, cb_eval_extra as CX
 EV = LAB / "classalloc_and_robustness/classalloc/run/eval"; C = pickle.load(open(EV / "cache.pkl", "rb"))
-res, cost, held = pickle.load(open(EV / "base.pkl", "rb")); mres, mcost, mop, _ = pickle.load(open(EV / "mg0.pkl", "rb"))
+res, cost, held = pickle.load(open(EV / "base.pkl", "rb")); mres, mcost, mop, _ = pickle.load(open(EV / "mt0.pkl", "rb"))
 ps = lambda a: 100 * np.nanmean(np.asarray(a, float), (0, 1))
-R = {k: ps(v) for k, v in res.items()}; R["MemGate"] = ps(mres)
+R = {k: ps(v) for k, v in res.items()}; R["MemTrial"] = ps(mres)
 EXP = ["FinMem", "MemRL", "Reflexion", "ExpeL"]; be = max(EXP, key=lambda k: R[k].mean())
-out = {"main": {"best_experience_agent": be, "MemTrial": ms(R["MemGate"]), "improv": ms(R["MemGate"] - R[be]),
-                "minus_1N": ms(R["MemGate"] - R["1/N"]), "trust_pct": ms(100 * mop.mean((0, 1)))}}
+out = {"main": {"best_experience_agent": be, "MemTrial": ms(R["MemTrial"]), "improv": ms(R["MemTrial"] - R[be]),
+                "minus_1N": ms(R["MemTrial"] - R["1/N"]), "trust_pct": ms(100 * mop.mean((0, 1)))}}
 
 
 def run_variant(name):
@@ -22,7 +22,7 @@ def run_variant(name):
     for pi, (p, (M, mfl, gam)) in enumerate(CE.INV.items()):
         ew = CE.project(np.full(CE.K, 1.0 / CE.K), M, mfl)
         for si, s in enumerate(seeds):
-            bank = MemGateBank(Z, {name: cfg}, masks=CE.HALF); h = ew.copy(); fb = CE.Feedback()
+            bank = MemTrialBank(Z, {name: cfg}, masks=CE.HALF); h = ew.copy(); fb = CE.Feedback()
             for di, t in enumerate(dates):
                 for a_ in fb.ready(t): bank.matured(*a_)
                 w = {k: CE.project(v, M, mfl) for k, v in W[(t, s)].items()}; Rl = rel[t]; ids = top4[t]
@@ -35,7 +35,7 @@ def run_variant(name):
                 if op:
                     lm = cfg.get("learner", "content")
                     if lm == "auto":
-                        sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MG.MIN_SCORES else -np.inf for m in ("identity", "content")}
+                        sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MT.MIN_SCORES else -np.inf for m in ("identity", "content")}
                         lm = "content" if sc["content"] > sc["identity"] else "identity"
                     v = [bank.L[lm].predict(hh) for hh in ids]
                     best = max(CE.HALF, key=lambda k: (sum(v[j] for j in range(len(ids)) if (k >> j) & 1), -bin(k).count("1"))); X = w[f"m{best}"]

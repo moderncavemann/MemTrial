@@ -15,15 +15,15 @@ for cfg, lab in (("full-price", "PB-Full"), ("raw-price", "PB-Raw")):
     def per_seed(n):
         x = np.array([[S[p]["res"][n][d] for p in G3] for d in ds]); return 100 * x.mean((0, 1))
     out["alpha"][lab] = {a: float(per_seed("S|default" if a == "0.05" else f"S|alpha={a}").mean()) for a in ALPHAS}
-    out["alpha"][lab]["MemGate"] = float(per_seed("MemGate").mean())
-out["alpha"]["IB"] = {a: I["variants"]["MemGate" if a == "0.05" else f"alpha={a}"]["util"][0] for a in ALPHAS}
+    out["alpha"][lab]["MemTrial"] = float(per_seed("MemTrial").mean())
+out["alpha"]["IB"] = {a: I["variants"]["MemTrial" if a == "0.05" else f"alpha={a}"]["util"][0] for a in ALPHAS}
 for part, lab in (("core", "PM-core"), ("informative", "PM-inf")):
     out["alpha"][lab] = {a: P["util_sens"]["S|default" if a == "0.05" else f"S|alpha={a}"][part][0] for a in ALPHAS}
 A0 = ["0.5", "0.75", "0.9", "0.95"]; L0 = ["1.0", "4.0", "16.0"]
 for cfg, lab in (("full-price", "PB-Full"), ("raw-price", "PB-Raw")):
-    out["anchor"][lab] = {f"{a},{l}": F["anchor"][cfg]["MemGate" if (a, l) == ("0.9", "4.0") else f"S|a0={a},lam0={l}"][0] for a in A0 for l in L0}
+    out["anchor"][lab] = {f"{a},{l}": F["anchor"][cfg]["MemTrial" if (a, l) == ("0.9", "4.0") else f"S|a0={a},lam0={l}"][0] for a in A0 for l in L0}
 out["anchor"]["IB"] = {f"{a},{l}": I["anchor"][f"{a},{l}"][0] for a in A0 for l in L0}
-out["anchor"]["PM-core"] = {f"{a},{l}": P["anchor_core"]["default (MemGate)" if (a, l) == ("0.9", "4.0") else f"S|a0={a},lam0={l}"][0] for a in A0 for l in L0}
+out["anchor"]["PM-core"] = {f"{a},{l}": P["anchor_core"]["default (MemTrial)" if (a, l) == ("0.9", "4.0") else f"S|a0={a},lam0={l}"][0] for a in A0 for l in L0}
 DES = ["k=2, full (4 drafts)", "k=3, half (4 drafts)", "k=3, full (8 drafts)", "k=4, half (8 drafts)", "k=4, full (16 drafts)", "k=5, half (16 drafts)", "k=6, half (32 drafts)"]
 for cfg, lab in (("full-price", "PB-Full"), ("raw-price", "PB-Raw")):
     out["k"][lab] = {d: F["k_trust"][d][cfg]["util"][0] for d in DES if d in F["k_trust"]}

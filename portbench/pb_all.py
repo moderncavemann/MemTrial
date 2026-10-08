@@ -1,20 +1,20 @@
 """All methods on the PortBench monthly extension with per-seed values (usage: python3 pb_all.py <cfg> <investor>)
 -> pb_all_<cfg>_<investor>.json  {method: {date: [seed0, seed1, seed2]}}.
 Seeds = the three independent draws per arm (deployment worlds). Time-forward: a decision at date d uses only dates
-before d. MemGate is the frozen version in ../memgate (MEMGATE_FROZEN.json): designed subsets = the 8 half-fraction
+before d. MemTrial is the frozen version in ../memtrial (MEMTRIAL_FROZEN.json): designed subsets = the 8 half-fraction
 subsets; content features = 8-dim PCA of the Qwen3 retrieval embeddings of the experiences."""
 import sys, json, math, random, collections
 from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / "memtrial"))
 import monthly_lib as ML, monthly_policies as MP
-from memgate import MemGateBank
+from memtrial import MemTrialBank
 HALF = [int(m) for m in MP.HALF]; MASKS = MP.MASKS
-VARIANTS = {"MemGate": dict(learner="auto"), "MemGate | content learner only": dict(learner="content"),
-            "MemGate | identity learner": dict(learner="identity"), "MemGate | F-test gate": dict(learner="auto", gate="ftest"),
-            "MemGate | no gate": dict(learner="auto", gate="none"), "MemGate | closed->ensemble": dict(learner="auto", closed="ens"),
-            "MemGate | closed->reference": dict(learner="auto", closed="ref"), "MemGate | uniform prior": dict(learner="auto", closed="uniform"),
-            "MemGate | gate 0.2": dict(learner="auto", alpha=0.2), "MemGate | gate 0.01": dict(learner="auto", alpha=0.01)}
+VARIANTS = {"MemTrial": dict(learner="auto"), "MemTrial | content learner only": dict(learner="content"),
+            "MemTrial | identity learner": dict(learner="identity"), "MemTrial | F-test gate": dict(learner="auto", gate="ftest"),
+            "MemTrial | no gate": dict(learner="auto", gate="none"), "MemTrial | closed->ensemble": dict(learner="auto", closed="ens"),
+            "MemTrial | closed->reference": dict(learner="auto", closed="ref"), "MemTrial | uniform prior": dict(learner="auto", closed="uniform"),
+            "MemTrial | gate 0.2": dict(learner="auto", alpha=0.2), "MemTrial | gate 0.01": dict(learner="auto", alpha=0.01)}
 
 
 def content_features(D, inp):
@@ -31,7 +31,7 @@ def run(D, cfg, p, Z):
     fams = [f for f in MP.FAMILIES if all(any(f in D.proj[key][d][r] for r in D.proj[key][d]) for d in valid)]
     for r in (0, 1, 2):
         hist = []; up_obs = []; votes = collections.defaultdict(float); rnd = random.Random(f"{cfg}|{p}|{r}")
-        bank = MemGateBank(Z, VARIANTS, masks=HALF)
+        bank = MemTrialBank(Z, VARIANTS, masks=HALF)
         for d in valid:
             W = D.proj[key][d]
             def X(arm):
@@ -74,10 +74,10 @@ def run(D, cfg, p, Z):
             exps = ["1/N"] + fams; Wf = np.array([ref] + [Xs[f] for f in fams])
             qh = MP.hedge([h["fam_u"] for h in hist], np.full(len(exps), 1 / len(exps)))
             out["Hedge (memory families)"] = float(D.U(qh @ Wf, d, p)[0])
-            # ---- MemGate (frozen) and ablations ----
+            # ---- MemTrial (frozen) and ablations ----
             Uh = {m: u[str(m)] for m in HALF}; grid = MP.ugrid(D.pack(np.array([ref, ens8]), d, p))
             out.update(bank.decide(d, ids, Uh, u["1/N"], u["ENS8"], grid))
-            gate_log.append({"world": r, "date": d, "open": bool(bank.log["MemGate"][-1][1]), "p": float(bank.log["MemGate"][-1][2])})
+            gate_log.append({"world": r, "date": d, "open": bool(bank.log["MemTrial"][-1][1]), "p": float(bank.log["MemTrial"][-1][2])})
             for k, v in out.items(): res[k][d].append(float(v))
             bank.matured(d, ids, Uh, u["1/N"], u["ENS8"], grid)
             T = {m: u[m] for m in MASKS}
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     res, gl = run(D, cfg, p, Z)
     json.dump({"res": res, "gate": gl, "split": split}, open(HERE / f"pb_all_{cfg}_{p}.json", "w"))
     test = [d for d in res["1/N"] if d >= split]
-    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "Reflexion", "Uplift credit (UpliftMem-style)", "ExpeL (adapted)", "MemGate", "MemGate | F-test gate"]:
+    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "Reflexion", "Uplift credit (UpliftMem-style)", "ExpeL (adapted)", "MemTrial", "MemTrial | F-test gate"]:
         per = [np.mean([res[k][d][w] for d in test]) for w in range(3)]
         print(f"{k:34s} test {100*np.mean(per):.3f} +- {100*np.std(per, ddof=1):.3f}")
     print("gate open (test):", np.mean([g["open"] for g in gl if g["date"] >= split]))

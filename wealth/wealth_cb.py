@@ -1,11 +1,11 @@
 """Monthly net returns of every ClassAlloc method (offline; usage: python3 wealth_cb.py).
 
-Runs the unchanged cb_eval.evaluate_base and cb_eval.evaluate_method('MemGate') on the cached logged drafts
+Runs the unchanged cb_eval.evaluate_base and cb_eval.evaluate_method('MemTrial') on the cached logged drafts
 (classalloc/run/eval/cache.pkl) once more. cb_eval.util is wrapped at run time (the file is not edited): the wrapper
 returns the original outputs and stores utility -> net return J = nav * value - 1 (after the 15 bp fee on what is traded)
 from the decision to the next decision date, where the account is rebalanced (cb_eval.to_next). Each method's utility is
 then mapped to its J, so the wealth path is the value of the account. Check: the rerun utilities must equal the published
-classalloc/run/eval/{base.pkl, mg0.pkl}. Writes WEALTH_CB.json.
+classalloc/run/eval/{base.pkl, mt0.pkl}. Writes WEALTH_CB.json.
 Other LLMs: python3 wealth_cb.py run_<model>_t0.7  -> WEALTH_CB_<model>.json (same procedure on that run's eval files)."""
 import sys, json, pickle, time
 from pathlib import Path
@@ -36,11 +36,11 @@ def main():
     name = "WEALTH_CB.json" if folder == "run" else "WEALTH_CB_" + folder[4:].rsplit("_t", 1)[0] + ".json"
     C = pickle.load(open(ev / "cache.pkl", "rb")); nx = CE.to_next(C["dates"]); NXT.update({id(C["rel"][t]): nx[t] for t in C["dates"]})
     res, cost, held = CE.evaluate_base(C)
-    mg = CE.evaluate_method(C, "MemGate")
-    pub_base = pickle.load(open(ev / "base.pkl", "rb"))[0]; pub_mg = pickle.load(open(ev / "mg0.pkl", "rb"))[0]
-    names = list(CE.MGV)
-    assert names[0] == "MemGate", names
-    res = dict(res); res["MemGate"] = mg[0]; pub = dict(pub_base); pub["MemGate"] = pub_mg
+    mt = CE.evaluate_method(C, "MemTrial")
+    pub_base = pickle.load(open(ev / "base.pkl", "rb"))[0]; pub_mt = pickle.load(open(ev / "mt0.pkl", "rb"))[0]
+    names = list(CE.MTV)
+    assert names[0] == "MemTrial", names
+    res = dict(res); res["MemTrial"] = mt[0]; pub = dict(pub_base); pub["MemTrial"] = pub_mt
     worst = max(float(np.nanmax(np.abs(res[k] - pub[k]))) for k in res)
     net = {}; miss = 0
     for k, U in res.items():
@@ -58,7 +58,7 @@ def main():
     post = np.array([t >= "2024-07-01" for t in C["dates"]])
     for pi, p in enumerate(CE.INV):
         print(p)
-        for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "MemGate"]:
+        for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL", "MemTrial"]:
             W = np.prod(1 + net[k][:, pi, :], 0); Wp = np.prod(1 + net[k][post, pi, :], 0)
             print(f"   {k:24s} all {W.mean():.3f} ± {W.std(ddof=1):.3f}   after cutoff {Wp.mean():.3f} ± {Wp.std(ddof=1):.3f}")
 

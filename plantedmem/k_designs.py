@@ -1,17 +1,17 @@
-"""How many retrieved experiences (k)? PlantedMem sensitivity of MemTrial (MemGate) (python3 k_designs.py run <investor> <s0> <s1>
+"""How many retrieved experiences (k)? PlantedMem sensitivity of MemTrial (python3 k_designs.py run <investor> <s0> <s1>
 | prun <investor> <s0> <s1> | table <s0> <s1>) -> results/k_<investor>_<s0>_<s1>.json, results/K_TABLE.md.
 Same worlds as suite (planted experiences, regime-correlated retrieval, drafts resampled from logged LLM allocations).
-The retriever returns the 6 best matches; MemGate uses the first k of them with a designed set of subsets:
+The retriever returns the 6 best matches; MemTrial uses the first k of them with a designed set of subsets:
 k=2 full factorial (4 drafts), k=3 half fraction (4) and full factorial (8), k=4 half fraction (8, the default),
 k=5 half fraction (16), k=6 half fraction (32). All designs share the retrieved experiences, the experiences' predictions,
 the draft draws and the reference draws (common random numbers), so differences come from k and the design only.
-The streams differ from suite, so the k=4 row is close to, not identical with, Table 3. memgate.py is unmodified."""
+The streams differ from suite, so the k=4 row is close to, not identical with, Table 3. memtrial.py is unmodified."""
 import sys, math, random, collections, json, time, glob
 from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE))
 import suite as S
-from memgate import MemGateBank
+from memtrial import MemTrialBank
 K_MAX = 6
 def even(k): return [m for m in range(1 << k) if bin(m).count("1") % 2 == 0]
 DESIGNS = {"k=2, full (4 drafts)": (2, list(range(4))), "k=3, half (4 drafts)": (3, even(3)), "k=3, full (8 drafts)": (3, list(range(8))),
@@ -28,7 +28,7 @@ def episode(beta, seed, M=12, warm=12, p_inf=0.7, noise_only=False, gamma=5.0, k
     Zc = {int(m): list(kappa * types[m] * np.eye(8)[0] + rng5.normal(0, 1, 8)) for m in range(M)}
     rngS, rngP = np.random.default_rng(seed + 11 * 10 ** 6), np.random.default_rng(seed + 12 * 10 ** 6)
     rngB, rngR = np.random.default_rng(seed + 13 * 10 ** 6), np.random.default_rng(seed + 14 * 10 ** 6)
-    banks = {n: MemGateBank(Zc, {"MemGate": dict(learner="auto")}, masks=ms) for n, (k, ms) in DESIGNS.items()}
+    banks = {n: MemTrialBank(Zc, {"MemTrial": dict(learner="auto")}, masks=ms) for n, (k, ms) in DESIGNS.items()}
     res = collections.defaultdict(list); opens = collections.defaultdict(list)
     for t in range(len(D)):
         score = (home == REG[t]).astype(float) + rngS.normal(0, 0.5, M); ret = [int(m) for m in np.argsort(-score)[:K_MAX]]
@@ -49,9 +49,9 @@ def episode(beta, seed, M=12, warm=12, p_inf=0.7, noise_only=False, gamma=5.0, k
             Wd = np.array([drafts[mask] for mask in ms]); ud = S.U_batch(Wd, rel, gamma); umem = {mask: float(x) for mask, x in zip(ms, ud)}
             ens = Wd.mean(0); u_ens = float(S.U_batch(ens[None, :], rel, gamma)[0])
             grid = S.U_batch(S.GRID[:, None] * ref_vec[None, :] + (1 - S.GRID)[:, None] * ens[None, :], rel, gamma)
-            b = banks[n]; v = b.decide(t, ids, umem, refavg, u_ens, grid)["MemGate"]
+            b = banks[n]; v = b.decide(t, ids, umem, refavg, u_ens, grid)["MemTrial"]
             if t >= warm:
-                res[n].append(v); opens[n].append(float(b.log["MemGate"][-1][1]))
+                res[n].append(v); opens[n].append(float(b.log["MemTrial"][-1][1]))
             b.matured(t, ids, umem, refavg, u_ens, grid)
     return {k: float(np.mean(v)) for k, v in res.items()}, {k: float(np.mean(v)) for k, v in opens.items()}
 

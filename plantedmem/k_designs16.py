@@ -1,7 +1,7 @@
 """Adds the k=4 full-factorial design (16 drafts) to the k sensitivity of k_designs.py, on the same worlds and draws
 (python3 k_designs16.py prun <investor> <s0> <s1>) -> results/k16_<investor>_<s0>_<s1>.json.
 The design uses bases[0..15] of the same 32 pre-drawn bases per date, so it shares common random numbers with k_designs.py;
-adding it does not change any other design. k_designs.py and memgate.py are unmodified."""
+adding it does not change any other design. k_designs.py and memtrial.py are unmodified."""
 import sys, json, time, collections
 import multiprocessing as mp
 import k_designs as K

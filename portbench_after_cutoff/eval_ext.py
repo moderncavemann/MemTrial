@@ -2,7 +2,7 @@
 
 Same code as the paper's PortBench numbers: ../portbench/monthly_lib.py (exact settlement, investor projection,
 utilities, the pre-specified data-gap exclusion) and ../portbench/pb_all.py (run(): every method time-forward over
-the dates, MemTrial = the frozen MemGate). The 59 frozen dates are followed by the new dates, so every method carries its
+the dates, MemTrial as frozen). The 59 frozen dates are followed by the new dates, so every method carries its
 state from 2019-2024 into 2025-2026 without re-tuning. Content features of MemTrial: pb_all.content_features() on the 59
 frozen dates (unchanged); an experience first retrieved on a new date is projected on the same 8 components.
 Checks: the 2019-2024 results must equal pb_all_<agent>_<investor>.json exactly (same rows, scores and code).
@@ -17,7 +17,7 @@ HERE = Path(__file__).resolve().parent; LAB = HERE.parent; FROZEN = LAB / "portb
 sys.path.insert(0, str(FROZEN)); sys.path.insert(0, str(LAB / "memtrial"))
 import monthly_lib as ML
 import pb_all as PA
-from memgate import t_sf
+from memtrial import t_sf
 atexit.register(lambda: ML.SC._dirty.__setitem__(0, False))     # never write the shared scoring cache (runs before its saver)
 CFGS = ("full-price", "raw-price"); INVS = ("conservative", "balanced", "aggressive")
 SPLIT_EXT = "2025-01-01"; LLM_CUTOFF = "2024-06-01"            # gpt-4.1-mini knowledge cutoff (June 2024)
@@ -27,7 +27,7 @@ METHODS = [("1/N", "1/N"), ("Minimum variance", "Minimum variance"), ("Zero-shot
            ("Similarity retrieval (top-4)", "Similarity retrieval (top-4)"), ("FinMem", "FinMem"), ("MemRL", "MemRL"),
            ("Reflexion", "Reflexion"), ("ExpeL", "ExpeL (adapted)"), ("Uplift credit", "Uplift credit (UpliftMem-style)"),
            ("Counterfactual selection", "Counterfactual selection (no gate)"), ("Draft averaging", "Draft averaging (8 drafts)"),
-           ("Hedge", "Hedge (memory families)"), ("MemTrial (ours)", "MemGate")]
+           ("Hedge", "Hedge (memory families)"), ("MemTrial (ours)", "MemTrial")]
 
 
 def load(old_only=False):

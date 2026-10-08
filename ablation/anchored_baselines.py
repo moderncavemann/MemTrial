@@ -1,7 +1,7 @@
 """Baselines with MemTrial's anchor (Appendix D.5, Table D.5; offline, no API calls).
 
 Each LLM-based baseline keeps its own decisions, but instead of deploying its portfolio x_t it deploys
-q_t * reference + (1 - q_t) * x_t, with q_t chosen exactly as MemTrial's anchored action (Eq. (11): memgate.ftrl_q,
+q_t * reference + (1 - q_t) * x_t, with q_t chosen exactly as MemTrial's anchored action (Eq. (11): memtrial.ftrl_q,
 prior alpha0 = 0.9 on the reference, lambda0 = 4) from the baseline's own matured dates. The reference is 1/N on the real
 benchmarks and the average of eight memory-free drafts in PlantedMem, as for MemTrial. Holdings, fees, the timing of the
 outcomes and the scoring are those of each benchmark's evaluation (pb_all.py, ib_turnover.py, cb_eval.py, suite.py), whose
@@ -22,14 +22,14 @@ import numpy as np
 HERE = Path(__file__).resolve().parent; LAB = HERE.parent
 for _p in ("memtrial", "portbench", "investorbench", "classalloc_and_robustness", "plantedmem", "tables"):
     sys.path.insert(0, str(LAB / _p))
-import memgate as MG
-from memgate import GRID, ftrl_q, MemGateBank
+import memtrial as MT
+from memtrial import GRID, ftrl_q, MemTrialBank
 A0, LAM0 = 0.9, 4.0
-NT = {"MemGate": dict(learner="auto"), "NT|never trust": dict(learner="auto", alpha=0.0)}
+NT = {"MemTrial": dict(learner="auto"), "NT|never trust": dict(learner="auto", alpha=0.0)}
 
 
 class Anchor:
-    """MemTrial's anchored action for any portfolio: the same FTRL statistics as memgate.MemGateBank."""
+    """MemTrial's anchored action for any portfolio: the same FTRL statistics as memtrial.MemTrialBank."""
     def __init__(self): self.sumG = np.zeros(len(GRID)); self.n = 0; self.sig = 0.0
     def q(self): return ftrl_q(self.sumG, self.n, self.sig, A0, LAM0)
     def matured(self, grid, u_ref, u_x): self.sumG += grid; self.n += 1; self.sig += abs(u_ref - u_x) / 2.0
@@ -58,7 +58,7 @@ def stage_pb(cfg, p):
     res = collections.defaultdict(lambda: collections.defaultdict(list)); qlog = collections.defaultdict(lambda: collections.defaultdict(list))
     for r in (0, 1, 2):
         hist = []; up_obs = []; votes = collections.defaultdict(float); rnd = random.Random(f"{cfg}|{p}|{r}")
-        bank = MemGateBank(Z, NT, masks=[int(m) for m in MP.HALF]); A = collections.defaultdict(Anchor)
+        bank = MemTrialBank(Z, NT, masks=[int(m) for m in MP.HALF]); A = collections.defaultdict(Anchor)
         for d in valid:
             W = D.proj[key][d]
             def X(arm):
@@ -121,7 +121,7 @@ def stage_pb(cfg, p):
     MAP = {"Zero-shot (no memory)": "Zero-shot (no memory)", "Similarity retrieval (top-2)": "Similarity retrieval (top-2)",
            "Similarity retrieval (top-4)": "Similarity retrieval (top-4)", "FinMem": "FinMem", "MemRL": "MemRL", "Reflexion": "Reflexion",
            "Counterfactual selection": "Counterfactual selection (no gate)", "Uplift credit": "Uplift credit (UpliftMem-style)",
-           "ExpeL": "ExpeL (adapted)", "Draft averaging": "Draft averaging (8 drafts)", "Hedge": "Hedge (memory families)", "MemGate": "MemGate", "1/N": "1/N"}
+           "ExpeL": "ExpeL (adapted)", "Draft averaging": "Draft averaging (8 drafts)", "Hedge": "Hedge (memory families)", "MemTrial": "MemTrial", "1/N": "1/N"}
     dev = {k: max(abs(a - b) for d in res[k] for a, b in zip(res[k][d], P[v][d])) for k, v in MAP.items()}
     da = max(abs(a - b) for d in res["A|Draft averaging"] for a, b in zip(res["A|Draft averaging"][d], res["NT|never trust"][d]))
     print(cfg, p, "max |unanchored - published|:", {k: f"{v:.1e}" for k, v in dev.items()}, "| anchored Draft averaging - never trust:", f"{da:.1e}", flush=True)
@@ -200,12 +200,12 @@ def stage_ib():
                                 lambda M, mfl: _sc_targets("ib_main", IA.vec, W, seeds, dates, IT.project, M, mfl))
     IT.VARIANTS["NT|never trust"] = dict(learner="auto", alpha=0.0); keep = IT.OUT; IT.OUT = tmp
     try:
-        mres, mop = IT.run_variant("MemGate", C); nres, _ = IT.run_variant("NT|never trust", C)
+        mres, mop = IT.run_variant("MemTrial", C); nres, _ = IT.run_variant("NT|never trust", C)
     finally:
         IT.OUT = keep
     unanch = {b: B0["res"][b] for b in NAMES}; unanch["Self-consistency"] = tl(scp)
     out = {"dates": dates, "seeds": seeds, "anchored": {b: tl(v) for b, v in res.items()}, "q": {b: tl(v) for b, v in qs.items()},
-           "unanchored": unanch, "Hedge (prior 0.9 on 1/N)": B9["res"]["Hedge"], "1/N": B0["res"]["1/N"], "MemGate": tl(mres), "NT|never trust": tl(nres),
+           "unanchored": unanch, "Hedge (prior 0.9 on 1/N)": B9["res"]["Hedge"], "1/N": B0["res"]["1/N"], "MemTrial": tl(mres), "NT|never trust": tl(nres),
            "check_anchored_draft_averaging_minus_never_trust": float(np.nanmax(np.abs(res["Draft averaging"] - nres)))}
     (HERE / "ANCHORED_ib.json").write_text(json.dumps(out))
     print("InvestorBench: anchored Draft averaging - never trust:", out["check_anchored_draft_averaging_minus_never_trust"], flush=True)
@@ -224,11 +224,11 @@ def stage_cb(run="run"):
     T = {(pi, si, di): tg for pi, si, di, tg in TG}
     res, qs, scp = _anchor_loop(NAMES, T, dates, seeds, CE.INV, CE.project, CE.util, CE.drift, None, lambda t: rel[t], lambda t: nxt[t], CE.Feedback, CE.K,
                                 lambda M, mfl: _sc_targets("cb_main", lambda w: np.array([w[c] for c in CE.CL]), W, seeds, dates, CE.project, M, mfl))
-    CE.MGV["NT|never trust"] = dict(learner="auto", alpha=0.0)
-    mg = CE.evaluate_method(C, "MemGate")[0]; nt = CE.evaluate_method(C, "NT|never trust")[0]
+    CE.MTV["NT|never trust"] = dict(learner="auto", alpha=0.0)
+    mt = CE.evaluate_method(C, "MemTrial")[0]; nt = CE.evaluate_method(C, "NT|never trust")[0]
     unanch = {b: tl(res0[b]) for b in NAMES}; unanch["Self-consistency"] = tl(scp)
     out = {"dates": dates, "seeds": seeds, "anchored": {b: tl(v) for b, v in res.items()}, "q": {b: tl(v) for b, v in qs.items()},
-           "unanchored": unanch, "Hedge (prior 0.9 on 1/N)": tl(res9["Hedge"]), "1/N": tl(res0["1/N"]), "MemGate": tl(mg), "NT|never trust": tl(nt),
+           "unanchored": unanch, "Hedge (prior 0.9 on 1/N)": tl(res9["Hedge"]), "1/N": tl(res0["1/N"]), "MemTrial": tl(mt), "NT|never trust": tl(nt),
            "check_anchored_draft_averaging_minus_never_trust": float(np.nanmax(np.abs(res["Draft averaging"] - nt)))}
     (HERE / "ANCHORED_cb.json").write_text(json.dumps(out))
     print("ClassAlloc: anchored Draft averaging - never trust:", out["check_anchored_draft_averaging_minus_never_trust"], flush=True)
@@ -286,16 +286,16 @@ def _pm_episode(bank=False):
     """suite.episode with the baselines' portfolios recorded and anchored; MemTrial itself runs only with bank=True (its
     published values come from suite.py and ablation/nt_pm.py)."""
     import suite as V5
-    V5.MG_VARIANTS = dict(NT) if bank else {}
-    edits = _PM_EDITS + [('    return means, means["_open|MemGate"]\n', '    return means, means.get("_open|MemGate")\n')]
+    V5.MT_VARIANTS = dict(NT) if bank else {}
+    edits = _PM_EDITS + [('    return means, means["_open|MemTrial"]\n', '    return means, means.get("_open|MemTrial")\n')]
     extra = dict(Anchor=Anchor, PRIOR9=np.array([0.025, 0.9, 0.025, 0.025, 0.025]))
-    if not bank: extra["MemGateBank"] = _NoBank
+    if not bank: extra["MemTrialBank"] = _NoBank
     fn, ns = exec_patched(V5.episode, V5, edits, extra)
     return fn, V5
 
 
 class _NoBank:
-    """stands in for MemGateBank when MemTrial itself is not rerun (it does not touch the random streams of the episode)."""
+    """stands in for MemTrialBank when MemTrial itself is not rerun (it does not touch the random streams of the episode)."""
     def __init__(self, *a, **k): self.log = {}
     def decide(self, *a): return {}
     def matured(self, *a): pass
@@ -307,7 +307,7 @@ BANK = False
 def _pm_job(a):
     g, n, s = a; fn, V5 = _pm_episode(BANK)
     means, _ = fn(seed=s, gamma=V5.GAMMA[g], **V5.REGIMES[n])
-    keep = {k: v for k, v in means.items() if k.startswith("A|") or k in PM_NAMES or k in ("MemGate", "NT|never trust", "1/N", "_open|MemGate", "Hedge (prior 0.9 on the reference)")}
+    keep = {k: v for k, v in means.items() if k.startswith("A|") or k in PM_NAMES or k in ("MemTrial", "NT|never trust", "1/N", "_open|MemTrial", "Hedge (prior 0.9 on the reference)")}
     return a, keep
 
 
@@ -326,7 +326,7 @@ def stage_pm(s0, s1, procs=2):
 def p_one_sided(d):
     d = np.asarray(d, float); n = len(d); sd = d.std(ddof=1)
     if sd == 0: return 0.0 if d.mean() > 0 else 1.0
-    return float(MG.t_sf(d.mean() / (sd / math.sqrt(n)), n - 1))
+    return float(MT.t_sf(d.mean() / (sd / math.sqrt(n)), n - 1))
 
 
 def report():
@@ -342,16 +342,16 @@ def report():
         dates = sorted(d for d in R["balanced"]["res"]["1/N"] if d >= split)
         def arr(k):
             return 100 * np.array([[R[p]["res"][k][d] for p in G3] for d in dates], float)       # dates x investors x seeds, pp
-        keys = ["1/N", "MemGate", "NT|never trust", "Hedge (prior 0.9 on 1/N)"] + names + ["A|" + b for b in names]
+        keys = ["1/N", "MemTrial", "NT|never trust", "Hedge (prior 0.9 on 1/N)"] + names + ["A|" + b for b in names]
         for k in keys:
             if all(k in R[p]["res"] and all(d in R[p]["res"][k] and len(R[p]["res"][k][d]) == 3 for d in dates) for p in G3):
                 a = arr(k); put(col, k, a.mean((0, 1)), a.mean((1, 2)).tolist())
     I = json.load(open(HERE / "ANCHORED_ib.json"))
-    for k, a in [("1/N", I["1/N"]), ("MemGate", I["MemGate"]), ("NT|never trust", I["NT|never trust"]), ("Hedge (prior 0.9 on 1/N)", I["Hedge (prior 0.9 on 1/N)"])] + \
+    for k, a in [("1/N", I["1/N"]), ("MemTrial", I["MemTrial"]), ("NT|never trust", I["NT|never trust"]), ("Hedge (prior 0.9 on 1/N)", I["Hedge (prior 0.9 on 1/N)"])] + \
                 [(b, I["unanchored"][b]) for b in names] + [("A|" + b, I["anchored"][b]) for b in names]:
         a = 1e4 * np.array(a, float); put("InvestorBench", k, np.nanmean(a, (0, 1)), np.nanmean(a, (1, 2)).tolist())
     Cb = json.load(open(HERE / "ANCHORED_cb.json"))
-    for k, a in [("1/N", Cb["1/N"]), ("MemGate", Cb["MemGate"]), ("NT|never trust", Cb["NT|never trust"]), ("Hedge (prior 0.9 on 1/N)", Cb["Hedge (prior 0.9 on 1/N)"])] + \
+    for k, a in [("1/N", Cb["1/N"]), ("MemTrial", Cb["MemTrial"]), ("NT|never trust", Cb["NT|never trust"]), ("Hedge (prior 0.9 on 1/N)", Cb["Hedge (prior 0.9 on 1/N)"])] + \
                 [(b, Cb["unanchored"][b]) for b in names] + [("A|" + b, Cb["anchored"][b]) for b in names]:
         a = 100 * np.array(a, float); put("ClassAlloc", k, np.nanmean(a, (0, 1)), np.nanmean(a, (1, 2)).tolist())
     PM = collections.defaultdict(dict)
@@ -363,7 +363,7 @@ def report():
         g = Path(f).stem.split("_")[1]
         for n, S in json.load(open(f)).items():
             for s, v in S.items():
-                if s in PM[(g, n)]: PM[(g, n)][s]["MemGate"] = v[0]["MemGate"]
+                if s in PM[(g, n)]: PM[(g, n)][s]["MemTrial"] = v[0]["MemTrial"]
     for f in glob.glob(str(HERE / "nt_pm_*_*.json")):                              # never trusting: ablation/nt_pm.py
         for g, Rg in json.load(open(f)).items():
             for n, S in Rg.items():
@@ -374,7 +374,7 @@ def report():
     if PM:
         seeds = sorted(PM[("balanced", "no influence")], key=int)
         inv = {v: k for k, v in PM_NAMES.items()}
-        pm_keys = [("1/N", "1/N"), ("MemGate", "MemGate"), ("NT|never trust", "NT|never trust"), ("Hedge (prior 0.9 on 1/N)", "Hedge (prior 0.9 on the reference)")] + \
+        pm_keys = [("1/N", "1/N"), ("MemTrial", "MemTrial"), ("NT|never trust", "NT|never trust"), ("Hedge (prior 0.9 on 1/N)", "Hedge (prior 0.9 on the reference)")] + \
                   [(b, inv[b]) for b in names] + [("A|" + b, "A|" + inv[b]) for b in names]
         for col, regs in GROUPS.items():
             for k, kk in pm_keys:
@@ -388,16 +388,16 @@ def report():
         if not col.startswith(("Port", "Inv", "Class", "Planted")): continue
         anch = {k[2:]: v for k, v in rows.items() if k.startswith("A|")}
         best = max(anch, key=lambda b: anch[b]["mean"])
-        if col in per_date: d = np.array(per_date[col]["MemGate"]) - np.array(per_date[col]["A|" + best])
-        else: d = np.array(rows["MemGate"]["per_seed"]) - np.array(rows["A|" + best]["per_seed"])
-        cmp[col] = dict(best_anchored=best, memtrial_minus_best=float(rows["MemGate"]["mean"] - anch[best]["mean"]),
-                        pct=float(100 * (rows["MemGate"]["mean"] - anch[best]["mean"]) / abs(anch[best]["mean"])), p_one_sided=p_one_sided(d),
+        if col in per_date: d = np.array(per_date[col]["MemTrial"]) - np.array(per_date[col]["A|" + best])
+        else: d = np.array(rows["MemTrial"]["per_seed"]) - np.array(rows["A|" + best]["per_seed"])
+        cmp[col] = dict(best_anchored=best, memtrial_minus_best=float(rows["MemTrial"]["mean"] - anch[best]["mean"]),
+                        pct=float(100 * (rows["MemTrial"]["mean"] - anch[best]["mean"]) / abs(anch[best]["mean"])), p_one_sided=p_one_sided(d),
                         p_two_sided=float(min(1.0, 2 * min(p_one_sided(d), p_one_sided(-d)))))
     (HERE / "ANCHORED.json").write_text(json.dumps({"table": T, "memtrial_vs_best_anchored": cmp}, indent=1))
     for col, rows in T.items():
-        if not isinstance(rows, dict) or "MemGate" not in rows: continue
+        if not isinstance(rows, dict) or "MemTrial" not in rows: continue
         print(f"\n{col}"); n1 = rows["1/N"]["mean"]
-        for k in ["1/N", "MemGate", "Hedge (prior 0.9 on 1/N)"] + names:
+        for k in ["1/N", "MemTrial", "Hedge (prior 0.9 on 1/N)"] + names:
             if k in rows:
                 a = rows.get("A|" + k)
                 print(f"  {k:32s} {rows[k]['mean']:8.3f} ± {rows[k]['sd']:.3f}" + (f"   anchored {a['mean']:8.3f} ± {a['sd']:.3f}" if a else ""))

@@ -5,10 +5,10 @@ Rules as on PortBench and InvestorBench: each portfolio is projected to the inve
 classes = equities and real estate, at most M; defensive classes = bonds and cash, at least m), held for 20 sessions,
 utility = net return - (gamma / 2) * (variance of daily returns x 20), in pp per month. As on InvestorBench, holdings are
 carried from month to month (drifted with prices) and the 15 bp fee is charged on what is traded; every method starts
-the test period holding the projected 1/N portfolio. The method itself is the frozen memgate.py (unmodified); the
+the test period holding the projected 1/N portfolio. The method itself is the frozen memtrial.py (unmodified); the
 baselines follow ib_turnover.stage_base line by line.
 
-Usage: python3 cb_eval.py [--mock] [--run FOLDER] [--stage cache|base|mg0|mg1|mg2|summary]
+Usage: python3 cb_eval.py [--mock] [--run FOLDER] [--stage cache|base|mt0|mt1|mt2|summary]
        (FOLDER under classalloc/, default run or run_mock; without --stage all steps run)
 Writes classalloc/<run>/eval/{cache.pkl, RESULTS.json} and prints the table.
 """
@@ -19,8 +19,8 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / "memtrial"))
-import memgate as MG
-from memgate import MemGateBank, banzhaf, GRID, ftrl_q, f_sf
+import memtrial as MT
+from memtrial import MemTrialBank, banzhaf, GRID, ftrl_q, f_sf
 import run_cb as RC
 
 CL = RC.CLASSES; K = len(CL)
@@ -32,8 +32,8 @@ EXPERIENCE = ["FinMem", "MemRL", "Reflexion", "ExpeL"]
 BASE = ["1/N", "Minimum variance", "Zero-shot (no memory)", "Self-consistency", "Similarity retrieval (top-2)",
         "Similarity retrieval (top-4)", "FinMem", "MemRL", "Reflexion", "ExpeL", "Draft averaging",
         "Counterfactual selection", "Uplift credit", "Hedge"]
-MGV = {"MemGate": dict(learner="auto"), "MemGate | no gate": dict(learner="auto", gate="none"),
-       "MemGate | F-test gate": dict(learner="auto", gate="ftest")}
+MTV = {"MemTrial": dict(learner="auto"), "MemTrial | no gate": dict(learner="auto", gate="none"),
+       "MemTrial | F-test gate": dict(learner="auto", gate="ftest")}
 
 
 def _simplex(y):
@@ -185,13 +185,13 @@ def evaluate_base(C):
 
 
 def evaluate_method(C, name):
-    cfg = dict(MGV[name]); W, top4, seeds, dates, rel, Z = C["W"], C["top4"], C["seeds"], C["dates"], C["rel"], C["Z"]
+    cfg = dict(MTV[name]); W, top4, seeds, dates, rel, Z = C["W"], C["top4"], C["seeds"], C["dates"], C["rel"], C["Z"]
     nD, nS = len(dates), len(seeds)
     res = np.full((nD, 3, nS), np.nan); cost = np.full((nD, 3, nS), np.nan); opened = np.zeros((nD, 3, nS)); fscore = {}; nxt = to_next(dates)
     for pi, (p, (M, mfl, gam)) in enumerate(INV.items()):
         ew = project(np.full(K, 1.0 / K), M, mfl)
         for si, s in enumerate(seeds):
-            bank = MemGateBank(Z, {name: cfg}, masks=HALF); h = ew.copy(); fb = Feedback()
+            bank = MemTrialBank(Z, {name: cfg}, masks=HALF); h = ew.copy(); fb = Feedback()
             for di, t in enumerate(dates):
                 for a_ in fb.ready(t): bank.matured(*a_)
                 w = {k: project(v, M, mfl) for k, v in W[(t, s)].items()}; R = rel[t]; ids = top4[t]
@@ -202,7 +202,7 @@ def evaluate_method(C, name):
                 q = ftrl_q(bank.sumG, bank.n, bank.sig, 0.9, 4.0)
                 out = bank.decide(t, ids, U, u_ref, u_ens, grid)[name]; op = bool(bank.log[name][-1][1])
                 if op:
-                    sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MG.MIN_SCORES else -np.inf for m in ("identity", "content")}
+                    sc = {m: np.mean(bank.G[m].scores) if len(bank.G[m].scores) >= MT.MIN_SCORES else -np.inf for m in ("identity", "content")}
                     lm = "content" if sc["content"] > sc["identity"] else "identity"
                     v = [bank.L[lm].predict(hh) for hh in ids]
                     best = max(HALF, key=lambda k: (sum(v[j] for j in range(len(ids)) if (k >> j) & 1), -bin(k).count("1")))
@@ -220,7 +220,7 @@ def evaluate_method(C, name):
 def paired_p(a, b):
     d = np.asarray(a) - np.asarray(b); n = len(d); sd = d.std(ddof=1)
     if sd == 0: return 0.0 if d.mean() > 0 else 1.0
-    return MG.t_sf(d.mean() / (sd / math.sqrt(n)), n - 1)
+    return MT.t_sf(d.mean() / (sd / math.sqrt(n)), n - 1)
 
 
 def diag(C, R):
@@ -243,7 +243,7 @@ def diag(C, R):
         out[p] = dict(outcome_vs_1N=spearman(oc, mk), cf_vs_1N=spearman(cf, mk), detectable_months=int(det), months=len(dates),
                       best_agent=best, best_minus_1N_pp=100 * (ex[best] - n1),
                       cfsel_minus_1N_pp=100 * (np.nanmean(R["Counterfactual selection"][:, pi, :]) - n1),
-                      method_minus_1N_pp=100 * (np.nanmean(R["MemGate"][:, pi, :]) - n1))
+                      method_minus_1N_pp=100 * (np.nanmean(R["MemTrial"][:, pi, :]) - n1))
     return out
 
 
@@ -255,26 +255,26 @@ def summarize(R, cost, dates, mask=None):
                        cost_pp=float(100 * np.nanmean(cost[k][sel])))
     by_date = {k: np.nanmean(A[sel], (1, 2)) for k, A in R.items()}
     best = max(EXPERIENCE, key=lambda k: rows[k]["mean"])
-    return dict(rows=rows, best_experience_agent=best, improv_vs_best_pp=rows["MemGate"]["mean"] - rows[best]["mean"],
-                p_vs_best=paired_p(by_date["MemGate"], by_date[best]),
-                method_minus_1N_pp=rows["MemGate"]["mean"] - rows["1/N"]["mean"], months=int(sel.sum()))
+    return dict(rows=rows, best_experience_agent=best, improv_vs_best_pp=rows["MemTrial"]["mean"] - rows[best]["mean"],
+                p_vs_best=paired_p(by_date["MemTrial"], by_date[best]),
+                method_minus_1N_pp=rows["MemTrial"]["mean"] - rows["1/N"]["mean"], months=int(sel.sum()))
 
 
 def main():
     mock = "--mock" in sys.argv
     name = sys.argv[sys.argv.index("--run") + 1] if "--run" in sys.argv else ("run_mock" if mock else "run")
     run = HERE / "classalloc" / name; ev = run / "eval"; ev.mkdir(exist_ok=True); t0 = time.time()
-    stage = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "all"   # cache | base | mg0 | mg1 | mg2 | summary
+    stage = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "all"   # cache | base | mt0 | mt1 | mt2 | summary
     if stage == "cache" or (stage == "all" and (run / "executions").exists()): C = build_cache(run)   # otherwise eval/cache.pkl
     else: C = pickle.load(open(ev / "cache.pkl", "rb"))
     if stage in ("all", "base"):
         res, cost, held = evaluate_base(C); pickle.dump((res, cost, held), open(ev / "base.pkl", "wb"))
-    for i, n in enumerate(MGV):
-        if stage in ("all", f"mg{i}"): pickle.dump(evaluate_method(C, n), open(ev / f"mg{i}.pkl", "wb"))
+    for i, n in enumerate(MTV):
+        if stage in ("all", f"mt{i}"): pickle.dump(evaluate_method(C, n), open(ev / f"mt{i}.pkl", "wb"))
     if stage not in ("all", "summary"): print(f"stage {stage} done ({time.time() - t0:.0f}s)"); return
     res, cost, held = pickle.load(open(ev / "base.pkl", "rb")); R = dict(res); Cst = dict(cost); trust = {}; fwd = {}
-    for i, n in enumerate(MGV):
-        r, c, op, fs = pickle.load(open(ev / f"mg{i}.pkl", "rb")); R[n] = r; Cst[n] = c; trust[n] = 100 * float(op.mean())
+    for i, n in enumerate(MTV):
+        r, c, op, fs = pickle.load(open(ev / f"mt{i}.pkl", "rb")); R[n] = r; Cst[n] = c; trust[n] = 100 * float(op.mean())
         sc = [v[m][0] for v in fs.values() for m in v if v[m][0] is not None]; fwd[n] = float(np.mean(sc)) if sc else None
     dates = C["dates"]; post = np.array([t >= "2024-07-01" for t in dates])
     out = {"run": name, "manifest": json.load(open(run / "MANIFEST.json")) if (run / "MANIFEST.json").exists() else None,
@@ -287,9 +287,9 @@ def main():
     (run / "eval" / "RESULTS.json").write_text(json.dumps(out, indent=1))
     A = out["all"]
     print(f"\nClassAlloc ({name}): utility, pp per month (mean ± sd over seeds), {len(dates)} test months")
-    for k in BASE + list(MGV): print(f"  {k:30s} {A['rows'][k]['mean']:7.3f} ± {A['rows'][k]['sd']:.3f}   cost {A['rows'][k]['cost_pp']:.3f}")
+    for k in BASE + list(MTV): print(f"  {k:30s} {A['rows'][k]['mean']:7.3f} ± {A['rows'][k]['sd']:.3f}   cost {A['rows'][k]['cost_pp']:.3f}")
     print(f"  best experience-learning agent: {A['best_experience_agent']}; method - best = {A['improv_vs_best_pp']:+.3f} pp "
-          f"(p = {A['p_vs_best']:.3f}); method - 1/N = {A['method_minus_1N_pp']:+.3f} pp; trust rate {trust['MemGate']:.1f}%")
+          f"(p = {A['p_vs_best']:.3f}); method - 1/N = {A['method_minus_1N_pp']:+.3f} pp; trust rate {trust['MemTrial']:.1f}%")
     for part in ("before_cutoff", "after_cutoff"):
         P = out[part]
         if P: print(f"  {part}: {P['months']} months; method - 1/N {P['method_minus_1N_pp']:+.3f} pp; best agent {P['best_experience_agent']} "

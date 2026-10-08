@@ -48,7 +48,7 @@ if STAGE == "pb":
             per = {k: 100 * np.array([R["res"][k][d] for d in te]).mean(0) for k in R["res"]}
             util = {"1/N": per["1/N"].tolist(), "Counterfactual selection": per["Counterfactual selection (no gate)"].tolist()}
             util.update({k: per[v].tolist() for k, v in EXPK.items()})
-            if "MemGate" in per: util["MemGate"] = per["MemGate"].tolist()
+            if "MemTrial" in per: util["MemTrial"] = per["MemTrial"].tolist()
             out[f"{cfg}|{p}"] = {"n_dates": len(ds), "n_test": len(te), **corr3(oc, cf, mk), "util": util}
             print(cfg, p, len(ds), {k: np.round(v, 4).tolist() for k, v in corr3(oc, cf, mk).items()}, flush=True)
     dump("pb", out)
@@ -69,7 +69,7 @@ if STAGE == "ib":
                 for si in range(len(seeds)): oc[si].append(U[si, on].mean()); cf[si].append(U[si, on].mean() - U[si, off].mean())
                 mk.append(u1n)
             h = IT.drift(ew, r)
-        util = {k: (1e4 * np.nanmean(RR[k][:, pi, :], 0)).tolist() for k in EXP + ["1/N", "Counterfactual selection", "MemGate"] if k in RR}
+        util = {k: (1e4 * np.nanmean(RR[k][:, pi, :], 0)).tolist() for k in EXP + ["1/N", "Counterfactual selection", "MemTrial"] if k in RR}
         out[p] = {"n_dates": len(dates), **corr3(oc, cf, mk), "util": util}
         print(p, len(dates), {k: np.round(v, 4).tolist() for k, v in corr3(oc, cf, mk).items()}, flush=True)
     dump("ib", out)
@@ -77,7 +77,7 @@ if STAGE == "ib":
 if STAGE == "cb":
     import cb_eval as CE
     EV = LAB / "classalloc_and_robustness/classalloc/run/eval"; C = pickle.load(open(EV / "cache.pkl", "rb"))
-    res, cost, held = pickle.load(open(EV / "base.pkl", "rb")); mres = np.asarray(pickle.load(open(EV / "mg0.pkl", "rb"))[0], float)
+    res, cost, held = pickle.load(open(EV / "base.pkl", "rb")); mres = np.asarray(pickle.load(open(EV / "mt0.pkl", "rb"))[0], float)
     W, seeds, dates, rel = C["W"], C["seeds"], C["dates"], C["rel"]; out = {}; nxt = CE.to_next(dates)
     for pi, (p, (M, mfl, gam)) in enumerate(CE.INV.items()):
         ew = CE.project(np.full(CE.K, 1.0 / CE.K), M, mfl); h = ew.copy(); oc = [[] for _ in seeds]; cf = [[] for _ in seeds]; mk = []
@@ -90,7 +90,7 @@ if STAGE == "cb":
                 mk.append(u1n)
             h = CE.drift(ew, nxt[t])
         util = {k: (100 * np.nanmean(np.asarray(res[k], float)[:, pi, :], 0)).tolist() for k in EXP + ["1/N", "Counterfactual selection"]}
-        util["MemGate"] = (100 * np.nanmean(mres[:, pi, :], 0)).tolist()
+        util["MemTrial"] = (100 * np.nanmean(mres[:, pi, :], 0)).tolist()
         out[p] = {"n_dates": len(dates), **corr3(oc, cf, mk), "util": util}
         print(p, len(dates), {k: np.round(v, 4).tolist() for k, v in corr3(oc, cf, mk).items()}, flush=True)
     dump("cb", out)
@@ -112,7 +112,7 @@ if STAGE == "report":
         row.update(best_agent=best, best_minus_1N=ms(U[best] - U["1/N"]), cfsel_minus_1N=ms(U["Counterfactual selection"] - U["1/N"]),
                    every_exp_minus_1N={k: ms(U[k] - U["1/N"]) for k in EXP}, one_over_N=ms(U["1/N"]),
                    util={k: ms(v) for k, v in U.items()})
-        if "MemGate" in U: row["memtrial_minus_1N"] = ms(U["MemGate"] - U["1/N"])
+        if "MemTrial" in U: row["memtrial_minus_1N"] = ms(U["MemTrial"] - U["1/N"])
         if s == "pb": dd = [det_pb[pre + p] for p in G3]
         elif s == "ib": dd = [(IBD[p]["detectable_days"], IBD[p]["days"]) for p in G3]
         else: dd = [(CBD[p]["detectable_months"], CBD[p]["months"]) for p in G3]

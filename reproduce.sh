@@ -29,7 +29,7 @@ echo "== PortBench"
 echo "== InvestorBench"
 (cd investorbench
  $PY ib_turnover.py base
- $PY ib_turnover.py mg "$($PY -c 'import ib_turnover as T; print(";".join(T.VARIANTS))')"
+ $PY ib_turnover.py mt "$($PY -c 'import ib_turnover as T; print(";".join(T.VARIANTS))')"
  $PY ib_turnover.py merge; $PY ib_turnover.py diag; $PY ib_k.py)
 
 echo "== ClassAlloc and Self-consistency with three draws per seed"

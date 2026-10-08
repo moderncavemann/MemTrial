@@ -1,4 +1,4 @@
-"""Share of decisions on which MemGate/CAVEAT trusts its learned values, for every sensitivity variant (analysis only;
+"""Share of decisions on which MemTrial trusts its learned values, for every sensitivity variant (analysis only;
 python3 trust_rates.py) -> TRUST_RATES.json. PortBench: the SensBank variants of sens.py replayed with the same inputs as
 pb_all.py, test months, pooled over configurations, investors and seeds. InvestorBench: ../investorbench/turnover
 (fee on traded amounts). Controlled: sens/ct_*.json, test seeds 15-114, five core regimes and the informative regime."""
@@ -47,5 +47,5 @@ for n in names:
     rg = "many experiences, informative content"
     out["Controlled informative"][n] = float(np.mean([ALL[(g, rg)][s][0]["_open|" + n] for g in ("conservative", "balanced", "aggressive") for s in ALL[(g, rg)]]))
 (HERE / "TRUST_RATES.json").write_text(json.dumps(out, indent=1))
-for n in ["MemGate", "S|default", "S|alpha=0.01", "S|alpha=0.02", "S|alpha=0.1", "S|alpha=0.2", "S|minscores=5", "S|minscores=20", "MemGate | no gate", "MemGate | F-test gate"]:
+for n in ["MemTrial", "S|default", "S|alpha=0.01", "S|alpha=0.02", "S|alpha=0.1", "S|alpha=0.2", "S|minscores=5", "S|minscores=20", "MemTrial | no gate", "MemTrial | F-test gate"]:
     print(f"{n:24s} PB {100*out['PortBench'].get(n, np.nan):5.1f}%  IB {100*out['InvestorBench'].get(n, np.nan) if n in out['InvestorBench'] else float('nan'):5.1f}%  CTcore {100*out['Controlled core'].get(n, np.nan):5.1f}%  CTinf {100*out['Controlled informative'].get(n, np.nan):5.1f}%")

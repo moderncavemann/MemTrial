@@ -12,8 +12,8 @@ a = "                chk = float(util(X, R, gam, h)[0][0])\n"
 b = ("                Xa = q * ew + (1 - q) * ens; DT.append((p, s, t, op, float(util(X, R, gam, h)[0][0]), float(util(Xa, R, gam, h)[0][0]), float(util(ew, R, gam, h)[0][0])))\n" + a)
 assert src.count(a) == 1; src = src.replace(a, b)
 ns = dict(CE.__dict__); ns["DT"] = []; exec(src, ns)
-r = ns["evaluate_method"](C, "MemGate")
-pub = pickle.load(open(HERE / "classalloc" / run / "eval" / "mg0.pkl", "rb"))[0]
+r = ns["evaluate_method"](C, "MemTrial")
+pub = pickle.load(open(HERE / "classalloc" / run / "eval" / "mt0.pkl", "rb"))[0]
 assert float(np.nanmax(np.abs(r[0] - pub))) == 0.0
 DT = ns["DT"]; tr = [x for x in DT if x[3]]
 d = 100 * np.array([x[4] - x[5] for x in tr]); dn = 100 * np.array([x[4] - x[6] for x in tr])

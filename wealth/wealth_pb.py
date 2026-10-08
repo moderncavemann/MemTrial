@@ -1,6 +1,6 @@
 """Monthly net returns of every PortBench method (offline; usage: python3 wealth_pb.py <cfg> <investor>).
 
-Runs the unchanged pb_all.run (frozen MemGate code, same logged drafts) once more and records, for every portfolio that
+Runs the unchanged pb_all.run (frozen MemTrial code, same logged drafts) once more and records, for every portfolio that
 the unchanged code evaluates, its net holding-period return J = nav * value_20 - 1 (the J inside mixture.U_batch, i.e.
 after the 15 bp fee on turnover). mixture.U_batch is wrapped at run time (the file is not edited): the wrapper returns
 the original utilities unchanged and stores utility -> J. Each method's stored utility is then mapped to the J of the
@@ -56,7 +56,7 @@ def main():
     (HERE / f"WEALTH_PB_{cfg}_{p}.json").write_text(json.dumps(out))
     test = [d for d in out["dates"] if d >= split]
     print(cfg, p, f"{time.time() - t0:.0f}s", out["check"], len(test), "test months")
-    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL (adapted)", "MemGate"]:
+    for k in ["1/N", "Zero-shot (no memory)", "FinMem", "MemRL", "Reflexion", "ExpeL (adapted)", "MemTrial"]:
         W = np.prod([1 + np.array(net[k][d], float) for d in test], 0)
         print(f"   {k:26s} terminal wealth {W.mean():.4f} ± {W.std(ddof=1):.4f}")
 

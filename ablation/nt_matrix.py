@@ -8,23 +8,23 @@ from pathlib import Path
 import numpy as np
 HERE = Path(__file__).resolve().parent; LAB = HERE.parent
 sys.path.insert(0, str(LAB / "memtrial")); sys.path.insert(0, str(LAB / "classalloc_and_robustness"))
-import memgate as MG
+import memtrial as MT
 from paper_tables import pb_load
 ROWS = ["MemTrial", "per-experience learner only", "content-aware learner only", "in-sample F-test", "none (always act on values)",
         "never passes (always anchored action)", "fall back to the draft average", "fixed fallback to the reference", "uniform prior"]
-PBK = dict(zip(ROWS, ["MemGate", "MemGate | identity learner", "MemGate | content learner only", "MemGate | F-test gate", "MemGate | no gate",
-                      "MemGate | gate 0.01", "MemGate | closed->ensemble", "MemGate | closed->reference", "MemGate | uniform prior"]))
-IBF = dict(zip(ROWS, ["MemGate", "MemGate_identity_learner", "MemGate_content_learner_only", "MemGate_F_test_gate", "MemGate_no_gate",
-                      None, "MemGate_closed_ensemble", "MemGate_closed_reference", "MemGate_uniform_prior"]))
-CAK = dict(zip(ROWS, ["MemGate", "identity learner only", "content learner only", "F-test gate", "no gate", "never trust",
+PBK = dict(zip(ROWS, ["MemTrial", "MemTrial | identity learner", "MemTrial | content learner only", "MemTrial | F-test gate", "MemTrial | no gate",
+                      "MemTrial | gate 0.01", "MemTrial | closed->ensemble", "MemTrial | closed->reference", "MemTrial | uniform prior"]))
+IBF = dict(zip(ROWS, ["MemTrial", "MemTrial_identity_learner", "MemTrial_content_learner_only", "MemTrial_F_test_gate", "MemTrial_no_gate",
+                      None, "MemTrial_closed_ensemble", "MemTrial_closed_reference", "MemTrial_uniform_prior"]))
+CAK = dict(zip(ROWS, ["MemTrial", "identity learner only", "content learner only", "F-test gate", "no gate", "never trust",
                       "closed -> draft average", "closed -> reference", "uniform prior"]))
-PMK = dict(zip(ROWS, ["MemGate", "MemGate | identity learner", "MemGate | content learner only", "MemGate | F-test gate", "MemGate | no gate",
-                      "NT|never trust", "MemGate | closed->ensemble", "MemGate | closed->reference", "MemGate | uniform prior"]))
+PMK = dict(zip(ROWS, ["MemTrial", "MemTrial | identity learner", "MemTrial | content learner only", "MemTrial | F-test gate", "MemTrial | no gate",
+                      "NT|never trust", "MemTrial | closed->ensemble", "MemTrial | closed->reference", "MemTrial | uniform prior"]))
 
 def p2(d):
     d = np.asarray(d, float); n = len(d); sd = d.std(ddof=1)
     if sd == 0: return 1.0 if abs(d.mean()) == 0 else 0.0
-    return float(2 * MG.t_sf(abs(d.mean()) / (sd / math.sqrt(n)), n - 1))
+    return float(2 * MT.t_sf(abs(d.mean()) / (sd / math.sqrt(n)), n - 1))
 
 def stats(arr, ref, scale, paired_axis_dates=True):
     """arr, ref: (dates, investors, seeds) for real benchmarks."""
@@ -42,10 +42,10 @@ for cfg, col in (("full-price", "PortBench-Full"), ("raw-price", "PortBench-Raw"
 # ---- InvestorBench (fee on the amount traded, as in the paper)
 TO = LAB / "investorbench/turnover"
 def ibres(r):
-    f = HERE / "mg_NT_never_trust.json" if IBF[r] is None else TO / f"mg_{IBF[r]}.json"
+    f = HERE / "mt_NT_never_trust.json" if IBF[r] is None else TO / f"mt_{IBF[r]}.json"
     return np.array(json.load(open(f))["res"], float)
 for r in ROWS: OUT[r]["InvestorBench"] = stats(ibres(r), ibres("MemTrial"), 1e4)
-# ---- ClassAlloc: cb_eval_extra.run_variant (frozen memgate.py), copied with one change: it also stores its result array
+# ---- ClassAlloc: cb_eval_extra.run_variant (frozen memtrial.py), copied with one change: it also stores its result array
 import cb_eval_extra as CX
 CX.VARIANTS["never trust"] = dict(learner="auto", alpha=0.0)
 src = inspect.getsource(CX.run_variant).replace("    return dict(", "    _STORE[name] = (res.copy(), opened.copy())\n    return dict(", 1)
@@ -53,9 +53,9 @@ assert "_STORE[name]" in src
 CX._STORE = {}; exec(compile(src, "run_variant_store", "exec"), CX.__dict__)
 C = pickle.load(open(LAB / "classalloc_and_robustness/classalloc/run/eval/cache.pkl", "rb"))
 for r in ROWS: CX.run_variant(C, CAK[r])
-pub = pickle.load(open(LAB / "classalloc_and_robustness/classalloc/run/eval/mg0.pkl", "rb"))[0]
-ca_identity = float(np.nanmax(np.abs(CX._STORE["MemGate"][0] - pub)))
-for r in ROWS: OUT[r]["ClassAlloc"] = stats(CX._STORE[CAK[r]][0], CX._STORE["MemGate"][0], 100)
+pub = pickle.load(open(LAB / "classalloc_and_robustness/classalloc/run/eval/mt0.pkl", "rb"))[0]
+ca_identity = float(np.nanmax(np.abs(CX._STORE["MemTrial"][0] - pub)))
+for r in ROWS: OUT[r]["ClassAlloc"] = stats(CX._STORE[CAK[r]][0], CX._STORE["MemTrial"][0], 100)
 # ---- PlantedMem (published ct files + the never-trust episodes of nt_pm.py)
 CT = collections.defaultdict(dict)
 for f in glob.glob(str(LAB / "memtrial/sens/ct_*_*_*.json")):
@@ -80,7 +80,7 @@ for col, regs in GROUPS.items():
                            identical=bool(np.max(np.abs(x - y)) < 1e-12), per_seed=ps.tolist())
 json.dump({"rows": OUT, "ca_identity_vs_published": ca_identity}, open(HERE / "NT_MATRIX.json", "w"))
 COLS = ["PortBench-Full", "PortBench-Raw", "InvestorBench", "ClassAlloc", "PlantedMem no signal", "PlantedMem signal", "PlantedMem informative", "PlantedMem core"]
-print("CA identity vs published MemGate:", ca_identity)
+print("CA identity vs published MemTrial:", ca_identity)
 for r in ROWS:
     cells = []
     for c in COLS:

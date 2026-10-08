@@ -1,7 +1,7 @@
 """PortBench: sd over the three seeds (deployment worlds) for every PortBench number reported without one.
 python3 sd_pb.py fast            -> SD_pb_fast.json   (main-table rows, anchor table, k-table trust rates; published files only)
 python3 sd_pb.py replay CFG      -> SD_pb_replay_<CFG>.json (trust rate of every variant per seed: the SensBank replay of
-                                     trust_rates.py, frozen memgate.py, per seed instead of pooled)
+                                     trust_rates.py, frozen memtrial.py, per seed instead of pooled)
 python3 sd_pb.py t1              -> SD_pb_t1.json     (Table 1 credits per seed; supplement decomposition per seed)
 Per seed = mean over the 20 test months and the three investors (and, where a number pools them, both configurations)."""
 import sys, os, json, collections
@@ -24,13 +24,13 @@ if STAGE == "fast":
             for p in G3:
                 R = json.load(open(MON / f"pb_all_{cfg}_{p}.json")); fl += [g["open"] for g in R["gate"] if g["world"] == r and g["date"] >= R["split"]]
             tr.append(100 * np.mean(fl)); trust_all[r] += fl
-        out["main"][cfg] = {"MemTrial": ms(per["MemGate"]), "best_experience_agent": be, "improv": ms(per["MemGate"] - per[EXPK[be]]),
-                            "minus_1N": ms(per["MemGate"] - per["1/N"]), "trust_pct": ms(tr), "n_test": len(dates)}
+        out["main"][cfg] = {"MemTrial": ms(per["MemTrial"]), "best_experience_agent": be, "improv": ms(per["MemTrial"] - per[EXPK[be]]),
+                            "minus_1N": ms(per["MemTrial"] - per["1/N"]), "trust_pct": ms(tr), "n_test": len(dates)}
         # anchor table
         S = {p: json.load(open(LAB / "memtrial/sens" / f"pb_{cfg}_{p}.json")) for p in G3}; split = S["balanced"]["split"]
         ds = sorted(d for d in S["balanced"]["res"]["1/N"] if d >= split)
         out["anchor"][cfg] = {}
-        for n in [k for k in S["balanced"]["res"] if k.startswith("S|a0=")] + ["MemGate", "S|default"]:
+        for n in [k for k in S["balanced"]["res"] if k.startswith("S|a0=")] + ["MemTrial", "S|default"]:
             if all(n in S[p]["res"] for p in G3):
                 x = np.array([[S[p]["res"][n][d] for p in G3] for d in ds]); out["anchor"][cfg][n] = ms(100 * x.mean((0, 1)))
         # k-table trust rates and utilities
@@ -44,7 +44,7 @@ if STAGE == "fast":
     out["main"]["pooled_trust_pct"] = ms([100 * np.mean(trust_all[r]) for r in range(3)])
     save("pb_fast", out)
     print(json.dumps(out["main"], indent=0)); print({k: v["pooled_trust_pct"] for k, v in out["k_trust"].items()})
-    print({c: out["anchor"][c].get("MemGate") for c in CFGS}, list(out["anchor"]["full-price"])[:4])
+    print({c: out["anchor"][c].get("MemTrial") for c in CFGS}, list(out["anchor"]["full-price"])[:4])
 else:
     import monthly_lib as ML, monthly_policies as MP, pb_all as PA
     rows, ids, dates, split = ML.load_monthly(); inp = json.load(open(MON / "data/inputs.json"))
