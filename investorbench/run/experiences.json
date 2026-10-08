@@ -1,0 +1,506 @@
+[
+ {
+  "id": "E000",
+  "date": "2020-07-02",
+  "lesson": "In a mixed market with strong MSFT momentum and positive JNJ news, overweighting MSFT and JNJ while maintaining modest exposure to HON and UVV outperformed an equal-weight approach. Future allocations should emphasize stocks with positive catalysts and momentum, balancing risk with cash to capture upside while managing volatility.",
+  "port": 1.5887309127980487,
+  "ew": 1.3085989706871004,
+  "text": "(2020-07-02) In a mixed market with strong MSFT momentum and positive JNJ news, overweighting MSFT and JNJ while maintaining modest exposure to HON and UVV outperformed an equal-weight approach. Future allocations should emphasize stocks with positive catalysts and momentum, balancing risk with cash to capture upside while managing volatility."
+ },
+ {
+  "id": "E001",
+  "date": "2020-07-06",
+  "lesson": "In a mixed market with moderate volatility and both positive and negative news, overweighting high-volatility stocks (MSFT) increased risk and led to underperformance. Next time, balance growth potential with risk by reducing exposure to volatile stocks and increasing allocation to stable performers and cash to better manage downside in uncertain conditions.",
+  "port": -0.9047011754077677,
+  "ew": -0.5278642112493803,
+  "text": "(2020-07-06) In a mixed market with moderate volatility and both positive and negative news, overweighting high-volatility stocks (MSFT) increased risk and led to underperformance. Next time, balance growth potential with risk by reducing exposure to volatile stocks and increasing allocation to stable performers and cash to better manage downside in uncertain conditions."
+ },
+ {
+  "id": "E002",
+  "date": "2020-07-07",
+  "lesson": "In a mixed market with recent volatility and sector-specific news, overweighting stocks with strong growth signals and positive industry trends (JNJ, MSFT) improved returns versus equal weighting. In similar conditions, emphasize fundamentals and market catalysts while maintaining diversification to balance risk and opportunity, adjusting cash to manage portfolio volatility.",
+  "port": 0.8584204362974435,
+  "ew": 0.42744769542746086,
+  "text": "(2020-07-07) In a mixed market with recent volatility and sector-specific news, overweighting stocks with strong growth signals and positive industry trends (JNJ, MSFT) improved returns versus equal weighting. In similar conditions, emphasize fundamentals and market catalysts while maintaining diversification to balance risk and opportunity, adjusting cash to manage portfolio volatility."
+ },
+ {
+  "id": "E003",
+  "date": "2020-07-08",
+  "lesson": "In a mixed market with strong MSFT gains and weak UVV, HON, and JNJ, overweighting MSFT and JNJ while maintaining some cash reduced losses versus equal weights. Future lesson: emphasize higher conviction stocks with positive momentum and favorable news, keep modest cash to manage downside, and underweight weaker performers despite sector or headline noise.",
+  "port": -0.45838305985412,
+  "ew": -0.8836522585662765,
+  "text": "(2020-07-08) In a mixed market with strong MSFT gains and weak UVV, HON, and JNJ, overweighting MSFT and JNJ while maintaining some cash reduced losses versus equal weights. Future lesson: emphasize higher conviction stocks with positive momentum and favorable news, keep modest cash to manage downside, and underweight weaker performers despite sector or headline noise."
+ },
+ {
+  "id": "E004",
+  "date": "2020-07-09",
+  "lesson": "In a mixed market with negative news on HON and positive innovation updates for MSFT and JNJ, I overweighted MSFT and JNJ but underperformed an equal-weight portfolio due to UVV\u2019s strong rebound. Future lesson: balance conviction with diversification to capture unexpected rallies, especially in volatile or uncertain markets.",
+  "port": 0.07963499330609136,
+  "ew": 0.5218143251623863,
+  "text": "(2020-07-09) In a mixed market with negative news on HON and positive innovation updates for MSFT and JNJ, I overweighted MSFT and JNJ but underperformed an equal-weight portfolio due to UVV\u2019s strong rebound. Future lesson: balance conviction with diversification to capture unexpected rallies, especially in volatile or uncertain markets."
+ },
+ {
+  "id": "E005",
+  "date": "2020-07-10",
+  "lesson": "In a mixed market with positive news for MSFT but short-term volatility, overweighting MSFT led to underperformance due to its negative next-day return. Balancing enthusiasm for strong fundamentals with recent return trends and volatility can improve outcomes. In similar cases, moderate allocations to high-volatility stocks and diversify more evenly to reduce downside risk.",
+  "port": -0.5287336107148143,
+  "ew": -0.11161023936984815,
+  "text": "(2020-07-10) In a mixed market with positive news for MSFT but short-term volatility, overweighting MSFT led to underperformance due to its negative next-day return. Balancing enthusiasm for strong fundamentals with recent return trends and volatility can improve outcomes. In similar cases, moderate allocations to high-volatility stocks and diversify more evenly to reduce downside risk."
+ },
+ {
+  "id": "E006",
+  "date": "2020-07-13",
+  "lesson": "In a mixed market with volatile tech (MSFT) and steady healthcare (JNJ), I overweighted stable and growth stocks based on recent news and volatility. This led to outperforming an equal-weight portfolio. Future allocations should balance innovation-driven stocks with consistent performers, considering both recent trends and volatility to optimize returns while managing risk.",
+  "port": 1.5103090220437954,
+  "ew": 1.1248416252268467,
+  "text": "(2020-07-13) In a mixed market with volatile tech (MSFT) and steady healthcare (JNJ), I overweighted stable and growth stocks based on recent news and volatility. This led to outperforming an equal-weight portfolio. Future allocations should balance innovation-driven stocks with consistent performers, considering both recent trends and volatility to optimize returns while managing risk."
+ },
+ {
+  "id": "E007",
+  "date": "2020-07-14",
+  "lesson": "In a moderately positive market with mixed news, I overweighted HON, JNJ, and MSFT due to growth prospects and approvals, underweighting UVV and holding some cash. The portfolio outperformed the equal-weight benchmark. In similar cases, emphasize stocks with strong fundamentals and positive catalysts while maintaining modest diversification to manage risk and capture upside.",
+  "port": 0.7855466234497721,
+  "ew": 0.4750351962149857,
+  "text": "(2020-07-14) In a moderately positive market with mixed news, I overweighted HON, JNJ, and MSFT due to growth prospects and approvals, underweighting UVV and holding some cash. The portfolio outperformed the equal-weight benchmark. In similar cases, emphasize stocks with strong fundamentals and positive catalysts while maintaining modest diversification to manage risk and capture upside."
+ },
+ {
+  "id": "E008",
+  "date": "2020-07-15",
+  "lesson": "In a mixed market with positive news for MSFT but recent negative returns, I overweighted MSFT expecting a rebound. However, MSFT declined, dragging portfolio returns below equal weight. Lesson: balance optimism from news with recent price trends and volatility; avoid overweighting stocks showing short-term weakness despite positive developments. Maintain diversification to reduce downside risk.",
+  "port": -0.49820944891831476,
+  "ew": -0.3600384489618791,
+  "text": "(2020-07-15) In a mixed market with positive news for MSFT but recent negative returns, I overweighted MSFT expecting a rebound. However, MSFT declined, dragging portfolio returns below equal weight. Lesson: balance optimism from news with recent price trends and volatility; avoid overweighting stocks showing short-term weakness despite positive developments. Maintain diversification to reduce downside risk."
+ },
+ {
+  "id": "E009",
+  "date": "2020-07-16",
+  "lesson": "In a mixed market with strong recent gains in HON and JNJ but weakness in MSFT and UVV, overweighting HON and JNJ while underweighting MSFT and UVV led to outperformance. For similar conditions, favor stocks with positive momentum and stable news, maintain some cash for flexibility, and cautiously reduce exposure to recent laggards to improve returns.",
+  "port": 0.3076090971106704,
+  "ew": 0.20178317262454115,
+  "text": "(2020-07-16) In a mixed market with strong recent gains in HON and JNJ but weakness in MSFT and UVV, overweighting HON and JNJ while underweighting MSFT and UVV led to outperformance. For similar conditions, favor stocks with positive momentum and stable news, maintain some cash for flexibility, and cautiously reduce exposure to recent laggards to improve returns."
+ },
+ {
+  "id": "E010",
+  "date": "2020-07-17",
+  "lesson": "In a mixed market with strong news for JNJ and MSFT but recent declines in MSFT and UVV, I overweighted HON and JNJ for stability and growth potential. Despite a dip in HON, MSFT\u2019s rebound boosted returns. In similar cases, balance stable leaders with growth stocks showing recovery signs, maintaining some cash to manage volatility.",
+  "port": 0.4387555405397553,
+  "ew": 0.22173629890993807,
+  "text": "(2020-07-17) In a mixed market with strong news for JNJ and MSFT but recent declines in MSFT and UVV, I overweighted HON and JNJ for stability and growth potential. Despite a dip in HON, MSFT\u2019s rebound boosted returns. In similar cases, balance stable leaders with growth stocks showing recovery signs, maintaining some cash to manage volatility."
+ },
+ {
+  "id": "E011",
+  "date": "2020-07-20",
+  "lesson": "In a mixed market with strong recent gains in HON and MSFT but weakness in UVV, I overweighted MSFT and HON. Despite positive news, MSFT declined sharply, while UVV rebounded strongly. Lesson: balance momentum and recovery potential by avoiding overconcentration in recently strong but volatile stocks; include modest positions in beaten-down stocks showing signs of reversal.",
+  "port": 0.08374754530909695,
+  "ew": 0.9832570263062145,
+  "text": "(2020-07-20) In a mixed market with strong recent gains in HON and MSFT but weakness in UVV, I overweighted MSFT and HON. Despite positive news, MSFT declined sharply, while UVV rebounded strongly. Lesson: balance momentum and recovery potential by avoiding overconcentration in recently strong but volatile stocks; include modest positions in beaten-down stocks showing signs of reversal."
+ },
+ {
+  "id": "E012",
+  "date": "2020-07-21",
+  "lesson": "In a moderately positive market with mixed news, I overweighted HON for growth potential despite a lawsuit risk, and MSFT for strong partnerships, resulting in a slight outperformance. Future allocations should balance growth prospects with risk signals, maintaining diversification and some cash to manage volatility and unexpected negative events.",
+  "port": 0.24582814530036134,
+  "ew": 0.19858331943784835,
+  "text": "(2020-07-21) In a moderately positive market with mixed news, I overweighted HON for growth potential despite a lawsuit risk, and MSFT for strong partnerships, resulting in a slight outperformance. Future allocations should balance growth prospects with risk signals, maintaining diversification and some cash to manage volatility and unexpected negative events."
+ },
+ {
+  "id": "E013",
+  "date": "2020-07-22",
+  "lesson": "In a volatile market with mixed short-term signals, overweighting higher-volatility stocks like MSFT increased risk and led to underperformance. Despite positive news, immediate returns were negative. In similar situations, balance growth potential with volatility by moderating positions in high-volatility stocks and maintaining diversification to protect against sudden downturns.",
+  "port": -1.4282818966813826,
+  "ew": -0.8393703933894738,
+  "text": "(2020-07-22) In a volatile market with mixed short-term signals, overweighting higher-volatility stocks like MSFT increased risk and led to underperformance. Despite positive news, immediate returns were negative. In similar situations, balance growth potential with volatility by moderating positions in high-volatility stocks and maintaining diversification to protect against sudden downturns."
+ },
+ {
+  "id": "E014",
+  "date": "2020-07-23",
+  "lesson": "In a volatile market with mixed news, overweighting JNJ and HON based on positive fundamentals led to underperformance versus equal weights. Next time, balance allocations more evenly to mitigate risk from sudden downturns, especially when recent returns and volatility signals caution despite strong news. Maintain some cash to reduce drawdowns.",
+  "port": -1.1110402234876275,
+  "ew": -0.8428564796005379,
+  "text": "(2020-07-23) In a volatile market with mixed news, overweighting JNJ and HON based on positive fundamentals led to underperformance versus equal weights. Next time, balance allocations more evenly to mitigate risk from sudden downturns, especially when recent returns and volatility signals caution despite strong news. Maintain some cash to reduce drawdowns."
+ },
+ {
+  "id": "E015",
+  "date": "2020-07-24",
+  "lesson": "In a mixed market with uneven short-term returns, I overweighted MSFT and JNJ based on growth prospects and news, underweighting HON and UVV. This led to slightly better portfolio returns than equal weights. In similar conditions, emphasize stocks with strong growth catalysts and stable volatility, while maintaining some cash for flexibility and risk control.",
+  "port": 0.5189228824329728,
+  "ew": 0.44263243342252734,
+  "text": "(2020-07-24) In a mixed market with uneven short-term returns, I overweighted MSFT and JNJ based on growth prospects and news, underweighting HON and UVV. This led to slightly better portfolio returns than equal weights. In similar conditions, emphasize stocks with strong growth catalysts and stable volatility, while maintaining some cash for flexibility and risk control."
+ },
+ {
+  "id": "E016",
+  "date": "2020-07-27",
+  "lesson": "In a mixed market with modest gains and losses across stocks, I overweighted HON due to strong growth projections and recent positive news. This led to a slight portfolio outperformance. In similar scenarios, emphasize stocks with solid fundamentals and growth potential, while maintaining diversification and cash buffer to mitigate volatility and downside risks.",
+  "port": 0.050042620754835454,
+  "ew": -0.03287185402200965,
+  "text": "(2020-07-27) In a mixed market with modest gains and losses across stocks, I overweighted HON due to strong growth projections and recent positive news. This led to a slight portfolio outperformance. In similar scenarios, emphasize stocks with solid fundamentals and growth potential, while maintaining diversification and cash buffer to mitigate volatility and downside risks."
+ },
+ {
+  "id": "E017",
+  "date": "2020-07-28",
+  "lesson": "In a mixed market with varied sector news, I overweighted HON and JNJ due to positive industry growth and innovation updates, underweighting more volatile MSFT and UVV. This led to outperformance versus equal weights. In similar conditions, prioritize stocks with strong fundamental catalysts and moderate volatility to balance growth and risk for better returns.",
+  "port": 0.6984494037385525,
+  "ew": 0.47695658363573035,
+  "text": "(2020-07-28) In a mixed market with varied sector news, I overweighted HON and JNJ due to positive industry growth and innovation updates, underweighting more volatile MSFT and UVV. This led to outperformance versus equal weights. In similar conditions, prioritize stocks with strong fundamental catalysts and moderate volatility to balance growth and risk for better returns."
+ },
+ {
+  "id": "E018",
+  "date": "2020-07-29",
+  "lesson": "In a mixed market with positive news but recent short-term volatility, I overweighted HON and MSFT expecting momentum; however, HON declined sharply next day, hurting returns. Lesson: balance enthusiasm for innovation with recent price weakness and volatility by diversifying more evenly or increasing cash to mitigate downside risk in uncertain markets.",
+  "port": -1.043919775907216,
+  "ew": -0.6949205078103837,
+  "text": "(2020-07-29) In a mixed market with positive news but recent short-term volatility, I overweighted HON and MSFT expecting momentum; however, HON declined sharply next day, hurting returns. Lesson: balance enthusiasm for innovation with recent price weakness and volatility by diversifying more evenly or increasing cash to mitigate downside risk in uncertain markets."
+ },
+ {
+  "id": "E019",
+  "date": "2020-07-30",
+  "lesson": "In a mixed-news environment with moderate volatility, I overweighted JNJ and MSFT due to positive developments, but returns were uneven. My portfolio slightly underperformed an equal-weight benchmark. In similar cases, balance optimism on news with volatility and short-term trends by diversifying more evenly to reduce risk and avoid overexposure to any single stock\u2019s uncertainty.",
+  "port": -0.06234402999228117,
+  "ew": -0.04321525629105594,
+  "text": "(2020-07-30) In a mixed-news environment with moderate volatility, I overweighted JNJ and MSFT due to positive developments, but returns were uneven. My portfolio slightly underperformed an equal-weight benchmark. In similar cases, balance optimism on news with volatility and short-term trends by diversifying more evenly to reduce risk and avoid overexposure to any single stock\u2019s uncertainty."
+ },
+ {
+  "id": "E020",
+  "date": "2020-07-31",
+  "lesson": "In a mixed market with strong tech growth and steady industrials, I overweighted MSFT and HON based on positive news and dividend stability. MSFT\u2019s strong return validated this. For similar conditions, prioritize tech stocks showing innovation and growth potential, balanced with reliable dividend payers, while keeping some cash for flexibility and risk control.",
+  "port": 2.823579857735643,
+  "ew": 1.51514407206236,
+  "text": "(2020-07-31) In a mixed market with strong tech growth and steady industrials, I overweighted MSFT and HON based on positive news and dividend stability. MSFT\u2019s strong return validated this. For similar conditions, prioritize tech stocks showing innovation and growth potential, balanced with reliable dividend payers, while keeping some cash for flexibility and risk control."
+ },
+ {
+  "id": "E021",
+  "date": "2020-08-03",
+  "lesson": "In a mixed market with strong recent gains in MSFT and UVV but overall volatility, overweighting MSFT and JNJ led to underperformance versus equal weights. Despite positive news, short-term returns were negative. In similar cases, avoid heavy concentration in high-volatility winners; maintain balanced exposure to mitigate downside risk.",
+  "port": -0.7396063839490102,
+  "ew": -0.5682694409513012,
+  "text": "(2020-08-03) In a mixed market with strong recent gains in MSFT and UVV but overall volatility, overweighting MSFT and JNJ led to underperformance versus equal weights. Despite positive news, short-term returns were negative. In similar cases, avoid heavy concentration in high-volatility winners; maintain balanced exposure to mitigate downside risk."
+ },
+ {
+  "id": "E022",
+  "date": "2020-08-04",
+  "lesson": "In a mixed market with strong recent gains in MSFT and moderate moves in others, I overweighted MSFT and JNJ but underweighted UVV. Despite positive returns, my portfolio underperformed an equal-weight allocation. Lesson: avoid heavy concentration in recent winners; diversify more evenly to capture broader gains and reduce risk.",
+  "port": 0.7343174161953725,
+  "ew": 0.9442134502978817,
+  "text": "(2020-08-04) In a mixed market with strong recent gains in MSFT and moderate moves in others, I overweighted MSFT and JNJ but underweighted UVV. Despite positive returns, my portfolio underperformed an equal-weight allocation. Lesson: avoid heavy concentration in recent winners; diversify more evenly to capture broader gains and reduce risk."
+ },
+ {
+  "id": "E023",
+  "date": "2020-08-05",
+  "lesson": "In a mixed market with strong vaccine news boosting JNJ but legal risks present, I overweighted JNJ and MSFT for growth and innovation, but JNJ declined while MSFT and HON rose. Next time, balance optimism on positive news with caution on litigation risks by reducing JNJ weight and increasing more stable or steadily growing stocks to improve risk-adjusted returns.",
+  "port": 0.43380798808525634,
+  "ew": 0.5176332693905517,
+  "text": "(2020-08-05) In a mixed market with strong vaccine news boosting JNJ but legal risks present, I overweighted JNJ and MSFT for growth and innovation, but JNJ declined while MSFT and HON rose. Next time, balance optimism on positive news with caution on litigation risks by reducing JNJ weight and increasing more stable or steadily growing stocks to improve risk-adjusted returns."
+ },
+ {
+  "id": "E024",
+  "date": "2020-08-06",
+  "lesson": "In a mixed market with strong gains in HON, UVV, and modest in JNJ, I overweighted MSFT, which then declined, hurting returns. Next time, avoid heavy allocation to recent high-volatility winners without clear catalysts; balance weights more evenly to reduce risk from sudden reversals despite positive news.",
+  "port": 0.2989460489622858,
+  "ew": 0.6545092361079496,
+  "text": "(2020-08-06) In a mixed market with strong gains in HON, UVV, and modest in JNJ, I overweighted MSFT, which then declined, hurting returns. Next time, avoid heavy allocation to recent high-volatility winners without clear catalysts; balance weights more evenly to reduce risk from sudden reversals despite positive news."
+ },
+ {
+  "id": "E025",
+  "date": "2020-08-07",
+  "lesson": "In a mixed-return environment with positive news for MSFT and UVV, I overweighted HON and MSFT but MSFT declined sharply. Despite strong fundamentals, short-term volatility can prevail. In similar cases, maintain diversification and limit concentration in volatile stocks, balancing momentum with risk controls to protect returns amid uncertain market reactions.",
+  "port": 0.3497496164183034,
+  "ew": 0.3330384073676984,
+  "text": "(2020-08-07) In a mixed-return environment with positive news for MSFT and UVV, I overweighted HON and MSFT but MSFT declined sharply. Despite strong fundamentals, short-term volatility can prevail. In similar cases, maintain diversification and limit concentration in volatile stocks, balancing momentum with risk controls to protect returns amid uncertain market reactions."
+ },
+ {
+  "id": "E026",
+  "date": "2020-08-10",
+  "lesson": "In a mixed market with strong sector-specific growth (HON, UVV) and weaker tech performance (MSFT), I overweighted industrial and consumer stocks, reducing tech exposure. This decision limited losses versus an equal-weight portfolio. In similar situations, prioritize stocks with clear growth drivers and moderate volatility, while maintaining some cash to manage downside risk.",
+  "port": -0.13871260257777518,
+  "ew": -0.39807750789530694,
+  "text": "(2020-08-10) In a mixed market with strong sector-specific growth (HON, UVV) and weaker tech performance (MSFT), I overweighted industrial and consumer stocks, reducing tech exposure. This decision limited losses versus an equal-weight portfolio. In similar situations, prioritize stocks with clear growth drivers and moderate volatility, while maintaining some cash to manage downside risk."
+ },
+ {
+  "id": "E027",
+  "date": "2020-08-11",
+  "lesson": "In a mixed market with strong recent gains for HON and UVV but weak MSFT performance offset by positive news, I overweighted HON and UVV, underweighted JNJ, and held some cash. The portfolio slightly underperformed an equal-weight benchmark due to MSFT\u2019s rebound. In similar cases, balance momentum with diversification and consider recent volatility to avoid missing rebounds.",
+  "port": 0.950368712956085,
+  "ew": 0.9904142010308249,
+  "text": "(2020-08-11) In a mixed market with strong recent gains for HON and UVV but weak MSFT performance offset by positive news, I overweighted HON and UVV, underweighted JNJ, and held some cash. The portfolio slightly underperformed an equal-weight benchmark due to MSFT\u2019s rebound. In similar cases, balance momentum with diversification and consider recent volatility to avoid missing rebounds."
+ },
+ {
+  "id": "E028",
+  "date": "2020-08-12",
+  "lesson": "In a mixed market with modest gains and varied news, I overweighted HON and JNJ but UVV and MSFT underperformed. Despite positive momentum and news, short-term volatility impacted returns. In similar cases, balance momentum signals with volatility risk, maintaining diversification and a modest cash buffer to mitigate sudden downturns.",
+  "port": -0.8625343886476089,
+  "ew": -0.8011062981475913,
+  "text": "(2020-08-12) In a mixed market with modest gains and varied news, I overweighted HON and JNJ but UVV and MSFT underperformed. Despite positive momentum and news, short-term volatility impacted returns. In similar cases, balance momentum signals with volatility risk, maintaining diversification and a modest cash buffer to mitigate sudden downturns."
+ },
+ {
+  "id": "E029",
+  "date": "2020-08-13",
+  "lesson": "In a mixed market with moderate volatility and positive sector news, I overweighted HON and MSFT based on growth prospects but missed UVV\u2019s strong short-term rebound. Future allocations should balance fundamental optimism with recent momentum signals to capture unexpected rallies, ensuring diversification benefits and improved returns versus equal-weight benchmarks.",
+  "port": 0.6162307899496455,
+  "ew": 0.7594571897190949,
+  "text": "(2020-08-13) In a mixed market with moderate volatility and positive sector news, I overweighted HON and MSFT based on growth prospects but missed UVV\u2019s strong short-term rebound. Future allocations should balance fundamental optimism with recent momentum signals to capture unexpected rallies, ensuring diversification benefits and improved returns versus equal-weight benchmarks."
+ },
+ {
+  "id": "E030",
+  "date": "2020-08-14",
+  "lesson": "In a mixed market with varied stock performances and positive sector news, I overweighted strong growth and innovation-driven stocks but held cash for safety. Despite this, the portfolio slightly underperformed. In similar situations, balance enthusiasm for growth with risk management by maintaining diversification and cash reserves to mitigate unexpected downturns.",
+  "port": -0.34003006940241165,
+  "ew": -0.3855173638680509,
+  "text": "(2020-08-14) In a mixed market with varied stock performances and positive sector news, I overweighted strong growth and innovation-driven stocks but held cash for safety. Despite this, the portfolio slightly underperformed. In similar situations, balance enthusiasm for growth with risk management by maintaining diversification and cash reserves to mitigate unexpected downturns."
+ },
+ {
+  "id": "E031",
+  "date": "2020-08-17",
+  "lesson": "In a mixed market with modest gains and volatility, I overweighted MSFT and maintained exposure to steady JNJ and HON, underweighting volatile UVV and holding cash. This outperformed an equal-weight portfolio. In similar conditions, favor stable, growth-supported stocks with strong fundamentals, limit exposure to high-volatility names, and keep some cash to manage risk.",
+  "port": 0.16273563476390196,
+  "ew": -0.049849547862628185,
+  "text": "(2020-08-17) In a mixed market with modest gains and volatility, I overweighted MSFT and maintained exposure to steady JNJ and HON, underweighting volatile UVV and holding cash. This outperformed an equal-weight portfolio. In similar conditions, favor stable, growth-supported stocks with strong fundamentals, limit exposure to high-volatility names, and keep some cash to manage risk."
+ },
+ {
+  "id": "E032",
+  "date": "2020-08-18",
+  "lesson": "In a mixed market with modest gains and losses, overweighting MSFT and JNJ aligned with positive trends but UVV\u2019s rebound was underestimated. Diversifying more evenly and maintaining a slightly higher cash position could reduce downside risk. In similar conditions, balance growth potential with volatility by avoiding concentration in fewer stocks despite recent strong performance.",
+  "port": -0.21512932589191625,
+  "ew": -0.009002346408484296,
+  "text": "(2020-08-18) In a mixed market with modest gains and losses, overweighting MSFT and JNJ aligned with positive trends but UVV\u2019s rebound was underestimated. Diversifying more evenly and maintaining a slightly higher cash position could reduce downside risk. In similar conditions, balance growth potential with volatility by avoiding concentration in fewer stocks despite recent strong performance."
+ },
+ {
+  "id": "E033",
+  "date": "2020-08-19",
+  "lesson": "In a mixed market with moderate volatility, I overweighted stable stocks (HON, JNJ) and growth (MSFT) while keeping some cash. This led to outperformance versus equal-weight. In similar conditions, balancing steady performers with growth and maintaining some cash can enhance returns and manage risk effectively.",
+  "port": 0.6347844328151131,
+  "ew": 0.47092259606264175,
+  "text": "(2020-08-19) In a mixed market with moderate volatility, I overweighted stable stocks (HON, JNJ) and growth (MSFT) while keeping some cash. This led to outperformance versus equal-weight. In similar conditions, balancing steady performers with growth and maintaining some cash can enhance returns and manage risk effectively."
+ },
+ {
+  "id": "E034",
+  "date": "2020-08-20",
+  "lesson": "In a mixed market with strong short-term gains in JNJ and HON but weakness in MSFT, overweighting MSFT limited returns. Despite positive news for all, the higher MSFT weight underperformed. In similar cases, balance allocations more evenly among strong performers and reduce exposure to recent underperformers to better capture short-term momentum.",
+  "port": 0.23129332257845692,
+  "ew": 0.30508855949055613,
+  "text": "(2020-08-20) In a mixed market with strong short-term gains in JNJ and HON but weakness in MSFT, overweighting MSFT limited returns. Despite positive news for all, the higher MSFT weight underperformed. In similar cases, balance allocations more evenly among strong performers and reduce exposure to recent underperformers to better capture short-term momentum."
+ },
+ {
+  "id": "E035",
+  "date": "2020-08-21",
+  "lesson": "In a mixed market with moderate gains and sector-specific growth news, I overweighted MSFT for its tech potential and HON for industrial prospects, keeping some cash. The portfolio slightly underperformed an equal-weight benchmark due to UVV\u2019s stronger return. In similar cases, balance conviction with diversification to capture unexpected sector moves and reduce tracking error.",
+  "port": 0.6156000898761682,
+  "ew": 0.6386739881755643,
+  "text": "(2020-08-21) In a mixed market with moderate gains and sector-specific growth news, I overweighted MSFT for its tech potential and HON for industrial prospects, keeping some cash. The portfolio slightly underperformed an equal-weight benchmark due to UVV\u2019s stronger return. In similar cases, balance conviction with diversification to capture unexpected sector moves and reduce tracking error."
+ },
+ {
+  "id": "E036",
+  "date": "2020-08-24",
+  "lesson": "In a mixed market with strong sector growth reports, overweighting stocks with robust fundamentals and positive catalysts (HON, MSFT) outperformed an equal-weight portfolio. Prioritize allocations toward leaders with clear growth drivers while maintaining diversification. In similar conditions, emphasize conviction in well-supported stocks but keep some cash for flexibility amid uncertainty.",
+  "port": 1.2223857411587753,
+  "ew": 0.816719456394852,
+  "text": "(2020-08-24) In a mixed market with strong sector growth reports, overweighting stocks with robust fundamentals and positive catalysts (HON, MSFT) outperformed an equal-weight portfolio. Prioritize allocations toward leaders with clear growth drivers while maintaining diversification. In similar conditions, emphasize conviction in well-supported stocks but keep some cash for flexibility amid uncertainty."
+ },
+ {
+  "id": "E037",
+  "date": "2020-08-25",
+  "lesson": "In a moderately bullish market with strong recent gains and positive growth outlooks, overweighting high-volatility, high-return stocks like MSFT and HON enhanced returns, while underweighting defensive or slower-growing stocks limited gains. In similar situations, emphasize stocks with robust growth prospects and momentum, but maintain some cash for risk control and potential market shifts.",
+  "port": 0.9682499637453301,
+  "ew": 0.2142513868032081,
+  "text": "(2020-08-25) In a moderately bullish market with strong recent gains and positive growth outlooks, overweighting high-volatility, high-return stocks like MSFT and HON enhanced returns, while underweighting defensive or slower-growing stocks limited gains. In similar situations, emphasize stocks with robust growth prospects and momentum, but maintain some cash for risk control and potential market shifts."
+ },
+ {
+  "id": "E038",
+  "date": "2020-08-26",
+  "lesson": "In a rising market with strong sector-specific growth projections, overweighting leaders with robust innovation and growth potential (MSFT) and stable performers (HON, JNJ) yielded above-average returns. Including a smaller position in riskier stocks (UVV) and holding minimal cash provided balance. In similar conditions, maintain higher weights in growth and stability while keeping some diversification and liquidity.",
+  "port": 1.0805764009080432,
+  "ew": 0.6761187718252515,
+  "text": "(2020-08-26) In a rising market with strong sector-specific growth projections, overweighting leaders with robust innovation and growth potential (MSFT) and stable performers (HON, JNJ) yielded above-average returns. Including a smaller position in riskier stocks (UVV) and holding minimal cash provided balance. In similar conditions, maintain higher weights in growth and stability while keeping some diversification and liquidity."
+ },
+ {
+  "id": "E039",
+  "date": "2020-08-27",
+  "lesson": "In a market with strong sector growth and positive news for HON and MSFT, overweighting these stocks led to outperforming the equal-weight benchmark. For similar environments, allocate more to stocks with robust growth outlooks and recent strong momentum, while maintaining some cash for flexibility. Balance risk by keeping moderate positions in stable names like JNJ and selective smaller weights in higher volatility stocks like UVV.",
+  "port": 0.8316486257420219,
+  "ew": 0.4272182014126402,
+  "text": "(2020-08-27) In a market with strong sector growth and positive news for HON and MSFT, overweighting these stocks led to outperforming the equal-weight benchmark. For similar environments, allocate more to stocks with robust growth outlooks and recent strong momentum, while maintaining some cash for flexibility. Balance risk by keeping moderate positions in stable names like JNJ and selective smaller weights in higher volatility stocks like UVV."
+ },
+ {
+  "id": "E040",
+  "date": "2020-08-28",
+  "lesson": "In a rising market with strong recent gains and positive news for MSFT, I overweighted it heavily. However, all stocks declined the next day, causing a larger loss than equal weight. Lesson: avoid concentrated bets after strong rallies; diversify more evenly to reduce risk from short-term reversals despite positive trends and news.",
+  "port": -1.1953462286055512,
+  "ew": -1.0144133831820912,
+  "text": "(2020-08-28) In a rising market with strong recent gains and positive news for MSFT, I overweighted it heavily. However, all stocks declined the next day, causing a larger loss than equal weight. Lesson: avoid concentrated bets after strong rallies; diversify more evenly to reduce risk from short-term reversals despite positive trends and news."
+ },
+ {
+  "id": "E041",
+  "date": "2020-08-31",
+  "lesson": "In a mixed-return market with strong sector growth signals for HON and moderate news for JNJ and MSFT, overweighting HON and MSFT while maintaining exposure to stable JNJ and minimal UVV exposure led to outperformance. In similar cases, prioritize stocks with robust growth potential and positive news, reduce weights in weaker performers, and keep some cash for flexibility.",
+  "port": 0.2600046945614237,
+  "ew": -0.5000460524240924,
+  "text": "(2020-08-31) In a mixed-return market with strong sector growth signals for HON and moderate news for JNJ and MSFT, overweighting HON and MSFT while maintaining exposure to stable JNJ and minimal UVV exposure led to outperformance. In similar cases, prioritize stocks with robust growth potential and positive news, reduce weights in weaker performers, and keep some cash for flexibility."
+ },
+ {
+  "id": "E042",
+  "date": "2020-09-01",
+  "lesson": "In a mixed market with strong growth prospects for HON and MSFT, I overweighted these stocks and held moderate positions in JNJ and UVV. This outperformed an equal-weight portfolio. Lesson: emphasize stocks with robust growth and positive news while maintaining diversification to capture upside and manage risk.",
+  "port": 1.9873666528328737,
+  "ew": 1.426691610044859,
+  "text": "(2020-09-01) In a mixed market with strong growth prospects for HON and MSFT, I overweighted these stocks and held moderate positions in JNJ and UVV. This outperformed an equal-weight portfolio. Lesson: emphasize stocks with robust growth and positive news while maintaining diversification to capture upside and manage risk."
+ },
+ {
+  "id": "E043",
+  "date": "2020-09-02",
+  "lesson": "In a volatile market with mixed recent returns, I overweighted higher momentum stocks like MSFT and HON but suffered larger losses than the equal-weight benchmark. Lesson: avoid concentrating on recent winners amid uncertainty; diversify more evenly to reduce downside risk when momentum reverses unexpectedly.",
+  "port": -3.8979521169749867,
+  "ew": -2.3548950678805647,
+  "text": "(2020-09-02) In a volatile market with mixed recent returns, I overweighted higher momentum stocks like MSFT and HON but suffered larger losses than the equal-weight benchmark. Lesson: avoid concentrating on recent winners amid uncertainty; diversify more evenly to reduce downside risk when momentum reverses unexpectedly."
+ },
+ {
+  "id": "E044",
+  "date": "2020-09-03",
+  "lesson": "In a volatile market with mixed news, overweighting HON despite recent losses led to slightly worse returns than equal weighting. Diversifying more evenly among stocks and holding moderate cash could better balance risk and reward. In similar conditions, avoid heavy concentration in recently underperforming stocks even if fundamentals appear strong.",
+  "port": -0.3835562360420386,
+  "ew": -0.1792666142441801,
+  "text": "(2020-09-03) In a volatile market with mixed news, overweighting HON despite recent losses led to slightly worse returns than equal weighting. Diversifying more evenly among stocks and holding moderate cash could better balance risk and reward. In similar conditions, avoid heavy concentration in recently underperforming stocks even if fundamentals appear strong."
+ },
+ {
+  "id": "E045",
+  "date": "2020-09-04",
+  "lesson": "In a mixed market with varied sector growth reports, I overweighted HON and MSFT expecting strong trends, but MSFT\u2019s sharp drop hurt returns. Next time, balance enthusiasm for growth with volatility risk\u2014limit exposure to highly volatile stocks during uncertain times to reduce downside, and maintain diversification to protect portfolio stability.",
+  "port": -2.301318968386939,
+  "ew": -1.3374868876658552,
+  "text": "(2020-09-04) In a mixed market with varied sector growth reports, I overweighted HON and MSFT expecting strong trends, but MSFT\u2019s sharp drop hurt returns. Next time, balance enthusiasm for growth with volatility risk\u2014limit exposure to highly volatile stocks during uncertain times to reduce downside, and maintain diversification to protect portfolio stability."
+ },
+ {
+  "id": "E046",
+  "date": "2020-09-08",
+  "lesson": "In a mixed market with recent declines but positive growth prospects, I allocated more to stable leaders (HON, JNJ) and moderate positions in volatile stocks (MSFT, UVV), keeping some cash for flexibility. The portfolio matched the market return. In similar situations, balancing quality and growth with cash reserves helps capture rebounds while managing risk.",
+  "port": 1.5199426242152891,
+  "ew": 1.5150109745586393,
+  "text": "(2020-09-08) In a mixed market with recent declines but positive growth prospects, I allocated more to stable leaders (HON, JNJ) and moderate positions in volatile stocks (MSFT, UVV), keeping some cash for flexibility. The portfolio matched the market return. In similar situations, balancing quality and growth with cash reserves helps capture rebounds while managing risk."
+ },
+ {
+  "id": "E047",
+  "date": "2020-09-09",
+  "lesson": "In a mixed market with recent gains and declines, I overweighted MSFT and HON based on growth prospects and news. However, all stocks fell next day, leading to underperformance versus equal weights. In similar volatile conditions, maintain balanced weights to reduce risk and avoid overexposure to recent outperformers that may face short-term pullbacks.",
+  "port": -1.6966754518349885,
+  "ew": -1.4585652359855406,
+  "text": "(2020-09-09) In a mixed market with recent gains and declines, I overweighted MSFT and HON based on growth prospects and news. However, all stocks fell next day, leading to underperformance versus equal weights. In similar volatile conditions, maintain balanced weights to reduce risk and avoid overexposure to recent outperformers that may face short-term pullbacks."
+ },
+ {
+  "id": "E048",
+  "date": "2020-09-10",
+  "lesson": "In a mixed market with recent declines but positive sector growth reports, overweighting stocks with strong growth prospects (HON, JNJ) and moderate positions in others outperformed an equal-weight portfolio. In similar conditions, emphasize companies with robust market opportunities and stable fundamentals while maintaining some cash for flexibility and risk management.",
+  "port": 0.4639281335078765,
+  "ew": 0.19298369332568788,
+  "text": "(2020-09-10) In a mixed market with recent declines but positive sector growth reports, overweighting stocks with strong growth prospects (HON, JNJ) and moderate positions in others outperformed an equal-weight portfolio. In similar conditions, emphasize companies with robust market opportunities and stable fundamentals while maintaining some cash for flexibility and risk management."
+ },
+ {
+  "id": "E049",
+  "date": "2020-09-11",
+  "lesson": "In a mixed market with varied short-term returns and promising growth reports for HON and JNJ, I overweighted HON and JNJ, underweighted MSFT, and held cash. This outperformed equal weighting. In similar conditions, emphasize stocks with strong growth outlooks and stable recent performance, while keeping some cash for flexibility and risk management.",
+  "port": 0.8451557539328081,
+  "ew": 0.7160120216921406,
+  "text": "(2020-09-11) In a mixed market with varied short-term returns and promising growth reports for HON and JNJ, I overweighted HON and JNJ, underweighted MSFT, and held cash. This outperformed equal weighting. In similar conditions, emphasize stocks with strong growth outlooks and stable recent performance, while keeping some cash for flexibility and risk management."
+ },
+ {
+  "id": "E050",
+  "date": "2020-09-14",
+  "lesson": "In a mixed market with positive news for JNJ and MSFT but recent negative 5-day returns for MSFT, I overweighted JNJ and MSFT, underweighted UVV and HON, and held some cash. The portfolio outperformed slightly. In similar cases, balance recent momentum with positive news, maintain diversification, and keep modest cash to manage uncertainty.",
+  "port": 0.3976694145654225,
+  "ew": 0.32556717477035146,
+  "text": "(2020-09-14) In a mixed market with positive news for JNJ and MSFT but recent negative 5-day returns for MSFT, I overweighted JNJ and MSFT, underweighted UVV and HON, and held some cash. The portfolio outperformed slightly. In similar cases, balance recent momentum with positive news, maintain diversification, and keep modest cash to manage uncertainty."
+ },
+ {
+  "id": "E051",
+  "date": "2020-09-15",
+  "lesson": "In a mixed market with modest gains for some stocks and losses for others, I overweighted stocks with recent positive momentum and growth prospects. However, the portfolio underperformed an equal-weight approach due to MSFT and UVV declines. In similar situations, balance momentum with diversification to mitigate downside risk and consider trimming higher-volatility stocks when uncertainty rises.",
+  "port": -0.43323426196814674,
+  "ew": -0.35947297141559975,
+  "text": "(2020-09-15) In a mixed market with modest gains for some stocks and losses for others, I overweighted stocks with recent positive momentum and growth prospects. However, the portfolio underperformed an equal-weight approach due to MSFT and UVV declines. In similar situations, balance momentum with diversification to mitigate downside risk and consider trimming higher-volatility stocks when uncertainty rises."
+ },
+ {
+  "id": "E052",
+  "date": "2020-09-16",
+  "lesson": "The market showed mixed short-term returns despite positive sector growth news. I overweighted HON and JNJ based on strong market potential and moderate volatility, underweighting MSFT and UVV. Although the portfolio slightly outperformed equal weights, it still declined. In similar cases, prioritize stocks with stable or improving trends and lower volatility to better withstand short-term downturns.",
+  "port": -0.2776656696185087,
+  "ew": -0.343784132848135,
+  "text": "(2020-09-16) The market showed mixed short-term returns despite positive sector growth news. I overweighted HON and JNJ based on strong market potential and moderate volatility, underweighting MSFT and UVV. Although the portfolio slightly outperformed equal weights, it still declined. In similar cases, prioritize stocks with stable or improving trends and lower volatility to better withstand short-term downturns."
+ },
+ {
+  "id": "E053",
+  "date": "2020-09-17",
+  "lesson": "In a mixed market with moderate volatility and sector-specific growth, overweighting stocks with recent positive momentum and strong growth prospects (HON, MSFT) led to underperformance due to unexpected short-term reversals. For similar conditions, balance momentum signals with risk controls and diversify weights more evenly to reduce vulnerability to sudden negative moves in leading stocks.",
+  "port": -0.3301854532763149,
+  "ew": -0.05164031094407662,
+  "text": "(2020-09-17) In a mixed market with moderate volatility and sector-specific growth, overweighting stocks with recent positive momentum and strong growth prospects (HON, MSFT) led to underperformance due to unexpected short-term reversals. For similar conditions, balance momentum signals with risk controls and diversify weights more evenly to reduce vulnerability to sudden negative moves in leading stocks."
+ },
+ {
+  "id": "E054",
+  "date": "2020-09-18",
+  "lesson": "In a mixed market with recent gains in HON and JNJ but declines in MSFT and UVV, overweighting HON and JNJ led to larger losses due to sudden HON drop. Diversifying more evenly or increasing cash can reduce downside risk. In similar volatile conditions, balance allocations to manage risk rather than overweight recent winners.",
+  "port": -2.633626601814644,
+  "ew": -1.566289430195138,
+  "text": "(2020-09-18) In a mixed market with recent gains in HON and JNJ but declines in MSFT and UVV, overweighting HON and JNJ led to larger losses due to sudden HON drop. Diversifying more evenly or increasing cash can reduce downside risk. In similar volatile conditions, balance allocations to manage risk rather than overweight recent winners."
+ },
+ {
+  "id": "E055",
+  "date": "2020-09-21",
+  "lesson": "In a mixed market with recent declines and volatility, I overweighted HON and MSFT, which outperformed, while underweighting weaker stocks. This led to better returns than equal weighting. In similar conditions, emphasize stocks showing short-term resilience despite recent drops, balancing volatility and momentum to enhance returns while maintaining diversification.",
+  "port": 0.48326125990615254,
+  "ew": 0.2016319987446491,
+  "text": "(2020-09-21) In a mixed market with recent declines and volatility, I overweighted HON and MSFT, which outperformed, while underweighting weaker stocks. This led to better returns than equal weighting. In similar conditions, emphasize stocks showing short-term resilience despite recent drops, balancing volatility and momentum to enhance returns while maintaining diversification."
+ },
+ {
+  "id": "E056",
+  "date": "2020-09-22",
+  "lesson": "In a broadly declining market with mixed short-term signals, overweighting higher-volatility stocks like MSFT and HON led to underperformance versus equal-weight. In similar conditions, avoid concentration in volatile names; diversify more evenly and maintain cautious cash levels to mitigate downside risk while preserving upside potential.",
+  "port": -1.7541279587548042,
+  "ew": -1.6404078385492404,
+  "text": "(2020-09-22) In a broadly declining market with mixed short-term signals, overweighting higher-volatility stocks like MSFT and HON led to underperformance versus equal-weight. In similar conditions, avoid concentration in volatile names; diversify more evenly and maintain cautious cash levels to mitigate downside risk while preserving upside potential."
+ },
+ {
+  "id": "E057",
+  "date": "2020-09-23",
+  "lesson": "In a declining market with no new information, I overweighted stable stocks (HON, JNJ) and underweighted higher volatility MSFT and UVV, aiming for safety. The portfolio underperformed an equal-weight benchmark as higher volatility stocks rebounded. In similar cases, consider balancing stability with some exposure to more volatile rebound candidates to capture upside during recoveries.",
+  "port": 0.3663713729288276,
+  "ew": 0.7785787717414427,
+  "text": "(2020-09-23) In a declining market with no new information, I overweighted stable stocks (HON, JNJ) and underweighted higher volatility MSFT and UVV, aiming for safety. The portfolio underperformed an equal-weight benchmark as higher volatility stocks rebounded. In similar cases, consider balancing stability with some exposure to more volatile rebound candidates to capture upside during recoveries."
+ },
+ {
+  "id": "E058",
+  "date": "2020-09-24",
+  "lesson": "In a mixed market with recent declines but positive news for MSFT, I overweighted MSFT and allocated moderate weights to HON and JNJ, reducing UVV and holding cash. The portfolio outperformed due to MSFT\u2019s strong rebound. In similar situations, prioritize stocks with strong positive catalysts and momentum, maintain diversification, and keep some cash for flexibility.",
+  "port": 1.2507832252249784,
+  "ew": 0.6535994893624419,
+  "text": "(2020-09-24) In a mixed market with recent declines but positive news for MSFT, I overweighted MSFT and allocated moderate weights to HON and JNJ, reducing UVV and holding cash. The portfolio outperformed due to MSFT\u2019s strong rebound. In similar situations, prioritize stocks with strong positive catalysts and momentum, maintain diversification, and keep some cash for flexibility."
+ },
+ {
+  "id": "E059",
+  "date": "2020-09-25",
+  "lesson": "In a mixed market with varied short-term returns and positive sector news, I overweighted HON and MSFT due to strong growth prospects, maintaining exposure to JNJ and UVV for diversification. This outperformed an equal-weight portfolio. In similar cases, prioritize stocks with robust growth signals and favorable news while keeping some cash for flexibility and risk management.",
+  "port": 1.2138252324753218,
+  "ew": 1.0369540270751099,
+  "text": "(2020-09-25) In a mixed market with varied short-term returns and positive sector news, I overweighted HON and MSFT due to strong growth prospects, maintaining exposure to JNJ and UVV for diversification. This outperformed an equal-weight portfolio. In similar cases, prioritize stocks with robust growth signals and favorable news while keeping some cash for flexibility and risk management."
+ },
+ {
+  "id": "E060",
+  "date": "2020-09-28",
+  "lesson": "In a mixed market with modest gains and sector growth news, I overweighted HON and JNJ based on positive industry outlooks, but all stocks declined next day. Lesson: positive fundamentals may not immediately translate to returns; maintain diversification and include cash to manage short-term volatility while holding conviction in growth sectors.",
+  "port": -0.34190442313137726,
+  "ew": -0.3218587886570301,
+  "text": "(2020-09-28) In a mixed market with modest gains and sector growth news, I overweighted HON and JNJ based on positive industry outlooks, but all stocks declined next day. Lesson: positive fundamentals may not immediately translate to returns; maintain diversification and include cash to manage short-term volatility while holding conviction in growth sectors."
+ },
+ {
+  "id": "E061",
+  "date": "2020-09-29",
+  "lesson": "In a mixed market with modest declines and positive news for all stocks, I overweighted HON and JNJ based on growth potential and vaccine progress, underweighting MSFT and UVV. The portfolio outperformed the equal-weight benchmark slightly. In similar conditions, emphasize fundamentals and growth catalysts but maintain diversification to balance volatility and capture broad gains.",
+  "port": 0.77005899403777,
+  "ew": 0.7244931978006353,
+  "text": "(2020-09-29) In a mixed market with modest declines and positive news for all stocks, I overweighted HON and JNJ based on growth potential and vaccine progress, underweighting MSFT and UVV. The portfolio outperformed the equal-weight benchmark slightly. In similar conditions, emphasize fundamentals and growth catalysts but maintain diversification to balance volatility and capture broad gains."
+ },
+ {
+  "id": "E062",
+  "date": "2020-09-30",
+  "lesson": "In a mixed market with varying short-term returns and moderate volatility, I overweighted MSFT and JNJ based on positive news and growth potential. Despite this, the portfolio slightly underperformed an equal-weight benchmark. In similar situations, balance conviction with diversification to mitigate downside risk, avoiding overexposure to any single stock despite favorable outlooks.",
+  "port": -0.1708918682855709,
+  "ew": -0.15822964345438617,
+  "text": "(2020-09-30) In a mixed market with varying short-term returns and moderate volatility, I overweighted MSFT and JNJ based on positive news and growth potential. Despite this, the portfolio slightly underperformed an equal-weight benchmark. In similar situations, balance conviction with diversification to mitigate downside risk, avoiding overexposure to any single stock despite favorable outlooks."
+ }
+]

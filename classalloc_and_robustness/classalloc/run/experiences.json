@@ -1,0 +1,466 @@
+[
+ {
+  "id": "E000",
+  "date": "2015-07-06",
+  "lesson": "In a market with recent mixed returns and rising volatility, avoiding commodities proved wise as they dropped sharply. Overweighting equities and bonds with moderate cash exposure limited losses and captured gains. Future allocations should emphasize assets showing relative strength and stability, reducing exposure to weak, volatile sectors to protect portfolio performance.",
+  "port": 0.8231504055062344,
+  "ew": -1.080183243409516,
+  "text": "(2015-07-06) In a market with recent mixed returns and rising volatility, avoiding commodities proved wise as they dropped sharply. Overweighting equities and bonds with moderate cash exposure limited losses and captured gains. Future allocations should emphasize assets showing relative strength and stability, reducing exposure to weak, volatile sectors to protect portfolio performance."
+ },
+ {
+  "id": "E001",
+  "date": "2015-08-03",
+  "lesson": "In August 2015, despite strong recent equity gains, I overweighted equities and underweighted commodities amid sharp recent commodity declines. The portfolio underperformed as equities dropped and commodities rebounded. In similar volatile conditions, avoid dismissing recovering assets; maintain diversification to protect against sudden reversals and reduce concentration risk.",
+  "port": -2.272424212697043,
+  "ew": -1.4934871722968168,
+  "text": "(2015-08-03) In August 2015, despite strong recent equity gains, I overweighted equities and underweighted commodities amid sharp recent commodity declines. The portfolio underperformed as equities dropped and commodities rebounded. In similar volatile conditions, avoid dismissing recovering assets; maintain diversification to protect against sudden reversals and reduce concentration risk."
+ },
+ {
+  "id": "E002",
+  "date": "2015-09-01",
+  "lesson": "In a broadly declining market with elevated volatility, I overweighted bonds and cash for stability, underweighting equities and real estate heavily down recently. Despite this, the portfolio underperformed the equal-weight benchmark as real estate and equities rebounded slightly. In similar conditions, consider modest exposure to beaten-down asset classes showing early recovery signs to capture rebounds while managing risk.",
+  "port": 0.1379206695626256,
+  "ew": 0.4891629616210724,
+  "text": "(2015-09-01) In a broadly declining market with elevated volatility, I overweighted bonds and cash for stability, underweighting equities and real estate heavily down recently. Despite this, the portfolio underperformed the equal-weight benchmark as real estate and equities rebounded slightly. In similar conditions, consider modest exposure to beaten-down asset classes showing early recovery signs to capture rebounds while managing risk."
+ },
+ {
+  "id": "E003",
+  "date": "2015-10-01",
+  "lesson": "In a volatile market with mixed short-term returns, I overweighted equities and bonds, underweighting commodities and cash. This led to outperformance versus equal weights, driven by strong equity and real estate gains. In similar conditions, I will continue favoring equities and real estate when momentum and volatility indicate recovery, while limiting exposure to weak, high-volatility assets like commodities.",
+  "port": 3.562094973689228,
+  "ew": 2.6094784585092645,
+  "text": "(2015-10-01) In a volatile market with mixed short-term returns, I overweighted equities and bonds, underweighting commodities and cash. This led to outperformance versus equal weights, driven by strong equity and real estate gains. In similar conditions, I will continue favoring equities and real estate when momentum and volatility indicate recovery, while limiting exposure to weak, high-volatility assets like commodities."
+ },
+ {
+  "id": "E004",
+  "date": "2015-11-02",
+  "lesson": "In a mixed market with strong equities and real estate gains but weak commodities and bonds, overweighting equities and real estate while avoiding commodities added value. Prioritize assets with recent positive momentum and lower volatility, reducing exposure to persistently weak or highly volatile classes. Continue dynamic weighting favoring stable winners to enhance returns over equal-weighted portfolios.",
+  "port": 0.9437358921898387,
+  "ew": -1.0594247057604367,
+  "text": "(2015-11-02) In a mixed market with strong equities and real estate gains but weak commodities and bonds, overweighting equities and real estate while avoiding commodities added value. Prioritize assets with recent positive momentum and lower volatility, reducing exposure to persistently weak or highly volatile classes. Continue dynamic weighting favoring stable winners to enhance returns over equal-weighted portfolios."
+ },
+ {
+  "id": "E005",
+  "date": "2015-12-01",
+  "lesson": "In December 2015, equities and real estate showed strong recent gains with moderate volatility, while commodities declined sharply. I overweighted equities and real estate, avoided commodities, and held cash. Despite this, bonds and real estate declined significantly, hurting returns. In similar scenarios, diversify more cautiously, temper bond exposure during rising volatility, and avoid complacency from recent positive trends.",
+  "port": -0.6125727054557029,
+  "ew": -1.185032648890767,
+  "text": "(2015-12-01) In December 2015, equities and real estate showed strong recent gains with moderate volatility, while commodities declined sharply. I overweighted equities and real estate, avoided commodities, and held cash. Despite this, bonds and real estate declined significantly, hurting returns. In similar scenarios, diversify more cautiously, temper bond exposure during rising volatility, and avoid complacency from recent positive trends."
+ },
+ {
+  "id": "E006",
+  "date": "2016-01-04",
+  "lesson": "In a declining market with volatile equities and commodities, I overweighted equities and bonds but still faced losses driven by equities and real estate drops. Equal weighting performed slightly better. In similar downturns, I would reduce exposure to high-volatility, negatively trending assets and increase cash or bonds to cushion losses.",
+  "port": -3.196227860585269,
+  "ew": -3.0127439537434064,
+  "text": "(2016-01-04) In a declining market with volatile equities and commodities, I overweighted equities and bonds but still faced losses driven by equities and real estate drops. Equal weighting performed slightly better. In similar downturns, I would reduce exposure to high-volatility, negatively trending assets and increase cash or bonds to cushion losses."
+ },
+ {
+  "id": "E007",
+  "date": "2016-02-01",
+  "lesson": "In a declining market with high volatility in equities and real estate, I favored bonds and cash for stability, resulting in slightly underperforming an equal-weighted portfolio. Next time, I would maintain some exposure to recovering assets like real estate and equities to capture rebounds, balancing risk and return more dynamically rather than heavily overweighting bonds and cash.",
+  "port": 1.3439288242109315,
+  "ew": 1.4111159241728588,
+  "text": "(2016-02-01) In a declining market with high volatility in equities and real estate, I favored bonds and cash for stability, resulting in slightly underperforming an equal-weighted portfolio. Next time, I would maintain some exposure to recovering assets like real estate and equities to capture rebounds, balancing risk and return more dynamically rather than heavily overweighting bonds and cash."
+ },
+ {
+  "id": "E008",
+  "date": "2016-03-01",
+  "lesson": "In a volatile market with mixed short-term signals, I overweighted higher-volatility, recovering assets like equities and real estate, underweighting commodities despite recent weakness. This led to outperforming the equal-weighted benchmark. In similar conditions, favor assets showing rebound potential and moderate volatility while maintaining diversification to capture upside and manage risk.",
+  "port": 4.202288978183546,
+  "ew": 3.500624860331212,
+  "text": "(2016-03-01) In a volatile market with mixed short-term signals, I overweighted higher-volatility, recovering assets like equities and real estate, underweighting commodities despite recent weakness. This led to outperforming the equal-weighted benchmark. In similar conditions, favor assets showing rebound potential and moderate volatility while maintaining diversification to capture upside and manage risk."
+ },
+ {
+  "id": "E009",
+  "date": "2016-04-01",
+  "lesson": "In April 2016, I overweighted equities and real estate despite their modest recent gains and higher volatility, underweighting commodities after a negative 6-month trend. Commodities surged unexpectedly, while real estate declined, causing underperformance. In similar cases, balance recent returns with volatility and consider momentum shifts in assets showing recovery signs to avoid missing strong rebounds.",
+  "port": 0.9699579483301547,
+  "ew": 1.9297460247815579,
+  "text": "(2016-04-01) In April 2016, I overweighted equities and real estate despite their modest recent gains and higher volatility, underweighting commodities after a negative 6-month trend. Commodities surged unexpectedly, while real estate declined, causing underperformance. In similar cases, balance recent returns with volatility and consider momentum shifts in assets showing recovery signs to avoid missing strong rebounds."
+ },
+ {
+  "id": "E010",
+  "date": "2016-05-02",
+  "lesson": "In a rising equities and commodities market with moderate volatility, overweighting equities (30%) and commodities (15%) added value despite commodity losses. Bonds and real estate underperformed. Going forward, balance growth assets with stable bonds to mitigate volatility, but maintain overweight in equities when momentum and recent returns are strong to capture upside while managing risk.",
+  "port": 0.8548141404699988,
+  "ew": 0.4203637807978411,
+  "text": "(2016-05-02) In a rising equities and commodities market with moderate volatility, overweighting equities (30%) and commodities (15%) added value despite commodity losses. Bonds and real estate underperformed. Going forward, balance growth assets with stable bonds to mitigate volatility, but maintain overweight in equities when momentum and recent returns are strong to capture upside while managing risk."
+ },
+ {
+  "id": "E011",
+  "date": "2016-06-01",
+  "lesson": "In June 2016, bonds and commodities showed strong short-term gains despite modest recent returns. I overweighted equities and bonds but underweighted commodities, leading to slightly underperforming the equal-weighted portfolio. In similar markets, consider increasing allocation to assets with rising momentum and lower recent volatility to better capture short-term rebounds and improve returns.",
+  "port": 1.6224383186028024,
+  "ew": 1.7059351510349472,
+  "text": "(2016-06-01) In June 2016, bonds and commodities showed strong short-term gains despite modest recent returns. I overweighted equities and bonds but underweighted commodities, leading to slightly underperforming the equal-weighted portfolio. In similar markets, consider increasing allocation to assets with rising momentum and lower recent volatility to better capture short-term rebounds and improve returns."
+ },
+ {
+  "id": "E012",
+  "date": "2016-07-01",
+  "lesson": "In a rising market with strong commodity gains but higher volatility, I overweighted commodities and underweighted bonds. Commodities then declined sharply, hurting returns. In similar mixed conditions, avoid heavy concentration in recent strong but volatile assets; instead, balance allocations to limit downside from sudden reversals while capturing broad market gains.",
+  "port": 0.821734912469702,
+  "ew": 1.160165803777169,
+  "text": "(2016-07-01) In a rising market with strong commodity gains but higher volatility, I overweighted commodities and underweighted bonds. Commodities then declined sharply, hurting returns. In similar mixed conditions, avoid heavy concentration in recent strong but volatile assets; instead, balance allocations to limit downside from sudden reversals while capturing broad market gains."
+ },
+ {
+  "id": "E013",
+  "date": "2016-08-01",
+  "lesson": "In August 2016, equities and bonds showed steady gains with low volatility, while commodities declined sharply and real estate dipped despite strong prior returns. I overweighted equities and real estate, underweighted commodities and cash. The portfolio outperformed due to equities and bonds. In similar conditions, maintain exposure to stable asset classes and reduce commodities when short-term momentum weakens.",
+  "port": 0.6706564759717154,
+  "ew": 0.39155884662955165,
+  "text": "(2016-08-01) In August 2016, equities and bonds showed steady gains with low volatility, while commodities declined sharply and real estate dipped despite strong prior returns. I overweighted equities and real estate, underweighted commodities and cash. The portfolio outperformed due to equities and bonds. In similar conditions, maintain exposure to stable asset classes and reduce commodities when short-term momentum weakens."
+ },
+ {
+  "id": "E014",
+  "date": "2016-09-01",
+  "lesson": "In a mixed market with strong equities and bonds but weak commodities and real estate, I favored equities and bonds, avoiding commodities. However, commodities unexpectedly outperformed while real estate declined. In similar situations, consider maintaining some exposure to undervalued or volatile assets like commodities to capture potential rebounds and improve diversification.",
+  "port": 0.4400474157607692,
+  "ew": 0.7455493589649387,
+  "text": "(2016-09-01) In a mixed market with strong equities and bonds but weak commodities and real estate, I favored equities and bonds, avoiding commodities. However, commodities unexpectedly outperformed while real estate declined. In similar situations, consider maintaining some exposure to undervalued or volatile assets like commodities to capture potential rebounds and improve diversification."
+ },
+ {
+  "id": "E015",
+  "date": "2016-10-03",
+  "lesson": "In a mixed market with modest equity gains but declines in bonds, commodities, and real estate, overweighting equities and commodities cushioned losses, outperforming equal weights. In similar uncertain conditions, favor assets with recent positive momentum and lower volatility, but maintain diversification to manage downside risks and avoid overexposure to weak sectors.",
+  "port": -1.025355789791872,
+  "ew": -1.2720295076613453,
+  "text": "(2016-10-03) In a mixed market with modest equity gains but declines in bonds, commodities, and real estate, overweighting equities and commodities cushioned losses, outperforming equal weights. In similar uncertain conditions, favor assets with recent positive momentum and lower volatility, but maintain diversification to manage downside risks and avoid overexposure to weak sectors."
+ },
+ {
+  "id": "E016",
+  "date": "2016-11-01",
+  "lesson": "In a volatile market with mixed short-term returns and rising equities, overweighting equities and bonds while underweighting weak real estate yielded above-average gains. Future allocations should favor assets showing strong momentum and moderate volatility, reducing exposure to persistently underperforming sectors to enhance risk-adjusted returns.",
+  "port": 0.6832068878280451,
+  "ew": 0.498197234579969,
+  "text": "(2016-11-01) In a volatile market with mixed short-term returns and rising equities, overweighting equities and bonds while underweighting weak real estate yielded above-average gains. Future allocations should favor assets showing strong momentum and moderate volatility, reducing exposure to persistently underperforming sectors to enhance risk-adjusted returns."
+ },
+ {
+  "id": "E017",
+  "date": "2016-12-01",
+  "lesson": "In a mixed market with strong recent equity and commodity gains but weak bonds and real estate, I overweighted equities and commodities while avoiding bonds. This led to outperforming the equal-weight portfolio despite commodity losses. In similar conditions, favoring assets with positive momentum and avoiding weak performers can enhance returns, but monitor volatility to manage risk.",
+  "port": 2.0692664010077655,
+  "ew": 1.6851579752767076,
+  "text": "(2016-12-01) In a mixed market with strong recent equity and commodity gains but weak bonds and real estate, I overweighted equities and commodities while avoiding bonds. This led to outperforming the equal-weight portfolio despite commodity losses. In similar conditions, favoring assets with positive momentum and avoiding weak performers can enhance returns, but monitor volatility to manage risk."
+ },
+ {
+  "id": "E018",
+  "date": "2017-01-03",
+  "lesson": "In a mixed market with strong short-term equity gains and weak bond and commodity performance, I overweighted equities and real estate, underweighting bonds and commodities. This led to outperforming the equal-weight portfolio. In similar conditions, favoring assets with recent positive momentum and acceptable volatility can enhance returns, but maintain diversification to manage risk.",
+  "port": 2.0646902768884234,
+  "ew": 1.7006915936121338,
+  "text": "(2017-01-03) In a mixed market with strong short-term equity gains and weak bond and commodity performance, I overweighted equities and real estate, underweighting bonds and commodities. This led to outperforming the equal-weight portfolio. In similar conditions, favoring assets with recent positive momentum and acceptable volatility can enhance returns, but maintain diversification to manage risk."
+ },
+ {
+  "id": "E019",
+  "date": "2017-02-01",
+  "lesson": "In a market with strong recent equity and commodity gains but rising commodity volatility, I overweighted equities and commodities, underweight bonds and real estate, and held some cash. Despite commodities' short-term decline, the portfolio outperformed equally weighted. In similar situations, balance momentum with volatility signals, maintaining diversification to protect against sudden reversals.",
+  "port": 1.6792134410236437,
+  "ew": 1.556566635337564,
+  "text": "(2017-02-01) In a market with strong recent equity and commodity gains but rising commodity volatility, I overweighted equities and commodities, underweight bonds and real estate, and held some cash. Despite commodities' short-term decline, the portfolio outperformed equally weighted. In similar situations, balance momentum with volatility signals, maintaining diversification to protect against sudden reversals."
+ },
+ {
+  "id": "E020",
+  "date": "2017-03-01",
+  "lesson": "In a rising equity and real estate market with moderate volatility, I overweighted these assets while underweighting bonds and cash. Despite overall positive trends, commodities declined sharply, dragging returns to flat. Next time, maintain diversification to mitigate sector-specific downturns, avoiding heavy exposure to volatile asset classes despite recent gains.",
+  "port": 0.002374811387593767,
+  "ew": -0.24096721643197094,
+  "text": "(2017-03-01) In a rising equity and real estate market with moderate volatility, I overweighted these assets while underweighting bonds and cash. Despite overall positive trends, commodities declined sharply, dragging returns to flat. Next time, maintain diversification to mitigate sector-specific downturns, avoiding heavy exposure to volatile asset classes despite recent gains."
+ },
+ {
+  "id": "E021",
+  "date": "2017-04-03",
+  "lesson": "In a rising market with strong equity gains and moderate bond returns, I overweighted equities and real estate, underweighting lower-performing commodities and cash. This led to outperformance versus equal weights. In similar conditions, maintaining higher equity exposure while cautiously limiting volatile or weak-performing assets can enhance returns without excessive risk.",
+  "port": 0.9500501842306208,
+  "ew": 0.3788299381665938,
+  "text": "(2017-04-03) In a rising market with strong equity gains and moderate bond returns, I overweighted equities and real estate, underweighting lower-performing commodities and cash. This led to outperformance versus equal weights. In similar conditions, maintaining higher equity exposure while cautiously limiting volatile or weak-performing assets can enhance returns without excessive risk."
+ },
+ {
+  "id": "E022",
+  "date": "2017-05-01",
+  "lesson": "In May 2017, equities and real estate showed strong recent gains and moderate volatility, while commodities lagged with negative returns and high volatility. I overweighted equities and real estate, underweighted commodities, and outperformed the equal-weight portfolio. In similar conditions, favor assets with positive momentum and manageable volatility, reducing exposure to weak, volatile sectors like commodities.",
+  "port": 1.454355734456263,
+  "ew": 0.7519199898201334,
+  "text": "(2017-05-01) In May 2017, equities and real estate showed strong recent gains and moderate volatility, while commodities lagged with negative returns and high volatility. I overweighted equities and real estate, underweighted commodities, and outperformed the equal-weight portfolio. In similar conditions, favor assets with positive momentum and manageable volatility, reducing exposure to weak, volatile sectors like commodities."
+ },
+ {
+  "id": "E023",
+  "date": "2017-06-01",
+  "lesson": "In a mixed market with strong recent equity gains but rising volatility, I overweighted equities and real estate, expecting continued momentum. The portfolio slightly underperformed as equities declined short-term while real estate gained. Future allocations should balance momentum with caution, reducing equity exposure when volatility rises despite strong returns to limit downside risk.",
+  "port": -0.03446890130351432,
+  "ew": -0.016181699041901698,
+  "text": "(2017-06-01) In a mixed market with strong recent equity gains but rising volatility, I overweighted equities and real estate, expecting continued momentum. The portfolio slightly underperformed as equities declined short-term while real estate gained. Future allocations should balance momentum with caution, reducing equity exposure when volatility rises despite strong returns to limit downside risk."
+ },
+ {
+  "id": "E024",
+  "date": "2017-07-03",
+  "lesson": "In July 2017, equities and real estate showed strong 3- and 6-month gains despite recent dips; bonds and commodities were weaker. Allocating overweight to equities (40%) and real estate (30%) captured higher returns, outperforming an equal-weight portfolio. In similar conditions, favor assets with strong medium-term momentum and manageable volatility to enhance returns while maintaining diversification.",
+  "port": 1.9231059935459038,
+  "ew": 1.3338432516194887,
+  "text": "(2017-07-03) In July 2017, equities and real estate showed strong 3- and 6-month gains despite recent dips; bonds and commodities were weaker. Allocating overweight to equities (40%) and real estate (30%) captured higher returns, outperforming an equal-weight portfolio. In similar conditions, favor assets with strong medium-term momentum and manageable volatility to enhance returns while maintaining diversification."
+ },
+ {
+  "id": "E025",
+  "date": "2017-08-01",
+  "lesson": "In a rising equity market with moderate bond and real estate gains, I overweighted equities and real estate. However, real estate declined unexpectedly, dampening returns. In similar situations, maintain equity exposure but reduce real estate allocation when volatility is high, favoring lower-volatility bonds and cash to balance risk and improve stability.",
+  "port": 0.11634787972767291,
+  "ew": 0.09578627074763757,
+  "text": "(2017-08-01) In a rising equity market with moderate bond and real estate gains, I overweighted equities and real estate. However, real estate declined unexpectedly, dampening returns. In similar situations, maintain equity exposure but reduce real estate allocation when volatility is high, favoring lower-volatility bonds and cash to balance risk and improve stability."
+ },
+ {
+  "id": "E026",
+  "date": "2017-09-01",
+  "lesson": "In a mixed environment with strong recent commodity gains but high volatility, I overweighted equities and commodities, expecting momentum to continue. However, commodities declined sharply, hurting returns. Next time, I will balance momentum signals with volatility risk, reducing exposure to highly volatile assets despite recent gains to protect portfolio stability.",
+  "port": 0.3679298489690547,
+  "ew": 0.1991160739796416,
+  "text": "(2017-09-01) In a mixed environment with strong recent commodity gains but high volatility, I overweighted equities and commodities, expecting momentum to continue. However, commodities declined sharply, hurting returns. Next time, I will balance momentum signals with volatility risk, reducing exposure to highly volatile assets despite recent gains to protect portfolio stability."
+ },
+ {
+  "id": "E027",
+  "date": "2017-10-02",
+  "lesson": "In a rising equity market with low bond returns and modest real estate gains, overweighting equities and real estate while underweighting bonds improved performance. Commodities rebounded unexpectedly, adding value. In similar conditions, maintain a growth-focused stance with equities and real estate, but include a modest commodity allocation to capture potential rebounds.",
+  "port": 1.9866875030965625,
+  "ew": 1.404053614084333,
+  "text": "(2017-10-02) In a rising equity market with low bond returns and modest real estate gains, overweighting equities and real estate while underweighting bonds improved performance. Commodities rebounded unexpectedly, adding value. In similar conditions, maintain a growth-focused stance with equities and real estate, but include a modest commodity allocation to capture potential rebounds."
+ },
+ {
+  "id": "E028",
+  "date": "2017-11-01",
+  "lesson": "In a rising market led by equities and real estate, I overweighted these assets and underweighted bonds and cash. This boosted portfolio returns above the equal-weight benchmark. In similar conditions, favor growth assets showing strong recent momentum while limiting low-return, low-volatility holdings to enhance overall performance without excessive risk.",
+  "port": 1.5564965757892568,
+  "ew": 1.1155363715580902,
+  "text": "(2017-11-01) In a rising market led by equities and real estate, I overweighted these assets and underweighted bonds and cash. This boosted portfolio returns above the equal-weight benchmark. In similar conditions, favor growth assets showing strong recent momentum while limiting low-return, low-volatility holdings to enhance overall performance without excessive risk."
+ },
+ {
+  "id": "E029",
+  "date": "2017-12-01",
+  "lesson": "In a rising market with equities and real estate showing strong recent gains and moderate volatility, overweighting these assets increased returns. Commodities also outperformed bonds and cash. For similar conditions, favor growth-oriented assets with reasonable volatility while maintaining some bond exposure for stability, balancing return potential and risk to outperform equal-weight benchmarks.",
+  "port": 1.3226891464084678,
+  "ew": 1.101297141773383,
+  "text": "(2017-12-01) In a rising market with equities and real estate showing strong recent gains and moderate volatility, overweighting these assets increased returns. Commodities also outperformed bonds and cash. For similar conditions, favor growth-oriented assets with reasonable volatility while maintaining some bond exposure for stability, balancing return potential and risk to outperform equal-weight benchmarks."
+ },
+ {
+  "id": "E030",
+  "date": "2018-01-02",
+  "lesson": "In a rising equities and commodities market with moderate volatility, overweighting these assets boosted returns despite weakness in bonds and real estate. Diversification helped limit losses. In similar conditions, maintain a bias toward stronger-performing, higher-volatility assets while holding modest cash for stability and flexibility.",
+  "port": 2.5504358479797355,
+  "ew": 1.3975796945003305,
+  "text": "(2018-01-02) In a rising equities and commodities market with moderate volatility, overweighting these assets boosted returns despite weakness in bonds and real estate. Diversification helped limit losses. In similar conditions, maintain a bias toward stronger-performing, higher-volatility assets while holding modest cash for stability and flexibility."
+ },
+ {
+  "id": "E031",
+  "date": "2018-02-01",
+  "lesson": "In a rising market, I overweighted equities and commodities, underweighting bonds and real estate. Despite strong past returns, all risk assets declined next month, highlighting momentum\u2019s limits. In similar situations, balance momentum with risk controls and diversification, avoiding overconcentration in recent winners to reduce vulnerability to sudden reversals.",
+  "port": -1.0171600693782552,
+  "ew": -1.7380881951584513,
+  "text": "(2018-02-01) In a rising market, I overweighted equities and commodities, underweighting bonds and real estate. Despite strong past returns, all risk assets declined next month, highlighting momentum\u2019s limits. In similar situations, balance momentum with risk controls and diversification, avoiding overconcentration in recent winners to reduce vulnerability to sudden reversals."
+ },
+ {
+  "id": "E032",
+  "date": "2018-03-01",
+  "lesson": "In a month of widespread short-term declines and rising volatility, I overweighted equities and commodities despite recent negative returns, resulting in underperformance versus an equal-weighted portfolio. In similar conditions, I would reduce exposure to assets with sharp recent drops and high volatility, favoring more stable or recovering sectors to improve risk-adjusted returns.",
+  "port": -0.3933667465959062,
+  "ew": 0.4006905911811631,
+  "text": "(2018-03-01) In a month of widespread short-term declines and rising volatility, I overweighted equities and commodities despite recent negative returns, resulting in underperformance versus an equal-weighted portfolio. In similar conditions, I would reduce exposure to assets with sharp recent drops and high volatility, favoring more stable or recovering sectors to improve risk-adjusted returns."
+ },
+ {
+  "id": "E033",
+  "date": "2018-04-02",
+  "lesson": "In April 2018, equities showed recent weakness but strong 6-month gains; bonds were stable with low volatility; commodities mildly positive; real estate mixed signals. I favored equities and bonds over cash, yielding a slightly better return than equal weights. In similar conditions, maintain diversified exposure but overweight assets with solid medium-term momentum and manageable volatility for balanced growth.",
+  "port": 1.2386456787094295,
+  "ew": 1.162783702241017,
+  "text": "(2018-04-02) In April 2018, equities showed recent weakness but strong 6-month gains; bonds were stable with low volatility; commodities mildly positive; real estate mixed signals. I favored equities and bonds over cash, yielding a slightly better return than equal weights. In similar conditions, maintain diversified exposure but overweight assets with solid medium-term momentum and manageable volatility for balanced growth."
+ },
+ {
+  "id": "E034",
+  "date": "2018-05-01",
+  "lesson": "In May 2018, equities showed strong recent gains but mixed medium-term trends; I overweighted equities and commodities, underweighting bonds and cash. This led to outperformance as equities rebounded sharply. In similar volatile markets with diverging trends, favor higher volatility, improving assets while maintaining some diversification to capture rebounds and manage risk.",
+  "port": 2.6881490671009955,
+  "ew": 1.7412966110482397,
+  "text": "(2018-05-01) In May 2018, equities showed strong recent gains but mixed medium-term trends; I overweighted equities and commodities, underweighting bonds and cash. This led to outperformance as equities rebounded sharply. In similar volatile markets with diverging trends, favor higher volatility, improving assets while maintaining some diversification to capture rebounds and manage risk."
+ },
+ {
+  "id": "E035",
+  "date": "2018-06-01",
+  "lesson": "In June 2018, equities showed strong recent gains but declined slightly, while commodities dropped notably despite positive momentum. I overweighted equities and commodities, resulting in underperformance versus equal weights. Lesson: Positive short-term returns don\u2019t guarantee near-term gains; in mixed signals, balance allocations to mitigate drawdowns, avoiding large bets on volatile assets despite recent strength.",
+  "port": -0.5999628174324984,
+  "ew": -0.304352599614921,
+  "text": "(2018-06-01) In June 2018, equities showed strong recent gains but declined slightly, while commodities dropped notably despite positive momentum. I overweighted equities and commodities, resulting in underperformance versus equal weights. Lesson: Positive short-term returns don\u2019t guarantee near-term gains; in mixed signals, balance allocations to mitigate drawdowns, avoiding large bets on volatile assets despite recent strength."
+ },
+ {
+  "id": "E036",
+  "date": "2018-07-02",
+  "lesson": "In a mixed market with strong equity gains and weak commodities, I overweighted equities and real estate, avoiding commodities. This led to outperformance versus equal weights. Lesson: favor assets with positive momentum and avoid weak, volatile sectors to enhance returns while managing risk in similar conditions.",
+  "port": 1.444799927732685,
+  "ew": 0.8187896102270864,
+  "text": "(2018-07-02) In a mixed market with strong equity gains and weak commodities, I overweighted equities and real estate, avoiding commodities. This led to outperformance versus equal weights. Lesson: favor assets with positive momentum and avoid weak, volatile sectors to enhance returns while managing risk in similar conditions."
+ },
+ {
+  "id": "E037",
+  "date": "2018-08-01",
+  "lesson": "In a mixed market with strong equity gains and weak commodities, overweighting equities and real estate while underweighting commodities and cash yielded above-average returns. Future allocations should emphasize assets with recent positive momentum and lower volatility, reducing exposure to persistently declining sectors like commodities to enhance portfolio performance.",
+  "port": 2.4656058970652026,
+  "ew": 1.2715583384944695,
+  "text": "(2018-08-01) In a mixed market with strong equity gains and weak commodities, overweighting equities and real estate while underweighting commodities and cash yielded above-average returns. Future allocations should emphasize assets with recent positive momentum and lower volatility, reducing exposure to persistently declining sectors like commodities to enhance portfolio performance."
+ },
+ {
+  "id": "E038",
+  "date": "2018-09-04",
+  "lesson": "In a mixed environment with rising equities and bonds but weak commodities and real estate, I avoided commodities, limiting losses but missing their rebound. My heavy equity and bond bias underperformed the balanced equal-weight portfolio. Next time, consider modest commodity exposure for diversification and potential rebound, balancing risks across asset classes to capture unexpected recoveries.",
+  "port": -0.305485469426528,
+  "ew": 0.4772017238955839,
+  "text": "(2018-09-04) In a mixed environment with rising equities and bonds but weak commodities and real estate, I avoided commodities, limiting losses but missing their rebound. My heavy equity and bond bias underperformed the balanced equal-weight portfolio. Next time, consider modest commodity exposure for diversification and potential rebound, balancing risks across asset classes to capture unexpected recoveries."
+ },
+ {
+  "id": "E039",
+  "date": "2018-10-01",
+  "lesson": "In October 2018, equities and commodities showed strong recent gains but also high volatility. I overweighted these, expecting momentum to continue. However, sharp declines led to underperformance versus equal weights. In similar volatile conditions, avoid heavy concentration in recent winners; diversify more evenly to reduce risk from sudden reversals.",
+  "port": -5.404960910418612,
+  "ew": -3.6013911813043586,
+  "text": "(2018-10-01) In October 2018, equities and commodities showed strong recent gains but also high volatility. I overweighted these, expecting momentum to continue. However, sharp declines led to underperformance versus equal weights. In similar volatile conditions, avoid heavy concentration in recent winners; diversify more evenly to reduce risk from sudden reversals."
+ },
+ {
+  "id": "E040",
+  "date": "2018-11-01",
+  "lesson": "In a declining market with mixed short-term returns and varying volatility, I overweighted bonds and cash for stability but underperformed the equal-weighted benchmark. Real estate\u2019s strong rebound was missed due to low allocation. In similar situations, consider maintaining some exposure to assets showing recent resilience to capture potential rebounds while balancing risk.",
+  "port": 0.17316931953350545,
+  "ew": 0.28157340943830045,
+  "text": "(2018-11-01) In a declining market with mixed short-term returns and varying volatility, I overweighted bonds and cash for stability but underperformed the equal-weighted benchmark. Real estate\u2019s strong rebound was missed due to low allocation. In similar situations, consider maintaining some exposure to assets showing recent resilience to capture potential rebounds while balancing risk."
+ },
+ {
+  "id": "E041",
+  "date": "2018-12-03",
+  "lesson": "In a volatile, mixed-return environment with rising equity and real estate volatility, I overweighted equities and real estate but suffered large losses. Bonds performed steadily, cushioning the portfolio. Next time, I would reduce exposure to high-volatility, recently weak assets and increase bonds and cash to mitigate downside risk in uncertain markets.",
+  "port": -5.34403671565883,
+  "ew": -4.141684467985181,
+  "text": "(2018-12-03) In a volatile, mixed-return environment with rising equity and real estate volatility, I overweighted equities and real estate but suffered large losses. Bonds performed steadily, cushioning the portfolio. Next time, I would reduce exposure to high-volatility, recently weak assets and increase bonds and cash to mitigate downside risk in uncertain markets."
+ },
+ {
+  "id": "E042",
+  "date": "2019-01-02",
+  "lesson": "In a declining market, I favored bonds and cash for stability, underweighting equities and real estate. However, a strong rebound in risk assets led to underperformance versus an equal-weighted portfolio. In similar scenarios, I would maintain more balanced exposure to capture upside potential while managing risk, avoiding excessive defensiveness that limits gains.",
+  "port": 3.542691622912393,
+  "ew": 5.560919773350199,
+  "text": "(2019-01-02) In a declining market, I favored bonds and cash for stability, underweighting equities and real estate. However, a strong rebound in risk assets led to underperformance versus an equal-weighted portfolio. In similar scenarios, I would maintain more balanced exposure to capture upside potential while managing risk, avoiding excessive defensiveness that limits gains."
+ },
+ {
+  "id": "E043",
+  "date": "2019-02-01",
+  "lesson": "In a market with strong recent gains and low volatility in real estate and equities, I overweighted these and commodities for higher return potential. The portfolio outperformed the equal-weight baseline. In similar conditions, favoring asset classes with strong momentum and moderate volatility can enhance returns, but maintain diversification to manage risk.",
+  "port": 1.3459936509052406,
+  "ew": 1.0506998901469577,
+  "text": "(2019-02-01) In a market with strong recent gains and low volatility in real estate and equities, I overweighted these and commodities for higher return potential. The portfolio outperformed the equal-weight baseline. In similar conditions, favoring asset classes with strong momentum and moderate volatility can enhance returns, but maintain diversification to manage risk."
+ },
+ {
+  "id": "E044",
+  "date": "2019-03-01",
+  "lesson": "In a mixed market with strong recent equity and real estate gains but rising volatility, overweighting equities and real estate boosted returns. Commodities underperformed despite stability, so cautious commodity exposure is prudent. In similar conditions, favor assets with momentum and manageable risk, reducing exposure to lagging or volatile sectors to enhance portfolio performance.",
+  "port": 2.052422799608366,
+  "ew": 1.5480708770566598,
+  "text": "(2019-03-01) In a mixed market with strong recent equity and real estate gains but rising volatility, overweighting equities and real estate boosted returns. Commodities underperformed despite stability, so cautious commodity exposure is prudent. In similar conditions, favor assets with momentum and manageable risk, reducing exposure to lagging or volatile sectors to enhance portfolio performance."
+ },
+ {
+  "id": "E045",
+  "date": "2019-04-01",
+  "lesson": "In a rising market with strong recent equity and real estate gains and low bond volatility, I overweighted equities and real estate, underweighting bonds and commodities. This led to outperformance despite commodity losses. In similar markets, favor growth assets with momentum and low volatility, but maintain some diversification to cushion against sector-specific downturns.",
+  "port": 1.465457566935201,
+  "ew": 0.7760999869542062,
+  "text": "(2019-04-01) In a rising market with strong recent equity and real estate gains and low bond volatility, I overweighted equities and real estate, underweighting bonds and commodities. This led to outperformance despite commodity losses. In similar markets, favor growth assets with momentum and low volatility, but maintain some diversification to cushion against sector-specific downturns."
+ },
+ {
+  "id": "E046",
+  "date": "2019-05-01",
+  "lesson": "In May 2019, strong recent equity gains led to overweighting equities and real estate, despite rising volatility. The market then reversed sharply, causing losses and underperformance versus equal weights. Lesson: avoid heavy concentration in recently strong but volatile assets; balance momentum signals with risk controls to reduce downside in reversal-prone environments.",
+  "port": -2.5064815707412773,
+  "ew": -1.258617998434661,
+  "text": "(2019-05-01) In May 2019, strong recent equity gains led to overweighting equities and real estate, despite rising volatility. The market then reversed sharply, causing losses and underperformance versus equal weights. Lesson: avoid heavy concentration in recently strong but volatile assets; balance momentum signals with risk controls to reduce downside in reversal-prone environments."
+ },
+ {
+  "id": "E047",
+  "date": "2019-06-03",
+  "lesson": "In June 2019, bonds and real estate showed steady gains with low volatility, while equities were recovering from recent losses. I overweighted bonds and equities, underweighting commodities and cash. The portfolio outperformed the equal-weighted benchmark due to equities\u2019 strong rebound. In similar conditions, favor a balanced approach with emphasis on recovering equities and stable bonds to capture upside while managing risk.",
+  "port": 3.776071901355099,
+  "ew": 3.4992953354718104,
+  "text": "(2019-06-03) In June 2019, bonds and real estate showed steady gains with low volatility, while equities were recovering from recent losses. I overweighted bonds and equities, underweighting commodities and cash. The portfolio outperformed the equal-weighted benchmark due to equities\u2019 strong rebound. In similar conditions, favor a balanced approach with emphasis on recovering equities and stable bonds to capture upside while managing risk."
+ },
+ {
+  "id": "E048",
+  "date": "2019-07-01",
+  "lesson": "In a strong equity market with high recent returns and moderate volatility, I overweighted equities and underweighted bonds and cash. This led to portfolio outperformance over equal weights. In similar conditions, favoring growth assets with strong momentum and manageable risk can enhance returns, while maintaining some diversification to limit downside.",
+  "port": 1.1530751984272725,
+  "ew": 0.863961753780651,
+  "text": "(2019-07-01) In a strong equity market with high recent returns and moderate volatility, I overweighted equities and underweighted bonds and cash. This led to portfolio outperformance over equal weights. In similar conditions, favoring growth assets with strong momentum and manageable risk can enhance returns, while maintaining some diversification to limit downside."
+ },
+ {
+  "id": "E049",
+  "date": "2019-08-01",
+  "lesson": "In a mixed market with bonds and real estate outperforming while commodities lagged, I overweighted equities and bonds, matching the equal-weight portfolio return. Future allocations should slightly reduce equities in favor of higher momentum bonds and real estate to enhance returns, while maintaining modest commodity exposure for diversification despite short-term weakness.",
+  "port": 1.182777295534061,
+  "ew": 1.1757587458390528,
+  "text": "(2019-08-01) In a mixed market with bonds and real estate outperforming while commodities lagged, I overweighted equities and bonds, matching the equal-weight portfolio return. Future allocations should slightly reduce equities in favor of higher momentum bonds and real estate to enhance returns, while maintaining modest commodity exposure for diversification despite short-term weakness."
+ },
+ {
+  "id": "E050",
+  "date": "2019-09-03",
+  "lesson": "In a moderate growth, low-volatility environment, I overweighted equities and bonds but underperformed a balanced equal-weight portfolio. Despite strong real estate gains, my lower allocation limited returns. Next time, diversify more evenly among growth assets to capture broader upside, balancing conviction with flexibility to adapt to varied sector performance.",
+  "port": 0.6731784240313188,
+  "ew": 0.6995329248990978,
+  "text": "(2019-09-03) In a moderate growth, low-volatility environment, I overweighted equities and bonds but underperformed a balanced equal-weight portfolio. Despite strong real estate gains, my lower allocation limited returns. Next time, diversify more evenly among growth assets to capture broader upside, balancing conviction with flexibility to adapt to varied sector performance."
+ },
+ {
+  "id": "E051",
+  "date": "2019-10-01",
+  "lesson": "In October 2019, real estate and equities showed strong recent returns with moderate volatility, while bonds declined. Allocating higher weights to real estate (35%) and equities (30%) capitalized on momentum, delivering a portfolio return above the equal-weight benchmark. In similar cases, emphasize assets with strong momentum and moderate risk, but maintain diversification to manage downside risks.",
+  "port": 2.5089039076302373,
+  "ew": 1.936572301798154,
+  "text": "(2019-10-01) In October 2019, real estate and equities showed strong recent returns with moderate volatility, while bonds declined. Allocating higher weights to real estate (35%) and equities (30%) capitalized on momentum, delivering a portfolio return above the equal-weight benchmark. In similar cases, emphasize assets with strong momentum and moderate risk, but maintain diversification to manage downside risks."
+ },
+ {
+  "id": "E052",
+  "date": "2019-11-01",
+  "lesson": "In November 2019, strong recent equity and real estate gains led to overweighting them, but short-term declines hurt returns. Despite bonds and cash underperforming, higher equity and commodity weights cushioned losses, beating equal-weight. Lesson: Balancing momentum with risk management is key; avoid overexposure to volatile assets after sharp gains to reduce drawdowns in volatile periods.",
+  "port": -0.29975758833982624,
+  "ew": -0.5771619809660877,
+  "text": "(2019-11-01) In November 2019, strong recent equity and real estate gains led to overweighting them, but short-term declines hurt returns. Despite bonds and cash underperforming, higher equity and commodity weights cushioned losses, beating equal-weight. Lesson: Balancing momentum with risk management is key; avoid overexposure to volatile assets after sharp gains to reduce drawdowns in volatile periods."
+ },
+ {
+  "id": "E053",
+  "date": "2019-12-02",
+  "lesson": "In a rising equity market with moderate bond and real estate weakness, overweighting equities (50%) and underweighting bonds (10%) captured growth and outperformed equal weights. Volatility was low to moderate. Lesson: In similar conditions, favor equities for momentum while keeping some real estate exposure for diversification; reduce bonds when yields and returns are weak.",
+  "port": 3.503797321125044,
+  "ew": 2.442373591135163,
+  "text": "(2019-12-02) In a rising equity market with moderate bond and real estate weakness, overweighting equities (50%) and underweighting bonds (10%) captured growth and outperformed equal weights. Volatility was low to moderate. Lesson: In similar conditions, favor equities for momentum while keeping some real estate exposure for diversification; reduce bonds when yields and returns are weak."
+ },
+ {
+  "id": "E054",
+  "date": "2020-01-02",
+  "lesson": "In a rising equity and commodity market with moderate volatility, overweighting equities and commodities seemed logical. However, commodities declined sharply while bonds and real estate outperformed. Future allocations should balance momentum with risk diversification, avoiding heavy commodity exposure when volatility is high and bonds show steady gains. Maintain flexibility to adjust weights as market trends shift.",
+  "port": -0.1999403058975351,
+  "ew": 0.12764347564210307,
+  "text": "(2020-01-02) In a rising equity and commodity market with moderate volatility, overweighting equities and commodities seemed logical. However, commodities declined sharply while bonds and real estate outperformed. Future allocations should balance momentum with risk diversification, avoiding heavy commodity exposure when volatility is high and bonds show steady gains. Maintain flexibility to adjust weights as market trends shift."
+ },
+ {
+  "id": "E055",
+  "date": "2020-02-03",
+  "lesson": "In a volatile market with recent strong equity and real estate gains but rising risks, I overweighted equities and real estate. However, these suffered notable losses, while bonds outperformed. In similar environments, I would reduce equity and real estate exposure, increase bonds for stability, and limit commodities due to high volatility and negative momentum.",
+  "port": -1.6335715898114915,
+  "ew": -1.305641992783686,
+  "text": "(2020-02-03) In a volatile market with recent strong equity and real estate gains but rising risks, I overweighted equities and real estate. However, these suffered notable losses, while bonds outperformed. In similar environments, I would reduce equity and real estate exposure, increase bonds for stability, and limit commodities due to high volatility and negative momentum."
+ },
+ {
+  "id": "E056",
+  "date": "2020-03-02",
+  "lesson": "In early March 2020, markets showed mixed short-term gains but rising volatility signaled risk. I overweighted equities and bonds, avoiding real estate, aiming for balance. The portfolio outperformed the equal-weighted benchmark despite losses. In similar turmoil, maintain diversification but reduce exposure to highly volatile or declining assets like commodities and real estate to limit downside risk.",
+  "port": -6.418072680638238,
+  "ew": -11.334794472766884,
+  "text": "(2020-03-02) In early March 2020, markets showed mixed short-term gains but rising volatility signaled risk. I overweighted equities and bonds, avoiding real estate, aiming for balance. The portfolio outperformed the equal-weighted benchmark despite losses. In similar turmoil, maintain diversification but reduce exposure to highly volatile or declining assets like commodities and real estate to limit downside risk."
+ },
+ {
+  "id": "E057",
+  "date": "2020-04-01",
+  "lesson": "During sharp market declines, I reduced equities and real estate exposure, favoring bonds and cash. However, a quick rebound led to underperformance versus equal weights. In similar rebounds, consider maintaining or cautiously increasing risk assets to capture recovery gains while managing volatility. Balancing downside protection with upside participation is key.",
+  "port": 6.507340852201078,
+  "ew": 7.8192651261058455,
+  "text": "(2020-04-01) During sharp market declines, I reduced equities and real estate exposure, favoring bonds and cash. However, a quick rebound led to underperformance versus equal weights. In similar rebounds, consider maintaining or cautiously increasing risk assets to capture recovery gains while managing volatility. Balancing downside protection with upside participation is key."
+ }
+]

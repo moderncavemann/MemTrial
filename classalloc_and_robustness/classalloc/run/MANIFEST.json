@@ -1,0 +1,33 @@
+{
+ "benchmark": "ClassAlloc",
+ "model": "gpt-4.1-mini-2025-04-14",
+ "temperature": 0.7,
+ "cap_usd": 6.0,
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "warmup": [
+  "2015-07-06",
+  "2020-04-01",
+  58
+ ],
+ "test": [
+  "2020-05-01",
+  "2026-03-02",
+  71
+ ],
+ "data_sha256": "7259d68c0115d97b3fbe3db310dfc5f004d11c02b41a18529d1f382e0ce7b144",
+ "run_cb_sha256": "e1746c20ed6f92ee5111509cf91d2060cc234f19ccb34a46d3cdbcc2b16b5bac",
+ "started_utc": "2026-10-04T19:45:17+00:00",
+ "feedback_timing": {
+  "protocol": "each outcome is released to the FinMem-style, MemRL-style and Reflexion agents only after its 20-session window",
+  "replay": "run_cb_delayfix.py replayed the FinMem-style, MemRL-style and Reflexion chains of the logged run under this protocol; a logged decision whose prompt is unchanged is kept, any other decision (and the Reflexion note written after it) is drawn anew",
+  "decisions_drawn_anew": 210,
+  "decisions_kept": 429,
+  "spent_usd_conservative": 0.123548,
+  "delayfix_sha256": "b925964194cab6437adb4f719fa74756c25a1d03df3ed5f6b997f2a9c20eda1e",
+  "replayed_utc": "2026-10-07T06:43:11+00:00"
+ }
+}

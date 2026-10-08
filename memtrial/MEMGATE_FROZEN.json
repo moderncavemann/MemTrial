@@ -1,0 +1,22 @@
+{
+ "name": "MemGate",
+ "learner": "auto (prequential choice between the per-experience and the content-based value model)",
+ "gate": "prequential forward-validation test, one-sided t-test of per-date Pearson r between predicted and realised contributions, alpha 0.05, at least 10 scored dates",
+ "open_action": "designed subset with the highest predicted value (ties -> fewer experiences); only if predicted gain > 0",
+ "closed_action": "KL-anchored FTRL between the safe reference and the average of the designed drafts; prior 0.9 on the reference, lambda0 4",
+ "content_features": "8-dim PCA of the retrieval embedding of each experience (standardised); identity model = Fay-Herriot without features",
+ "selection": {
+  "rule": "lowest mean regret over 3 investors x 7 regimes on controlled dev seeds 0-14 among alpha-0.05 variants",
+  "dev_mean_regret_pp": {
+   "MemGate | adaptive learner": 0.0352,
+   "MemGate (content learner)": 0.0417,
+   "MemGate | content learner, LR-tested": 0.0401,
+   "MemGate | identity learner": 0.0395,
+   "MemGate | F-test gate": 0.0532,
+   "previous version (F-test gate, ANOVA EB)": 0.0488
+  },
+  "note": "alpha kept at 0.05 as frozen before the monthly PortBench run; alpha 0.2 (0.0330) goes to the sensitivity analysis"
+ },
+ "code_sha256": "7d64c9da0e8d02c610e8f9879442fe59c5bf492790f5b16c013b968acfe909cd",
+ "frozen_at_utc": "2026-10-04T08:12:19Z"
+}

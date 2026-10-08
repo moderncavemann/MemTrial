@@ -1,0 +1,4 @@
+# offline evaluation (all results of the paper from the included LLM outputs)
+numpy>=1.23
+pandas>=1.5          # only to read portbench_prices/prices.pkl
+# the LLM runs use the Python standard library only (urllib); certifi is optional
