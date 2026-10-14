@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# LLM runs of the supplementary experiments (paid; needs API keys, see ../README.md). Every run has its own hard cap
+# LLM runs of the supplementary experiments (paid; needs API keys, see ../REPRODUCE.md). Every run has its own hard cap
 # and resumes where it stopped (every API response is saved before use), so the script can simply be started again.
 #   lane A (gpt-4.1-mini): ClassAlloc, InvestorBench at temperature 0, 0.3 and 1.0
 #   lane B (other LLMs):  InvestorBench with gpt-4.1-nano, gpt-5-mini and Llama-3.3-70B (OpenRouter)

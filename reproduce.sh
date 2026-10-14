@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Recompute the results of the paper from the included LLM outputs: offline, no API key, about two hours on 4 cores.
-# Every step writes its outputs next to its script; see README.md for where each table and figure is.
+# Every step writes its outputs next to its script; see REPRODUCE.md for where each table and figure is.
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=${PYTHON:-python3}
